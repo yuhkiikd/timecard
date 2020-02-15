@@ -14,3 +14,7 @@
           = f.id
         %td
           = f.name
+        %td
+          = link_to '編集', edit_affiliation_path(f)
+        %td
+          = link_to '削除', f, method: :delete, data: { confirm: t('.delete_confirm') }

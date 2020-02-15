@@ -1,8 +1,16 @@
-%h1 Affiliations#index
-%p
-  Find me in
-  = link_to("テストリンク", affiliations_index_path)
-%p
-  Find me in
-  = link_to("テストリンク2", affiliations_index_path)
+%h1 所属一覧
 
+%table
+  %thead
+    %tr
+      %th
+        ID
+      %th
+        所属名
+  %tbody
+    - @affiliations.each do |f|
+      %tr
+        %td
+          = f.id
+        %td
+          = f.name

@@ -1,0 +1,24 @@
+%h1
+  ユーザー一覧
+%table
+  %tr
+    %th
+      ID
+    %th
+      名前
+  - @users.each do |f|
+    %tr
+      %td
+        = f.id
+      %td
+        = f.name
+      %td
+        = f.email
+      %td
+        = f.affiliation.name
+-#      %td
+        = link_to '詳細', user_path(f.id)
+      %td
+        = link_to '編集', edit_user_path(f)
+      %td
+        = link_to '削除', f, method: :delete, data: { confirm: t('.delete_confirm') }

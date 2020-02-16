@@ -14,9 +14,9 @@
       = f.password_field :password_confirmation
     %p
       = f.label :affiliation_id
-      = f.collection_select :affiliation_id, Affiliation.all, :id, :name, :include_blank => true
+      = f.collection_select :affiliation_id, affiliation_select, :id, :name, :prompt => true
     %p
       = f.label :admin
-      = f.select :admin, [["一般", false],["管理者", true]]
+      = f.select :admin, [["一般", false],["管理者", true]], { selected: 1 }
     %p
       = f.submit

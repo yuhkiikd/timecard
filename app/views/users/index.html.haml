@@ -9,6 +9,10 @@
       %th
         Mail
       %th
+        所属
+      %th
+        詳細
+      %th
       %th
   %tbody
     - @users.each do |f|
@@ -21,6 +25,8 @@
           = f.mail
         %td
           = f.affiliation.name
+        %td
+          = link_to '詳細', user_path(f.id)
         %td
           = link_to '編集', edit_user_path(f)
         %td

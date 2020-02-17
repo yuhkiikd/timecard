@@ -16,9 +16,9 @@
         = f.email
       %td
         = f.affiliation.name
--#      %td
+      %td
         = link_to '詳細', user_path(f.id)
       %td
-        = link_to '編集', edit_user_path(f)
+        = link_to '編集', edit_user_registration_path(f)
       %td
         = link_to '削除', f, method: :delete, data: { confirm: t('.delete_confirm') }

@@ -3,23 +3,16 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
-  before_action :sign_in_required, only: [:show]
-  before_action :ensure_current_user_admin
 
   # GET /resource/sign_up
-  def new
-    super
-  end
+  # def new
+  #   super
+  # end
 
   # POST /resource
-  def create
-    @user = User.new(user_params)
-    if @user.save
-      redirect_to user_session_path
-    else
-      render :new
-    end
-  end
+  # def create
+  #   super
+  # end
 
   # GET /resource/edit
   # def edit
@@ -66,30 +59,4 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
-
-  private
-
-  def sign_in_status
-    unless user_signed_in
-      redirect_to new_user_session_path
-    end
-  end
-
-  def ensure_current_user_admin
-    if user_signed_in? == false
-      redirect_to new_user_session_path
-      flash[:danger] = "ログインしてください"
-    elsif current_user.admin? == false
-      redirect_to affiliations_path
-      flash[:danger] = "管理者権限がありません"
-    end
-  end
-
-  def set_users
-    @user = User.find(params[:id])
-  end
-
-  def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :admin, :affiliation_id)
-  end
 end

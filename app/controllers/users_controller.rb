@@ -1,25 +1,21 @@
 class UsersController < ApplicationController
-  before_action :set_users, only: [:show, :edit, :destroy, :update]
-
-  def index
-    @users = User.all
-  end
+  before_action :set_users, only: [:show]
 
   def show
-  end
-
-  def edit
-  end
-
-  def destroy
-    @user.destroy
-    redirect_to users_path
-    flash[:success] = 'アカウントを削除しました'
   end
 
   private
 
   def set_users
     @user = User.find(params[:id])
+  end
+
+  def ensure_current_user
+    if logged_in? == false
+      redirect_to new_session_path
+      flash[:danger] = "ログインしてください"
+    elsif current_user.id != params[:id].to_i
+      redirect_to tasks_path
+    end
   end
 end

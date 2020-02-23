@@ -1,0 +1,11 @@
+<h1>ユーザーページ</h1>
+
+<ul>
+  <li><%= @user.name %></li>
+  <li><%= @user.email %></li>
+  <% if @user.admin? %>
+    <li>管理者</li>
+  <% else %>
+    <li>一般ユーザー</li>
+  <% end %>
+</ul>

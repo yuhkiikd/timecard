@@ -1,5 +1,10 @@
 ---
 ja:
+  devise:
+    sessions:
+      user:
+        signed_in: 'サインインしました'
+        signed_out: 'サインアウトしました'
   users:
     index:
       delete_confirm: '本当に削除してもよろしいですか？'

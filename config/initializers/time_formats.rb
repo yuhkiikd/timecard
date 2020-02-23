@@ -1,0 +1,1 @@
+Time::DATE_FORMATS[:time] = '%H時間%M分'

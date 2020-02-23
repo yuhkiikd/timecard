@@ -1,2 +1,34 @@
 %h1 TimeCards#index
-%p Find me in app/views/time_cards/index.html.haml
+
+- @time_cards.each do |t|
+  - if t.worked_out_at.present? && t.breaked_out_at.present?
+    - worked_time = t.worked_out_at - t.worked_in_at
+    - breaked_time = t.breaked_out_at - t.breaked_in_at
+  %p
+    年：
+    = t.year
+  %p
+    月：
+    = t.month
+  %p
+    日：
+    = t.day
+  %p
+    出勤時間：
+    = t.worked_in_at
+  %p
+    退勤時間：
+    = t.worked_out_at
+  %p
+    休憩開始時間：
+    = t.breaked_in_at
+  %p
+    休憩終了時間：
+    = t.breaked_out_at
+  %p
+    実働時間：
+    - if t.worked_out_at.present? && t.breaked_out_at.present?
+      = Time.at(worked_time - breaked_time).utc.strftime('%H時間%M分')
+  %p
+    ユーザーID
+    = t.user_id

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_22_053953) do
+ActiveRecord::Schema.define(version: 2020_02_23_135957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,13 +22,17 @@ ActiveRecord::Schema.define(version: 2020_02_22_053953) do
   end
 
   create_table "time_cards", force: :cascade do |t|
-    t.time "worked_in_at"
-    t.time "worked_out_at"
-    t.time "breaked_in_at"
-    t.time "breaked_out_at"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "year", limit: 2, null: false
+    t.integer "month", limit: 2, null: false
+    t.integer "day", limit: 2, null: false
+    t.datetime "worked_in_at"
+    t.datetime "worked_out_at"
+    t.datetime "breaked_in_at"
+    t.datetime "breaked_out_at"
+    t.index ["user_id", "year", "month", "day"], name: "index_time_cards_on_user_id_and_year_and_month_and_day", unique: true
     t.index ["user_id"], name: "index_time_cards_on_user_id"
   end
 

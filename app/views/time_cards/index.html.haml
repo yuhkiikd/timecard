@@ -20,10 +20,6 @@
         ユーザー
   %tbody
   - @time_cards.each do |t|
-    - if t.worked_out_at.present? && t.breaked_out_at.present?
-      - worked_time = t.worked_out_at - t.worked_in_at
-      - breaked_time = t.breaked_out_at - t.breaked_in_at
-      - result_time = worked_time - breaked_time
     %tr
       %td
         = t.day
@@ -40,7 +36,25 @@
           = t.breaked_out_at.strftime('%H:%M')
       %td
         - if t.worked_out_at.present? && t.breaked_out_at.present?
-          = Time.at(result_time).strftime('%H:%M')
+          - worked_result = t.worked_out_at - t.worked_in_at
+          - breaked_result = t.breaked_out_at - t.breaked_in_at
+          - total_time = worked_result - breaked_result
+          = Time.at(total_time).strftime('%H:%M')
+        - elsif t.worked_out_at.present? && t.breaked_out_at == nil
+          - worked_result = t.worked_out_at - t.worked_in_at
+          = Time.at(worked_result).strftime('%H:%M')
+      %td
+        - if t.worked_out_at.present? && t.breaked_out_at.present?
+          - worked_result = t.worked_out_at - t.worked_in_at
+          - breaked_result = t.breaked_out_at - t.breaked_in_at
+          - total_time = worked_result - breaked_result
+          - if total_time.to_i >= 28800
+            = Time.at(total_time - 28800).strftime('%H:%M')
+          - else
+            00:00
+        - elsif t.worked_out_at.present? && t.breaked_out_at == nil
+          - worked_result = t.worked_out_at - t.worked_in_at
+          = Time.at(worked_result).strftime('%H:%M')
       %td
         = t.user.name
 

@@ -28,5 +28,6 @@ module TimecardApp
                         request_specs: false
     end
     config.active_record.default_timezone = :local
+    config.time_zone = 'Tokyo'
   end
 end

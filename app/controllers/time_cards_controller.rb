@@ -16,11 +16,7 @@ class TimeCardsController < ApplicationController
     @time_card = TimeCard.today(current_user)
     
     if params[:worked_in]
-      @time_card.worked_in_at = Time.now
-      @time_card.save
-      redirect_to time_cards_path
-    elsif params[:worked_out]
-      @time_card.worked_out_at = Time.now
+      @time_card.worked_in_at = DateTime.current
       @time_card.save
       redirect_to time_cards_path
     end
@@ -30,6 +26,19 @@ class TimeCardsController < ApplicationController
   end
 
   def update
+    if params[:worked_out]
+      @time_card.worked_out_at = Time.now
+      @time_card.save
+      redirect_to time_cards_path
+    elsif params[:breaked_in]
+      @time_card.breaked_in_at = Time.now
+      @time_card.save
+      redirect_to time_cards_path
+    elsif params[:breaked_out]
+      @time_card.breaked_out_at = Time.now
+      @time_card.save
+      redirect_to time_cards_path
+    end
   end
 
   def show

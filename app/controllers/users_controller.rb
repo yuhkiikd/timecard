@@ -2,6 +2,8 @@ class UsersController < ApplicationController
   before_action :set_users, only: [:show]
 
   def show
+    @days = TimeCard.pluck(:worked_in_at).map{ |item| item.strftime('%Y/%m/%d').to_s}
+    @times = TimeCard.pluck(:worked_in_at).map{ |item| item.strftime('%H').to_i}
   end
 
   private

@@ -7,5 +7,5 @@ Rails.application.routes.draw do
   }
   resources :users, only: [:show]
   resources :affiliations, only: [:index, :new, :create, :edit, :update, :destroy]
-  resources :time_cards, only: [:index, :show]
+  resources :time_cards
 end

@@ -5,7 +5,7 @@ class TimeCardsController < ApplicationController
     today = Date.current
     @year = today.year
     @month = today.month
-    @time_cards = TimeCard.monthly(current_user, @year, @month)
+    @time_cards = monthly_time_cards(current_user, @year, @month)
   end
 
   def new
@@ -63,6 +63,13 @@ class TimeCardsController < ApplicationController
   private
 
   def monthly_time_cards(user, year, month)
+    number_of_days_in_month = Date.new(year, month, 1).next_month.prev_day.day
+    results = Array.new(number_of_days_in_month) # 月の日数分nilで埋めた配列を用意
+    time_cards = TimeCard.monthly(user, year, month)
+    time_cards.each do |card|
+      results[card.day - 1] = card
+    end
+    results
   end
 
   def set_time_card

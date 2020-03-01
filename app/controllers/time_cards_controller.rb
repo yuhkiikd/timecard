@@ -1,11 +1,17 @@
 class TimeCardsController < ApplicationController
   before_action :set_time_card, only: [:show, :edit, :update, :destroy]
+  before_action :logged_in?
+  before_action :ensure_admin, only: [:edit]
 
   def index
-    today = Date.today
+    today = Date.current
     @year = today.year
     @month = today.month
-    @time_cards = TimeCard.monthly(current_user, @year, @month)
+    @time_cards = monthly_time_cards(current_user, @year, @month)
+  end
+
+  def all_index
+    @time_cards = TimeCard.all.order(worked_in_at: "DESC")
   end
 
   def new
@@ -26,8 +32,20 @@ class TimeCardsController < ApplicationController
   end
 
   def update
-    if params[:worked_out]
+    if @time_card.worked_time? && @time_card.breaked_time? && 28800 < (@time_card.worked_time - @time_card.breaked_time).to_i
+      @time_card.overtime = (@time_card.worked_time - @time_card.breaked_time).to_i
+      @time_card.save
+    elsif params[:worked_out]
       @time_card.worked_out_at = Time.now
+      @time_card.worked_time = (@time_card.worked_out_at - @time_card.worked_in_at).to_i
+      if @time_card.breaked_time? && 28800 < @time_card.worked_time.to_i
+        @time_card.worked_time -= @time_card.breaked_time
+        @time_card.overtime = (@time_card.worked_time - 28800).to_i
+      elsif 28800 < @time_card.worked_time
+        @time_card.overtime = (@time_card.worked_time - 28800).to_i
+      else
+        @time_card.overtime = 0
+      end
       @time_card.save
       redirect_to time_cards_path
     elsif params[:breaked_in]
@@ -36,6 +54,7 @@ class TimeCardsController < ApplicationController
       redirect_to time_cards_path
     elsif params[:breaked_out]
       @time_card.breaked_out_at = Time.now
+      @time_card.breaked_time = (@time_card.breaked_out_at - @time_card.breaked_in_at).to_i
       @time_card.save
       redirect_to time_cards_path
     end
@@ -44,12 +63,22 @@ class TimeCardsController < ApplicationController
   def show
   end
 
-  def detroy
+  def destroy
+    @time_card.destroy
+    flash[:success] = '勤怠データを削除しました！'
+    redirect_to all_index_time_cards_url
   end
 
   private
 
   def monthly_time_cards(user, year, month)
+    number_of_days_in_month = Date.new(year, month, 1).next_month.prev_day.day
+    results = Array.new(number_of_days_in_month) # 月の日数分nilで埋めた配列を用意
+    time_cards = TimeCard.where(year: @year, month: @month).monthly(user, year, month)
+    time_cards.each do |card|
+      results[card.day - 1] = card
+    end
+    results
   end
 
   def set_time_card

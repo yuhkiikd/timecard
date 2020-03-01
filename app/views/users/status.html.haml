@@ -1,0 +1,18 @@
+%h1 勤務状況一覧
+%p #{@year}年#{@month}月#{@day}日 #{%w(日 月 火 水 木 金 土)[Date.current.wday] + '曜日'}
+%table
+  %thead
+    %th 名前
+    %th 勤務状況
+    %th 出勤時間
+    %th 退勤時間
+    %th 休憩開始時間
+    %th 休憩終了時間
+  - @status.each do |t|
+    %tr
+      %td= t.user.name
+      %td= working_status(t)
+      %td= time_str(t.worked_in_at)
+      %td= time_str(t.worked_out_at)
+      %td= time_str(t.breaked_in_at)
+      %td= time_str(t.breaked_out_at)

@@ -40,7 +40,6 @@ end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'bcrypt', '3.1.11'
 gem 'dotenv-rails'
 
 gem 'pry-rails'
@@ -54,6 +53,8 @@ gem 'faker', '>= 2.6.0'
 
 gem 'devise'
 gem 'haml-rails'
-gem "chartkick"
+gem 'chartkick'
+gem 'chart-js-rails'
+
 gem 'rails_admin', '~> 2.0'
 gem 'cancancan'

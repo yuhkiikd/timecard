@@ -1,7 +1,7 @@
 class AffiliationsController < ApplicationController
+  before_action :logged_in?
+  before_action :ensure_admin, only: [:new, :edit, :destroy]
   before_action :set_affiliation, only: [:edit, :update, :destroy]
-  before_action :authenticate_user!
-  before_action :ensure_admin, only: [:new]
   
   def index
     @affiliations = Affiliation.all

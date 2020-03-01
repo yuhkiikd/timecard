@@ -1,3 +1,5 @@
 %h1 出退勤時間登録
-
+%p
+  現在状況
+  %span#work-status= working_status(@time_card)
 = render 'form'

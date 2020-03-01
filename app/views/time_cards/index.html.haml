@@ -1,62 +1,37 @@
-%h1 #{@time_cards.first.year}年 #{@time_cards.first.month}月　勤務表
-%table
+%h1 #{@year}年 #{@month}月　勤務表
+%table.table.table-bordered.table-condensed
   %thead
     %tr
-      %th
-        日
-      %th
-        出勤時間
-      %th
-        退勤時間
-      %th
-        休憩開始時間
-      %th
-        休憩終了時間
-      %th
-        実働時間
-      %th
-        残業時間
-      %th
-        ユーザー
+      %th 月日
+      %th 曜日
+      %th 出勤時間
+      %th 退勤時間
+      %th 休憩開始時間
+      %th 休憩終了時間
+      %th 実働時間
+      %th 残業時間
+      %th ユーザー
+      %th 編集
   %tbody
-  - @time_cards.each do |t|
+  - each_date_in_month(@year, @month) do |date, index|
     %tr
-      %td
-        = t.day
-      %td
-        = t.worked_in_at.strftime('%H:%M')
-      %td
-        - if t.worked_out_at.present?
-          = t.worked_out_at.strftime('%H:%M')
-      %td
-        - if t.breaked_in_at.present?
-          = t.breaked_in_at.strftime('%H:%M')
-      %td
-        - if t.breaked_out_at.present?
-          = t.breaked_out_at.strftime('%H:%M')
-      %td
-        - if t.worked_out_at.present? && t.breaked_out_at.present?
-          - worked_result = t.worked_out_at - t.worked_in_at
-          - breaked_result = t.breaked_out_at - t.breaked_in_at
-          - total_time = worked_result - breaked_result
-          = Time.at(total_time).strftime('%H:%M')
-        - elsif t.worked_out_at.present? && t.breaked_out_at == nil
-          - worked_result = t.worked_out_at - t.worked_in_at
-          = Time.at(worked_result).strftime('%H:%M')
-      %td
-        - if t.worked_out_at.present? && t.breaked_out_at.present?
-          - worked_result = t.worked_out_at - t.worked_in_at
-          - breaked_result = t.breaked_out_at - t.breaked_in_at
-          - total_time = worked_result - breaked_result
-          - if total_time.to_i >= 28800
-            = Time.at(total_time - 28800).strftime('%H:%M')
-          - else
-            00:00
-        - elsif t.worked_out_at.present? && t.breaked_out_at == nil
-          - worked_result = t.worked_out_at - t.worked_in_at
-          = Time.at(worked_result).strftime('%H:%M')
-      %td
-        = t.user.name
-
-
-
+      %td= date_in_japanese(date, :month_day)
+      %td= day_of_the_week_in_japanese(date, :short)
+      - if @time_cards[index]
+        %td= time_str(@time_cards[index].worked_in_at)
+        %td= time_str(@time_cards[index].worked_out_at)
+        %td= time_str(@time_cards[index].breaked_in_at)
+        %td= time_str(@time_cards[index].breaked_out_at)
+        %td= time_count(@time_cards[index].worked_time)
+        %td= time_count(@time_cards[index].overtime)
+        %td= @time_cards[index].user.name
+        %td= link_to '編集', edit_time_card_path(@time_cards[index].id)
+      - else
+        %td
+        %td
+        %td
+        %td
+        %td
+        %td
+        %td
+        %td

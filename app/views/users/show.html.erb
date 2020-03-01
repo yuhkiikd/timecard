@@ -9,3 +9,39 @@
     <li>一般ユーザー</li>
   <% end %>
 </ul>
+
+<canvas id="myChart" width="900" height="300"></canvas>
+<script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: <%= @days.to_json.html_safe %>,
+        datasets: [{
+            label: "残業時間",
+            data: <%= @times %>,
+            backgroundColor: 'rgba(255, 99, 132, 1.0)',
+            borderColor: 'rgba(255, 50, 132, 1.0)',
+            fill: true
+        }]
+    },
+    options: {
+        title:  {
+          display: false,
+          text: "タイトル"
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              suggestedMax: 10,
+              suggestedMin: 0,
+              stepSize: 1,
+              callback: function(value, index, values){
+                return value + 'h'
+              }
+            }
+          }]
+        },
+    }
+});
+</script>

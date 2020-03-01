@@ -1,0 +1,31 @@
+%h1 全タイムカードデータ一覧
+%table.table.table-bordered.table-condensed
+  %thead
+    %tr
+      %th 年
+      %th 月
+      %th 日
+      %th 出勤時間
+      %th 退勤時間
+      %th 休憩開始時間
+      %th 休憩終了時間
+      %th 実働時間
+      %th 残業時間
+      %th ユーザー名
+      %th 編集
+      %th 削除
+  %tbody
+  - @time_cards.each do |t|
+    %tr
+      %td= t.year
+      %td= t.month
+      %td= t.day
+      %th= time_str(t.worked_in_at)
+      %th= time_str(t.worked_out_at)
+      %th= time_str(t.breaked_in_at)
+      %th= time_str(t.breaked_out_at)
+      %th= time_count(t.worked_time)
+      %th= time_count(t.overtime)
+      %th= t.user.name
+      %th= link_to '編集', edit_time_card_path(t)
+      %th= link_to '削除', t, method: :delete, data: { confirm: t('.delete_confirm') }

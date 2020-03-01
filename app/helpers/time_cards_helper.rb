@@ -39,6 +39,20 @@ module TimeCardsHelper
     end
   end
 
+  # 勤務状況を取得する
+  def working_status(time_card)
+    case time_card.working_status
+    when :not_arrived
+      '未出社'
+    when :working
+      '勤務中'
+    when :breaking
+      '休憩中'
+    when :left
+      '退社済'
+    end  
+  end
+
   def time_str(time)
     time ? time.strftime('%H:%M') : ''
   end

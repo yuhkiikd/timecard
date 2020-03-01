@@ -1,8 +1,15 @@
 class UsersController < ApplicationController
+  before_action :logged_in?, only: [:index, :show, :status]
+  before_action :ensure_current_user, only: [:index, :show, :status]
   before_action :set_users, only: [:show]
-  before_action :logged_in?, only: [:show]
-  before_action :ensure_admin, only: [:show]
-  before_action :ensure_current_user, only: [:show]
+
+  def status
+    today = Date.current
+    @year = today.year
+    @month = today.month
+    @day = today.day
+    @status = TimeCard.where(year: @year, month: @month, day: @day)
+  end
 
   def show
     today = Date.current

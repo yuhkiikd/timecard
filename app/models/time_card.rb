@@ -14,4 +14,23 @@ class TimeCard < ApplicationRecord
       self.where(user: user).order(:day).all
     end
   end
+
+  def working_status
+    case [!!worked_in_at, !!worked_out_at, !!breaked_in_at, !!breaked_out_at]
+    when [false, false, false, false]
+      :not_arrived # 未出社
+    when [true, false, false, false]
+      :working # 勤務中
+    when [true, false, true, true]
+      :working # 勤務中
+    when [true, false, true, false]
+      :breaking # 休憩中
+    when [true, true, true, true]
+      :left # 退社済
+    when [true, true, false, false]
+      :left # 退社済
+    when [true, true, true, false]
+      :left # 退社済
+    end
+  end
 end

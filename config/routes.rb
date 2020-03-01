@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => {
     :registrations => 'users/registrations'
   }
-  resources :users, only: [:show]
+  resources :users, only: [:show] do
+    collection do
+      get 'status'
+    end
+  end
   resources :affiliations, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :time_cards do
     collection do

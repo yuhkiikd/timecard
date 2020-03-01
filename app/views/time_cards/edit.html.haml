@@ -1,0 +1,16 @@
+%h1 出退勤時間編集
+%div.container
+  = form_with(model: @time_card, local: true) do |f|
+    - if @time_card.errors.any?
+      %div#error_explanation
+      %h2= @time_card.errors.count 件のエラーがあります。
+      %ul
+        -@time_card.errors.full_messages.each do |msg|
+          %li= msg
+    %div.worked_in_at
+      =f.label :worked_in_at
+      =f.date_select :worked_in_at, {}
+    %div.month
+      =f.label :month
+      =f.text_field :month, {}
+      =f.submit

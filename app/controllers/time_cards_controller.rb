@@ -1,11 +1,17 @@
 class TimeCardsController < ApplicationController
   before_action :set_time_card, only: [:show, :edit, :update, :destroy]
+  before_action :logged_in?
+  before_action :ensure_admin, only: [:edit]
 
   def index
     today = Date.current
     @year = today.year
     @month = today.month
     @time_cards = monthly_time_cards(current_user, @year, @month)
+  end
+
+  def all_index
+    @time_cards = TimeCard.all.order(worked_in_at: "DESC")
   end
 
   def new
@@ -57,7 +63,10 @@ class TimeCardsController < ApplicationController
   def show
   end
 
-  def detroy
+  def destroy
+    @time_card.destroy
+    flash[:success] = '勤怠データを削除しました！'
+    redirect_to all_index_time_cards_url
   end
 
   private
@@ -65,7 +74,7 @@ class TimeCardsController < ApplicationController
   def monthly_time_cards(user, year, month)
     number_of_days_in_month = Date.new(year, month, 1).next_month.prev_day.day
     results = Array.new(number_of_days_in_month) # 月の日数分nilで埋めた配列を用意
-    time_cards = TimeCard.monthly(user, year, month)
+    time_cards = TimeCard.where(year: @year, month: @month).monthly(user, year, month)
     time_cards.each do |card|
       results[card.day - 1] = card
     end

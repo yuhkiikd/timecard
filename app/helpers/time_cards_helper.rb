@@ -33,7 +33,6 @@ module TimeCardsHelper
 
   def each_date_in_month(year, month)
     date = Date.new(year, month, 1)
-
     while date.month == month do
       yield date, date.day - 1
       date = date.next_day

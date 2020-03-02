@@ -1,12 +1,10 @@
 class TimeCardsController < ApplicationController
   before_action :set_time_card, only: [:show, :edit, :update, :destroy]
   before_action :logged_in?
-  before_action :ensure_admin, only: [:edit]
+  before_action :ensure_admin, only: [:all_index, :edit]
+  before_action :set_month, only: [:index]
 
   def index
-    today = Date.current
-    @year = today.year
-    @month = today.month
     @time_cards = monthly_time_cards(current_user, @year, @month)
   end
 
@@ -20,7 +18,6 @@ class TimeCardsController < ApplicationController
 
   def create
     @time_card = TimeCard.today(current_user)
-    
     if params[:worked_in]
       @time_card.worked_in_at = DateTime.current
       @time_card.save
@@ -43,8 +40,6 @@ class TimeCardsController < ApplicationController
         @time_card.overtime = (@time_card.worked_time - 28800).to_i
       elsif 28800 < @time_card.worked_time
         @time_card.overtime = (@time_card.worked_time - 28800).to_i
-      else
-        @time_card.overtime = 0
       end
       @time_card.save
       redirect_to time_cards_path
@@ -87,5 +82,11 @@ class TimeCardsController < ApplicationController
 
   def time_card_params
     params.require(:time_card).permit(:year, :month, :day, :worked_in_at, :worked_out_at, :breaked_in_at, :breaked_out_at, :user_id)
+  end
+
+  def set_month
+    today = Date.current
+    @year = today.year
+    @month = today.month
   end
 end

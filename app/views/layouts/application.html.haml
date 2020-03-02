@@ -1,0 +1,28 @@
+!!!
+%html
+  %head
+    %title TimecardApp
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+    - if user_signed_in?
+      - if current_user.admin?
+        = link_to "ダッシュボード", rails_admin_path
+        = link_to "勤怠状況一覧", status_users_path
+        = link_to "所属登録", new_affiliation_path
+        = link_to "全タイムカード一覧", all_index_time_cards_path
+      = link_to "タイムカード打刻", new_time_card_path
+      = link_to "今月のタイムカード", time_cards_path
+      = link_to "マイページ", user_path(current_user.id)
+      = link_to "ログアウト", destroy_user_session_path, method: :delete
+    - else
+      = link_to "ログイン", new_user_session_path
+    - if notice
+      %p.alert.alert-notice
+        = notice
+    - if alert
+      %p.alert.alert-error
+        = alert
+    = yield

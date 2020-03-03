@@ -32,8 +32,11 @@ class AffiliationsController < ApplicationController
   end
 
   def destroy
-    @affiliation.destroy
-    redirect_to affiliations_path
+    if @affiliation.destroy
+      redirect_to affiliations_path, notice: "アカウントを削除しました"
+    else
+      redirect_to affiliations_path, notice: "所属ユーザーがいるため削除できません"
+    end
   end
 end
 

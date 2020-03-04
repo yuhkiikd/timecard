@@ -1,5 +1,10 @@
 class TimeCard < ApplicationRecord
   belongs_to :user
+  validates :year, presence: true
+  validates :month, presence: true
+  validates :day, presence: true
+  validates :worked_in_at, presence: true
+  validate :is_time_correct?
 
   class << self
     # 今日のタイムカードを取得する
@@ -31,6 +36,15 @@ class TimeCard < ApplicationRecord
       :left # 退社済
     when [true, true, true, false]
       :left # 退社済
+    end
+  end
+
+  private
+
+  def is_time_correct?
+    return if worked_in_at.nil? || worked_out_at.nil?
+    if worked_in_at > worked_out_at
+      errors[:base] << '退社時間は、出社時間より後の時間である必要があります ※保存は完了していません'
     end
   end
 end

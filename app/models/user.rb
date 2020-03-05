@@ -12,12 +12,20 @@ class User < ApplicationRecord
                     uniqueness: true
   validates :password, presence: true, length: { minimum: 8 }
   validates :affiliation_id, presence: true
-  before_destroy :least_one
-
+  before_destroy :least_one_destroy
+  before_update :least_one_update
+  
   private
 
-  def least_one
-    if User.where(admin: :true).count == 1 && admin == true
+  def least_one_destroy
+    if User.where(admin: :true).count == 1 && self.admin?
+      errors[:base] << '管理者権限は最低1つ必要です。'
+      throw :abort
+    end
+  end
+
+  def least_one_update
+    if User.where(admin: :true).count == 1 && self.admin? == false && self.admin_was == true
       errors[:base] << '管理者権限は最低1つ必要です'
       throw :abort
     end

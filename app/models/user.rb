@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
 
   belongs_to :affiliation, foreign_key: "affiliation_id"
-  belongs_to :time_card, foreign_key: "time_card_id", dependent: :destroy
+  has_many :time_card, dependent: :destroy
   validates :name, presence: true, length: { maximum: 10 }
   validates :email, presence: true, length: { maximum: 50 },
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },

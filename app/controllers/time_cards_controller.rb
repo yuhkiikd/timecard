@@ -59,9 +59,9 @@ class TimeCardsController < ApplicationController
   end
 
   def destroy
-    @time_card.destroy
-    flash[:success] = '勤怠データを削除しました！'
-    redirect_to all_index_time_cards_url
+    if @time_card.destroy
+      redirect_to all_index_time_cards_url, notice: '勤怠データを削除しました！'
+    end
   end
 
   private

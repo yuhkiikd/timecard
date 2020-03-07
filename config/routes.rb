@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => {
     :registrations => 'users/registrations'
   }
-  resources :users, only: [:show] do
+  resources :users, only: [:index, :show, :edit, :update, :destroy] do
     collection do
       get 'status'
     end

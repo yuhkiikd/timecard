@@ -1,6 +1,6 @@
 class AffiliationsController < ApplicationController
   before_action :logged_in?
-  before_action :ensure_admin, only: [:new, :edit, :destroy]
+  before_action :ensure_admin, only: [:index, :new, :edit, :destroy]
   before_action :set_affiliation, only: [:edit, :update, :destroy]
   
   def index
@@ -32,8 +32,11 @@ class AffiliationsController < ApplicationController
   end
 
   def destroy
-    @affiliation.destroy
-    redirect_to affiliations_path
+    if @affiliation.destroy
+      redirect_to affiliations_path, notice: "アカウントを削除しました"
+    else
+      redirect_to affiliations_path, notice: "所属ユーザーがいるため削除できません"
+    end
   end
 end
 

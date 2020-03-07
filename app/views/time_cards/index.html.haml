@@ -10,8 +10,6 @@
       %th 休憩終了時間
       %th 実働時間
       %th 残業時間
-      %th ユーザー
-      %th 編集
   %tbody
   - each_date_in_month(@year, @month) do |date, index|
     %tr
@@ -24,11 +22,7 @@
         %td= time_str(@time_cards[index].breaked_out_at)
         %td= time_count(@time_cards[index].worked_time)
         %td= time_count(@time_cards[index].overtime)
-        %td= @time_cards[index].user.name
-        %td= link_to '編集', edit_time_card_path(@time_cards[index].id)
-      - else
-        %td
-        %td
+      -else
         %td
         %td
         %td

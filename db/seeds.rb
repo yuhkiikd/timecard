@@ -1,12 +1,15 @@
-10.times do |i|
-  TimeCard.create!(
-    user_id: 17,
-    year: 2020,
-    month: 3,
-    day: 1 + i,
-    worked_in_at: DateTime.parse('2020-02-01 00:00:00') + i,
-    worked_out_at: DateTime.parse('2020-02-01 11:00:00') + i,
-    breaked_in_at: DateTime.parse('2020-02-01 04:00:00') + i,
-    breaked_out_at: DateTime.parse('2020-02-01 05:00:00') + i,
-  )
+1.times do |i|
+  Affiliation.create!(
+    name: '総務部',
+    )
+end
+
+1.times do |i|
+  User.create!(
+    name: 'admin2',
+    email: 'admin2@a.com',
+    password: 'hogehoge',
+    admin: true,
+    affiliation_id: 1,
+    )
 end

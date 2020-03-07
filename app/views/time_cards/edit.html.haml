@@ -7,10 +7,28 @@
       %ul
         -@time_card.errors.full_messages.each do |msg|
           %li= msg
-    %div.worked_in_at
-      =f.label :worked_in_at
-      =f.date_select :worked_in_at, {}
+    %div.year
+      =f.label :year
+      =f.text_field :year, readonly: true, disabled: true
     %div.month
       =f.label :month
-      =f.text_field :month, {}
+      =f.text_field :month, readonly: true, disabled: true
+    %div.day
+      =f.label :day
+      =f.text_field :day, readonly: true, disabled: true
+    %div.worked_in_at
+      =f.label :worked_in_at
+      =f.datetime_select :worked_in_at, {}
+    %div.worked_out_at
+      =f.label :worked_out_at
+      =f.datetime_select :worked_out_at, {}
+    %div.breaked_in_at
+      =f.label :breaked_in_at
+      =f.datetime_select :breaked_in_at, {}
+    %div.breaked_out_at
+      =f.label :breaked_out_at
+      =f.datetime_select :breaked_out_at, {}
+
+
+
       =f.submit

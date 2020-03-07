@@ -27,5 +27,5 @@
       %th= time_count(t.worked_time)
       %th= time_count(t.overtime)
       %th= t.user.name
-      %th= link_to '編集', edit_time_card_path(t)
+      %th= link_to '編集', rails_admin.edit_path(model_name: 'time_card', id: t.id)
       %th= link_to '削除', t, method: :delete, data: { confirm: t('.delete_confirm') }

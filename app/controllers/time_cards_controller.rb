@@ -32,6 +32,7 @@ class TimeCardsController < ApplicationController
     if @time_card.worked_time? && @time_card.breaked_time? && 28800 < (@time_card.worked_time - @time_card.breaked_time).to_i
       @time_card.overtime = (@time_card.worked_time - @time_card.breaked_time).to_i
       @time_card.save
+      redirect_to time_cards_path
     elsif params[:worked_out]
       @time_card.worked_out_at = Time.now
       @time_card.worked_time = (@time_card.worked_out_at - @time_card.worked_in_at).to_i

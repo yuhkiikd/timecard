@@ -13,7 +13,7 @@ end
 1.times do |i|
   User.create!(
     name: 'admin',
-    email: 'admin@a.com',
+    email: 'testdikd@gmail.com',
     password: 'hogehoge',
     admin: true,
     affiliation_id: 1,

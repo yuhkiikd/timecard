@@ -383,6 +383,7 @@ DEPENDENCIES
   rails_admin
   rspec-rails (~> 3.8)
   sass-rails
+  sassc (= 2.2.1)
   selenium-webdriver
   spring
   spring-commands-rspec

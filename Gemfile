@@ -46,7 +46,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'dotenv-rails'
-gem 'unicorn'
+gem 'unicorn', "~> 5.4"
 gem 'mini_racer', platforms: :ruby
 
 gem 'pry-rails'

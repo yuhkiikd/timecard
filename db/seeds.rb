@@ -5,11 +5,7 @@
 end
 
 1.times do |i|
-  User.create!(
-    name: 'admin2',
-    email: 'admin2@a.com',
-    password: 'hogehoge',
-    admin: true,
-    affiliation_id: 1,
+  Affiliation.create!(
+    name: '営業部',
     )
 end

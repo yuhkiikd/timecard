@@ -49,10 +49,9 @@
 #
 # The server-based syntax can be used to override options:
 # ------------------------------------
-server '54.92.40.221',
-  user: 'app',
-  roles: %w{app db web},
+server '52.196.156.153', user: 'app', roles: %w{app db web}
 set :ssh_options, keys: '/home/vagrant/.ssh/id_rsa'
+
 #   ssh_options: {
 #     user: 'user_name', # overrides user setting above
 #     keys: %w(/home/user_name/.ssh/id_rsa),

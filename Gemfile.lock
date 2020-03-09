@@ -396,7 +396,7 @@ DEPENDENCIES
   rails-i18n (= 5.1.3)
   rails_admin!
   rspec-rails (~> 3.8)
-  sass-rails
+  sass-rails (= 5.1.0)
   sassc (= 2.2.1)
   selenium-webdriver
   spring

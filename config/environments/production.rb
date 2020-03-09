@@ -34,16 +34,4 @@ Rails.application.configure do
   end
 
   config.active_record.dump_schema_after_migration = false
-
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-  ActionMailer::Base.delivery_method = :smtp
-  ActionMailer::Base.smtp_settings = {
-    :address => ENV['SMTP_ADDRESS'],
-    :port => 587,
-    :authetication => :login,
-    :user_name => ENV['SMTP_USER'],
-    :domain => ENV['SMTP_DOMAIN'],
-    :password => ENV['SMTP_PASS'],
-    :enable_starttls_auto => true,
-  }
 end

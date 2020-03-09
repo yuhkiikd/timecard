@@ -58,6 +58,6 @@ module TimeCardsHelper
   end
 
   def time_count(time)
-    time ? Time.at(time).strftime('%H:%M') : ''
+    time ? Time.at(time - 32400).strftime('%H:%M') : ''
   end
 end

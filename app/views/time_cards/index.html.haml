@@ -20,7 +20,7 @@
         %td= time_str(@time_cards[index].worked_out_at)
         %td= time_str(@time_cards[index].breaked_in_at)
         %td= time_str(@time_cards[index].breaked_out_at)
-        %td= time_count(@time_cards[index].worked_time)
+        %td= time_count(@time_cards[index].worked_time - 32400)
         %td= time_count(@time_cards[index].overtime - 32400)
       -else
         %td

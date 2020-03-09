@@ -64,5 +64,5 @@ gem 'haml-rails'
 gem 'chartkick'
 gem 'chart-js-rails'
 
-gem 'rails_admin'
+gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 gem 'cancancan'

@@ -35,15 +35,15 @@ Rails.application.configure do
 
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = { host: 'timecard-ikd.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
-    user_name: ENV['SENDGRID_USERNAME'],
-    password: ENV['SENDGRID_PASSWORD'],
-    domain: "heroku.com",
-    address: "smtp.SendGrid.net",
-    port: 587,
-    authentication: :plain,
-    enable_starttls_auto: true
+    :address => ENV['SMTP_ADDRESS'],
+    :port => 587,
+    :authetication => :login,
+    :user_name => ENV['SMTP_USER'],
+    :domain => ENV['SMTP_DOMAIN'],
+    :password => ENV['SMTP_PASS'],
+    :enable_starttls_auto => true,
   }
 end

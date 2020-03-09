@@ -20,7 +20,7 @@ Rails.application.configure do
 
   config.active_storage.service = :local
 
-  #config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = false
 
   config.action_mailer.perform_caching = false
 
@@ -37,14 +37,13 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-  config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address => ENV['SMTP_ADDRESS'],
-    :port => 587,
-    :authetication => :login,
-    :user_name => ENV['SMTP_USER'],
-    :domain => ENV['SMTP_DOMAIN'],
-    :password => ENV['SMTP_PASS'],
     :enable_starttls_auto => true,
+    :address => "smtp.gmail.com",
+    :port => 587,
+    :domain => 'smtp.gmail.com',
+    :user_name => Settings.gmail[:user_name], #gmailアドレス
+    :password => Settings.gmail[:password], #gmailパスワード
+    :authentication => 'login'
   }
 end

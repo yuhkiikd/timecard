@@ -11,6 +11,7 @@
     worked_time: 36000,
     breaked_time: 3600,
     overtime: 7200,
+    affiliation_id: 1,
     )
 end
 
@@ -27,5 +28,6 @@ end
     worked_time: 32400,
     breaked_time: 3600,
     overtime: 3600,
+    affiliation_id: 2,
     )
 end

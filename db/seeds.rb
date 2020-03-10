@@ -19,3 +19,13 @@ end
     affiliation_id: 1,
     )
 end
+
+1.times do |i|
+  User.create!(
+    name: 'normal',
+    email: 'normal@gmail.com',
+    password: 'hogehoge',
+    admin: false,
+    affiliation_id: 2,
+    )
+end

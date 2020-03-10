@@ -19,6 +19,7 @@ class TimeCardsController < ApplicationController
   def create
     @time_card = TimeCard.today(current_user)
     if params[:worked_in]
+      @time_card.affiliation_id = current_user.affiliation_id
       @time_card.worked_in_at = DateTime.current
       @time_card.save
       redirect_to time_cards_path
@@ -82,7 +83,7 @@ class TimeCardsController < ApplicationController
   end
 
   def time_card_params
-    params.require(:time_card).permit(:year, :month, :day, :worked_in_at, :worked_out_at, :breaked_in_at, :breaked_out_at, :user_id)
+    params.require(:time_card).permit(:year, :month, :day, :worked_in_at, :worked_out_at, :breaked_in_at, :breaked_out_at, :user_id, :affiliation_id)
   end
 
   def set_month

@@ -440,6 +440,7 @@ DEPENDENCIES
   faker (>= 2.6.0)
   haml-rails
   jbuilder (~> 2.5)
+  jquery-rails
   kaminari (~> 0.17.0)
   launchy
   letter_opener_web

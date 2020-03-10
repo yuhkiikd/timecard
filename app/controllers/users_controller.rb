@@ -12,6 +12,9 @@ class UsersController < ApplicationController
   def show
     @days = TimeCard.where(year: @year, month: @month, user_id: @user.id).order(day: "ASC").pluck(:worked_in_at).map{ |item| item.strftime('%Y/%m/%d')}
     @times = TimeCard.where(year: @year, month: @month, user_id: @user.id).order(day: "ASC").pluck(:overtime).map{ |item| Time.at(item).strftime('%X:%M').to_i}
+    @worked_time = TimeCard.where(year: @year, month: @month, user_id: @user.id).sum(:worked_time)
+    @worked_time_month = TimeCard.where(year: @year, month: @month, user_id: @user.id).sum(:worked_time)
+    @overtime_month = TimeCard.where(year: @year, month: @month, user_id: @user.id).sum(:overtime)
   end
 
   private

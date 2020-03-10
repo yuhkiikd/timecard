@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_02_214331) do
+ActiveRecord::Schema.define(version: 2020_03_10_152902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,9 +32,10 @@ ActiveRecord::Schema.define(version: 2020_03_02_214331) do
     t.datetime "worked_out_at"
     t.datetime "breaked_in_at"
     t.datetime "breaked_out_at"
-    t.integer "worked_time"
-    t.integer "breaked_time"
+    t.integer "worked_time", default: 0, null: false
+    t.integer "breaked_time", default: 0, null: false
     t.integer "overtime", default: 0, null: false
+    t.integer "affiliation_id", null: false
     t.index ["user_id", "year", "month", "day"], name: "index_time_cards_on_user_id_and_year_and_month_and_day", unique: true
     t.index ["user_id"], name: "index_time_cards_on_user_id"
   end

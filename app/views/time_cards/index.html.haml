@@ -1,6 +1,7 @@
-%h1 #{@year}年 #{@month}月　勤務表
-%table.table.table-bordered.table-condensed
-  %thead
+%h1.text-center.mt-5.col-12 勤怠状況
+%h2.text-center.col-12 #{@year}年 #{@month}月
+%table.table.table-bordered.table-condensed.text-center
+  %thead.bg-dark.text-white
     %tr
       %th 月日
       %th 曜日
@@ -20,8 +21,8 @@
         %td= time_str(@time_cards[index].worked_out_at)
         %td= time_str(@time_cards[index].breaked_in_at)
         %td= time_str(@time_cards[index].breaked_out_at)
-        %td= time_count(@time_cards[index].worked_time - 32400)
-        %td= time_count(@time_cards[index].overtime - 32400)
+        %td= time_count(@time_cards[index].worked_time)
+        %td= time_count(@time_cards[index].overtime)
       -else
         %td
         %td

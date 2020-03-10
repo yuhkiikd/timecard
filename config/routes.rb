@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       get 'status'
     end
   end
-  resources :affiliations, only: [:index, :new, :create, :edit, :update, :destroy]
+  resources :affiliations
   resources :time_cards do
     collection do
       get 'all_index'

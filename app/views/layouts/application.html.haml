@@ -7,18 +7,32 @@
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
-    - if user_signed_in?
-      - if current_user.admin?
-        = link_to "ダッシュボード", rails_admin_path
-        = link_to "勤怠状況一覧", status_users_path
-        = link_to "所属登録", new_affiliation_path
-        = link_to "ユーザー一覧", rails_admin.index_path('user')
-        = link_to "ユーザー登録", rails_admin.new_path('user')
-        = link_to "全タイムカード一覧", all_index_time_cards_path
-      = link_to "タイムカード打刻", new_time_card_path
-      = link_to "今月のタイムカード", time_cards_path
-      = link_to "マイページ", user_path(current_user.id)
-      = link_to "ログアウト", destroy_user_session_path, method: :delete
+    %nav.navbar.navbar-expand-md.navbar-dark.bg-dark
+      = link_to "TimeCard APP", root_path, { class: "navbar-brand" }
+      %button.navbar-toggler{"aria-controls" => "navbar", "aria-expanded" => "false", "aria-label" => "ナビゲーションの切替", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
+        %span.navbar-toggler-icon
+      - if user_signed_in?
+        #navbar.collapse.navbar-collapse
+          %ul.navbar-nav.mr-auto
+            %li.nav-item
+              = link_to "タイムカード打刻", new_time_card_path, { class: "nav-link" }
+            %li.nav-item
+              = link_to "今月のタイムカード", time_cards_path, { class: "nav-link" }
+            %li.nav-item
+              = link_to "マイページ", user_path(current_user.id), { class: "nav-link" }
+            - if current_user.admin?
+              %li.nav-item.dropdown
+                %a#dropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#"} 管理者メニュー
+                .dropdown-menu{"aria-labelledby" => "dropdown"}
+                  = link_to "ダッシュボード", rails_admin_path,{ class: "dropdown-item" }
+                  = link_to "勤怠状況一覧", status_users_path,{ class: "dropdown-item" }
+                  = link_to "所属登録", new_affiliation_path,{ class: "dropdown-item" }
+                  = link_to "ユーザー一覧", rails_admin.index_path('user'),{ class: "dropdown-item" }
+                  = link_to "ユーザー登録", rails_admin.new_path('user'),{ class: "dropdown-item" }
+                  = link_to "全タイムカード一覧", all_index_time_cards_path,{ class: "dropdown-item" }
+
+            %li.nav-item
+              = link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link"
     - if notice
       %p.alert.alert-notice
         = notice
@@ -26,3 +40,7 @@
       %p.alert.alert-error
         = alert
     = yield
+
+    %footer.footer.bg-dark
+      .container
+        %p.text-meted.text-center.text-white © Yuhki ikeda

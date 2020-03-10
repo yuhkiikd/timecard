@@ -1,42 +1,69 @@
-%h1 ユーザーページ
-%ul
-  %li= @user.name
-  %li= @user.email
-  - if @user.admin?
-    %li 管理者
-  - else
-    %li 一般ユーザー
-%canvas#myChart{:height => "300", :width => "900"}
-:javascript
-  var ctx = document.getElementById("myChart").getContext('2d');
-  var myChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-          labels: #{@days.to_json.html_safe},
-          datasets: [{
-              label: "残業時間",
-              data: #{@times},
-              backgroundColor: 'rgba(255, 99, 132, 1.0)',
-              borderColor: 'rgba(255, 50, 132, 1.0)',
-              fill: true
-          }]
-      },
-      options: {
-          title:  {
-            display: false,
-            text: "タイトル"
-          },
-          scales: {
-            yAxes: [{
-              ticks: {
-                suggestedMax: 10,
-                suggestedMin: 0,
-                stepSize: 1,
-                callback: function(value, index, values){
-                  return value + 'h'
-                }
-              }
+%h1.text-center.mt-5.col-12 #{@user.name} さんの従業員情報
+
+
+%table.table.table-bordered.table-condensed.text-center.md-5
+  %thead.bg-dark.text-white
+    %tr
+      %th.w-25 名前
+      %th.w-25 勤務状況
+      %th.w-25 所属
+      %th.w-25 権限
+  %tbody
+    %tr
+      %td= @user.id
+      %td= @user.name
+      %td= @user.affiliation.name
+      %td
+        - if @user.admin?
+          管理者
+        - else
+          一般ユーザー
+
+.container.mb-3
+  .row
+    .col-md-11.mx-auto
+      %table.table.table-bordered.table-condensed.text-center
+        %thead.bg-dark.text-white
+          %tr
+            %th.w-50 今月の実働時間
+            %th.w-50 今月の残業時間
+        %tbody
+          %tr
+            %td= "#{worked_hour_month(@worked_time)}：#{worked_minutes_month(@worked_time)}"
+            %td= "#{worked_hour_month(@overtime)}：#{worked_minutes_month(@overtime)}"
+
+.container
+  %canvas#myChart{:height => "300", :width => "900"}
+  :javascript
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: #{@days.to_json.html_safe},
+            datasets: [{
+                label: "残業時間",
+                data: #{@times},
+                backgroundColor: 'rgba(255, 99, 132, 1.0)',
+                borderColor: 'rgba(255, 50, 132, 1.0)',
+                fill: false
             }]
-          },
-      }
-  });
+        },
+        options: {
+            title:  {
+              display: false,
+              text: "タイトル"
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  suggestedMax: 6,
+                  suggestedMin: 0,
+                  stepSize: 1,
+                  callback: function(value, index, values){
+                    return value + 'h'
+                  }
+                }
+              }]
+            },
+        }
+    });

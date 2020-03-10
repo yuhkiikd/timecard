@@ -60,4 +60,12 @@ module TimeCardsHelper
   def time_count(time)
     time ? Time.at(time).strftime('%H:%M') : ''
   end
+
+  def worked_hour_month(time)
+    time ? time / 3600 : ''
+  end
+
+  def worked_minutes_month(time)
+    time ? Time.at(time).strftime('%M') : ''
+  end
 end

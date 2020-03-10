@@ -1,5 +1,8 @@
-%h1 出退勤時間登録
-%p
-  現在状況
-  %span#work-status= working_status(@time_card)
-= render 'form'
+%h1.text-center.mt-5.col-12 出退勤時間登録
+.container
+  .row.justify-content-around
+    .col-12.text-center
+      現在状況
+      %span#work-status= working_status(@time_card)
+    .col-12
+      = render 'form'

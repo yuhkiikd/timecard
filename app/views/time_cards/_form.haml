@@ -1,10 +1,12 @@
 %div
   = form_with model: @time_card, local: true do |f|
-    %p
-      = f.submit "出勤", name: 'worked_in', disabled: !!@time_card.worked_in_at
-    %p
-      = f.submit "退勤", name: 'worked_out', disabled: !!@time_card.worked_out_at || !@time_card.worked_in_at
-    %p
-      = f.submit "休憩開始時間", name: 'breaked_in', disabled: !!@time_card.breaked_in_at || !@time_card.worked_in_at
-    %p
-      = f.submit "休憩終了時間", name: 'breaked_out', disabled: !!@time_card.breaked_out_at || !@time_card.breaked_in_at || !@time_card.worked_in_at
+    .container
+      .row.justify-content-around
+        .col-12.h-25.mb-5
+          = f.submit "出勤", name: 'worked_in', disabled: !!@time_card.worked_in_at, class: "form-control input-md h-25 p-4"
+        .col-6.h-25.mb-5
+          = f.submit "休憩開始時間", name: 'breaked_in', disabled: !!@time_card.breaked_in_at || !@time_card.worked_in_at, class: "form-control input-lg h-25 p-4"
+        .col-6.h-25.mb-5
+          = f.submit "休憩終了時間", name: 'breaked_out', disabled: !!@time_card.breaked_out_at || !@time_card.breaked_in_at || !@time_card.worked_in_at, class: "form-control input-lg h-25 p-4"
+        .col-12.h-25
+          = f.submit "退勤", name: 'worked_out', disabled: !@time_card.worked_in_at || !!@time_card.breaked_in_at && !@time_card.breaked_out_at, class: "form-control input-lg h-25 p-4"

@@ -1,7 +1,7 @@
-%h1 勤務状況一覧
-%p #{@year}年#{@month}月#{@day}日 #{%w(日 月 火 水 木 金 土)[Date.current.wday] + '曜日'}
-%table
-  %thead
+%h1.text-center.mt-5.col-12 勤務状況一覧
+%p.text-center.col-12 #{@year}年#{@month}月#{@day}日 #{%w(日 月 火 水 木 金 土)[Date.current.wday] + '曜日'}
+%table.table.table-bordered.table-condensed.text-center
+  %thead.bg-dark.text-white
     %th 名前
     %th 勤務状況
     %th 出勤時間

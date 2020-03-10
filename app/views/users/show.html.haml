@@ -1,0 +1,42 @@
+%h1 ユーザーページ
+%ul
+  %li= @user.name
+  %li= @user.email
+  - if @user.admin?
+    %li 管理者
+  - else
+    %li 一般ユーザー
+%canvas#myChart{:height => "300", :width => "900"}
+:javascript
+  var ctx = document.getElementById("myChart").getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: #{@days.to_json.html_safe},
+          datasets: [{
+              label: "残業時間",
+              data: #{@times},
+              backgroundColor: 'rgba(255, 99, 132, 1.0)',
+              borderColor: 'rgba(255, 50, 132, 1.0)',
+              fill: true
+          }]
+      },
+      options: {
+          title:  {
+            display: false,
+            text: "タイトル"
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                suggestedMax: 10,
+                suggestedMin: 0,
+                stepSize: 1,
+                callback: function(value, index, values){
+                  return value + 'h'
+                }
+              }
+            }]
+          },
+      }
+  });

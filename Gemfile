@@ -68,3 +68,4 @@ gem 'cancancan'
 gem 'aws-ses'
 gem 'config'
 gem 'erb2haml'
+gem "jquery-rails"

@@ -1,7 +1,7 @@
 class AffiliationsController < ApplicationController
   before_action :logged_in?
   before_action :ensure_admin, only: [:index, :new, :edit, :destroy]
-  before_action :set_affiliation, only: [:edit, :update, :destroy]
+  before_action :set_affiliation, only: [:edit,:show ,:update, :destroy]
   
   def index
     @affiliations = Affiliation.all
@@ -26,6 +26,9 @@ class AffiliationsController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def show
   end
 
   def edit

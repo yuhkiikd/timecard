@@ -4,6 +4,9 @@ class TimeCard < ApplicationRecord
   validates :month, presence: true
   validates :day, presence: true
   validates :worked_in_at, presence: true
+  validates :worked_time, presence: true
+  validates :breaked_time, presence: true
+  validates :overtime, presence: true
   validate :is_time_correct?
 
   class << self

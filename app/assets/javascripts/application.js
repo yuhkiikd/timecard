@@ -15,6 +15,8 @@
 //= require turbolinks
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap/dist/js/bootstrap.min
+//= require jquery3
+//= require popper
+//= require bootstrap-sprockets
 //= require Chart.min
 //= require_tree .

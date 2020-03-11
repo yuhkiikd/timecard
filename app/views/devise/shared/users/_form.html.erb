@@ -1,0 +1,24 @@
+<%
+  options = {
+    url: form_url
+  }
+  options[:as] = resource_name if defined?(resource_name) && resource_name.present?
+%>
+
+<%= form_for(resource, options) do |f| %>
+  <% if !defined?(password_only) || !password_only %>
+    <%= f.email_field :email %>
+  <% end %>
+
+  <% required = false %>
+  <% if resource.new_record? %>
+    <% required = true %>
+  <% end %>
+  <%= f.password_field :password, autocomplete: "off", required: required %>
+  <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  <% if resource.persisted? && !current_user.has_role?(:admin) %>
+    <%= f.password_field :current_password, autocomplete: "off" %>
+  <% end %>
+
+  <%= f.submit %>
+<% end %>

@@ -54,28 +54,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # The path used after sign up.
-<<<<<<< HEAD
-  def after_sign_up_path_for(resource)
-    if current_user_is_admin?
-      redirect_to users_path
-    else
-      super(resource)
-    end
-  end
-
-  # The path used after update.
-  def after_update_path_for(resource)
-    if current_user_is_admin?
-      users_path
-    else
-      super(resource)
-    end
-  end
-=======
   # def after_sign_up_path_for(resource)
   #   super(resource)
   # end
->>>>>>> parent of 65a3660... 100_ユーザー情報の更新途中
 
   # The path used after sign up for inactive accounts.
   # def after_inactive_sign_up_path_for(resource)

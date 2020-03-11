@@ -7,12 +7,8 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => {
     :registrations => 'users/registrations'
   }
-<<<<<<< HEAD
 
   resources :users, only: [:index, :show, :edit] do
-=======
-  resources :users, only: [:show] do
->>>>>>> parent of 65a3660... 100_ユーザー情報の更新途中
     collection do
       get 'status'
     end

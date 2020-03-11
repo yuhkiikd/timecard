@@ -4,8 +4,8 @@
 %table.table.table-bordered.table-condensed.text-center.md-5
   %thead.bg-dark.text-white
     %tr
+      %th.w-25 従業員ID
       %th.w-25 名前
-      %th.w-25 勤務状況
       %th.w-25 所属
       %th.w-25 権限
   %tbody
@@ -29,8 +29,8 @@
             %th.w-50 今月の残業時間
         %tbody
           %tr
-            %td= "#{int_to_hour(@worked_time)}:#{(int_to_minute(@worked_time)}"
-            %td= "#{int_to_hour(@overtime)}:#{int_to_minute((@overtime)}"
+            %td= "#{int_to_hour(@worked_time)}:#{int_to_minutes(@worked_time)}"
+            %td= "#{int_to_hour(@overtime)}:#{int_to_minutes(@overtime)}"
 
 .container
   %canvas#myChart{:height => "300", :width => "900"}

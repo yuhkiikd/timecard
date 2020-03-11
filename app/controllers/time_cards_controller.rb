@@ -2,7 +2,7 @@ class TimeCardsController < ApplicationController
   before_action :set_time_card, only: [:show, :edit, :update, :destroy]
   before_action :logged_in?
   before_action :ensure_admin, only: [:all_index, :edit]
-  before_action :set_month, only: [:index]
+  before_action :set_year_and_month, only: [:index]
 
   def index
     @time_cards = monthly_time_cards(current_user, @year, @month)
@@ -84,11 +84,5 @@ class TimeCardsController < ApplicationController
 
   def time_card_params
     params.require(:time_card).permit(:year, :month, :day, :worked_in_at, :worked_out_at, :breaked_in_at, :breaked_out_at, :user_id, :affiliation_id)
-  end
-
-  def set_month
-    today = Date.current
-    @year = today.year
-    @month = today.month
   end
 end

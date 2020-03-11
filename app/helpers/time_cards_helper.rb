@@ -68,4 +68,15 @@ module TimeCardsHelper
   def int_to_minutes(time)
     time ? Time.at(time).strftime('%M') : ''
   end
+
+  def set_year_and_month
+    today = Date.current
+    @year = today.year
+    @month = today.month
+  end
+
+  def set_date
+    set_year_and_month
+    @day = today.day
+  end
 end

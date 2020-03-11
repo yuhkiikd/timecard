@@ -29,3 +29,10 @@ body {
 .container .text-muted {
   margin: 20px 0;
 }
+
+.has-error {
+  display: contents;
+  input.form-control {
+    border: 1px solid #de0000;
+  }
+}

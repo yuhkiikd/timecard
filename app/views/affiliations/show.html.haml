@@ -1,12 +1,19 @@
-%h1 所属一覧
-%table
+%h1 所属詳細情報
+%table.text-center
   %thead
     %tr
       %th
         ID
       %th
         所属名
+      %th
+        所属人数
+      %th
+        今月の総残業時間数（時のみ）
   %tbody
+  -@affiliations.each do |f|
     %tr 
-      %td=@affiliation.id
-      %td=@affiliation.name
+      %td=f.id
+      %td=f.name
+      %td="#{f.user.count(:email)}名"
+      %td= "#{int_to_hour(f.time_card.where(year:2020,month:3).sum(:worked_time))}時間"

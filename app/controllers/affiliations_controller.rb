@@ -29,6 +29,8 @@ class AffiliationsController < ApplicationController
   end
 
   def show
+    @affiliations = Affiliation.all
+    @worked_time = @affiliation.time_card.where(year:2020,month:3).sum(:worked_time)
   end
 
   def edit

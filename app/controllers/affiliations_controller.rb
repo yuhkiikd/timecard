@@ -14,7 +14,7 @@ class AffiliationsController < ApplicationController
   def create
     @affiliation = Affiliation.new(affiliation_params)
     if @affiliation.save
-      redirect_to affiliations_path, notice: "所属を作成しました"
+      redirect_to affiliations_path
     else
       render :new
     end
@@ -29,6 +29,7 @@ class AffiliationsController < ApplicationController
   end
 
   def show
+    @affiliations = Affiliation.all
     @worked_time = @affiliation.time_card.where(year:2020,month:3).sum(:worked_time)
   end
 
@@ -37,9 +38,9 @@ class AffiliationsController < ApplicationController
 
   def destroy
     if @affiliation.destroy
-      redirect_to affiliations_path, notice: "削除が成功しました"
+      redirect_to affiliations_path, notice: "アカウントを削除しました"
     else
-      redirect_to affiliations_path, alert: "所属ユーザーがいるため削除できません"
+      redirect_to affiliations_path, notice: "所属ユーザーがいるため削除できません"
     end
   end
 end

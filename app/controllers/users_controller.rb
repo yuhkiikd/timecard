@@ -21,4 +21,11 @@ class UsersController < ApplicationController
   def set_users
     @user = User.find(params[:id])
   end
+
+  def set_date
+    today = Date.current
+    @year = today.year
+    @month = today.month
+    @day = today.day
+  end
 end

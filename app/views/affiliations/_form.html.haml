@@ -1,15 +1,15 @@
 %div
   = form_with model: @affiliation, local: true do |f|
     -if @affiliation.errors.any?
-      #error_explanation
-      %h2= "#{@affiliation.errors.count}件のエラーがあります。"
+      %div#error_explanation
+      %h2
+        = @affiliation.errors.count
+        件のエラーがあります。
       %ul
       - @affiliation.errors.full_messages.each do |msg|
         %li= msg
-    .container.mt-5
-      .row.justify-content-around
-        .col-12.h-25.mb-5
-          %p= f.label :name
-          = f.text_field :name,class: "form-control form-control-lg p-4 text-center"
-        .col-12.h-25.mb-5
-          = f.submit class: "form-control btn btn-dark input-lg h-25 p-4"
+    %p
+      = f.label :name
+      = f.text_field :name
+    %p
+      = f.submit

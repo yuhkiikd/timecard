@@ -1,5 +1,4 @@
 module ApplicationHelper
-  private
 
   def ensure_admin
     unless current_user.try(:admin?)

@@ -61,11 +61,11 @@ module TimeCardsHelper
     time ? Time.at(time).strftime('%H:%M') : ''
   end
 
-  def worked_hour_month(time)
+  def int_to_hour(time)
     time ? time / 3600 : ''
   end
 
-  def worked_minutes_month(time)
+  def int_to_minutes(time)
     time ? Time.at(time).strftime('%M') : ''
   end
 end

@@ -29,8 +29,8 @@
             %th.w-50 今月の残業時間
         %tbody
           %tr
-            %td= "#{worked_hour_month(@worked_time)}：#{worked_minutes_month(@worked_time)}"
-            %td= "#{worked_hour_month(@overtime)}：#{worked_minutes_month(@overtime)}"
+            %td= "#{int_to_hour(@worked_time)}:#{(int_to_minute(@worked_time)}"
+            %td= "#{int_to_hour(@overtime)}:#{int_to_minute((@overtime)}"
 
 .container
   %canvas#myChart{:height => "300", :width => "900"}

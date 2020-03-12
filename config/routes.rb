@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     :registrations => 'users/registrations'
   }
 
-  resources :users, only: [:index, :show, :edit] do
+  resources :users, only: [:index, :show, :destroy] do
     collection do
       get 'status'
     end

@@ -29,8 +29,8 @@ class AffiliationsController < ApplicationController
   end
 
   def show
-    @affiliations = Affiliation.all
-    @worked_time = @affiliation.time_card.where(year:2020,month:3).sum(:worked_time)
+    @days = TimeCard.where(year: @year, month: @month, affiliation_id: @affiliation.id).order(day: "ASC").pluck(:worked_in_at).map{ |item| item.strftime('%Y/%m/%d')}
+    @times = TimeCard.where(year: @year, month: @month, affiliation_id: @affiliation.id).order(day: "ASC").pluck(:overtime).map{ |item| Time.at(item).strftime('%X:%M').to_i}
   end
 
   def edit

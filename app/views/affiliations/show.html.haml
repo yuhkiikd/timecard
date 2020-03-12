@@ -1,19 +1,42 @@
-%h1 所属詳細情報
-%table.text-center
-  %thead
-    %tr
-      %th
-        ID
-      %th
-        所属名
-      %th
-        所属人数
-      %th
-        今月の総残業時間数（時のみ）
-  %tbody
-  -@affiliations.each do |f|
-    %tr 
-      %td=f.id
-      %td=f.name
-      %td="#{f.user.count(:email)}名"
-      %td= "#{int_to_hour(f.time_card.where(year:2020,month:3).sum(:worked_time))}時間"
+%h1.text-center.mt-5.col-12 所属詳細情報
+.container.mb-3.text-center
+  .row
+    .col-md-12.mx-auto
+      ="所属：#{@affiliation.name}"
+    .col-md-12.mx-auto
+      ="所属人数：#{@affiliation.user_ids.count}"
+.container
+  %canvas#myChart{:height => "300", :width => "900"}
+  :javascript
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: #{@days.to_json.html_safe},
+            datasets: [{
+                label: "残業時間",
+                data: #{@times},
+                backgroundColor: 'rgba(255, 99, 132, 1.0)',
+                borderColor: 'rgba(255, 50, 132, 1.0)',
+                fill: true
+            }]
+        },
+        options: {
+            title:  {
+              display: false,
+              text: "タイトル"
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  suggestedMax: 10,
+                  suggestedMin: 0,
+                  stepSize: 1,
+                  callback: function(value, index, values){
+                    return value + 'h'
+                  }
+                }
+              }]
+            },
+        }
+    });

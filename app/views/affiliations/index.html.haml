@@ -1,19 +1,19 @@
-%h1 所属一覧
-%table
-  %thead
+%h1.text-center.mt-5.col-12 所属一覧
+%table.table.table-bordered.table-condensed.text-center
+  %thead.bg-dark.text-white
     %tr
-      %th
-        ID
-      %th
-        所属名
+      %th 所属ID
+      %th 所属名
+      %td 従業員数
+      %td 今月の残業時間
+      %td 編集
+      %td 削除
   %tbody
-    - @affiliations.each do |f|
-      %tr
-        %td
-          = f.id
-        %td
-          = f.name
-        %td
-          = link_to '編集', edit_affiliation_path(f)
-        %td
-          = link_to '削除', f, method: :delete, data: { confirm: t('.delete_confirm') }
+  - @affiliations.each do |f|
+    %tr
+      %td= f.id
+      %td= f.name
+      %td= f.user_ids.count
+      %td= "#{int_to_hour(f.time_card.sum(:worked_time))}時間"
+      %td= link_to '編集', edit_affiliation_path(f)
+      %td= link_to '削除', f, method: :delete, data: { confirm: t('.delete_confirm') }

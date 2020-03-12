@@ -31,6 +31,7 @@
                   = link_to "ユーザー登録", rails_admin.new_path('user'),{ class: "dropdown-item" }
                   = link_to "全タイムカード一覧", all_index_time_cards_path,{ class: "dropdown-item" }
 
+
             %li.nav-item
               = link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link"
     - if notice

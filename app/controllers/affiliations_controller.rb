@@ -38,9 +38,11 @@ class AffiliationsController < ApplicationController
 
   def destroy
     if @affiliation.destroy
-      redirect_to affiliations_path, notice: "アカウントを削除しました"
+      redirect_to affiliations_path, notice: "所属を削除しました"
+    elsif @affiliation.valid?
+      redirect_to affiliations_path, alert: "所属ユーザーまたは所属に紐付くタイムカードがあるため削除できません"
     else
-      redirect_to affiliations_path, notice: "所属ユーザーがいるため削除できません"
+      redirect_to affiliations_path, alert: "削除できませんでした"
     end
   end
 end

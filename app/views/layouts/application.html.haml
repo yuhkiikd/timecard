@@ -25,20 +25,19 @@
                 %a#dropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#"} 管理者メニュー
                 .dropdown-menu{"aria-labelledby" => "dropdown"}
                   = link_to "ダッシュボード", rails_admin_path,{ class: "dropdown-item" }
-                  = link_to "勤怠状況一覧", status_users_path,{ class: "dropdown-item" }
+                  = link_to "所属一覧", affiliations_path,{ class: "dropdown-item" }
                   = link_to "所属登録", new_affiliation_path,{ class: "dropdown-item" }
                   = link_to "ユーザー一覧", rails_admin.index_path('user'),{ class: "dropdown-item" }
                   = link_to "ユーザー登録", rails_admin.new_path('user'),{ class: "dropdown-item" }
+                  = link_to "勤怠状況一覧", status_users_path,{ class: "dropdown-item" }
                   = link_to "全タイムカード一覧", all_index_time_cards_path,{ class: "dropdown-item" }
-
-
             %li.nav-item
               = link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link"
     - if notice
-      %p.alert.alert-notice
+      %p.alert.alert-success
         = notice
     - if alert
-      %p.alert.alert-error
+      %p.alert.alert-danger
         = alert
     = yield
 

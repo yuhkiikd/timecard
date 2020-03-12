@@ -17,28 +17,6 @@ class User < ApplicationRecord
   
   private
 
-  def update_without_password(params, *options)
-    # current_password = params.delete(:current_password)
-
-    if params[:password].blank?
-      params.delete(:password)
-      params.delete(:password_confirmation) if params[:password_confirmation].blank?
-    end
-
-    # result = if valid_password?(current_password)
-    #   update_attributes(params, *options)
-    # else
-    #   self.assign_attributes(params, *options)
-    #   self.valid?
-    #   self.errors.add(:current_password, current_password.blank? ? :blank : :invalid)
-    #   false
-    # end
-    update_attributes(params, *options)
-
-    clean_up_passwords
-    result
-  end
-
   def least_one_destroy
     if User.where(admin: :true).count == 1 && self.admin?
       errors[:alert] << '管理者権限は最低1つ必要です。'

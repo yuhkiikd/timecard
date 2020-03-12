@@ -8,12 +8,14 @@ Rails.application.routes.draw do
     :registrations => 'users/registrations'
   }
 
-  resources :users, only: [:index, :show, :destroy] do
+  resources :users, except: [:new, :create] do
     collection do
       get 'status'
     end
   end
+
   resources :affiliations
+  
   resources :time_cards do
     collection do
       get 'all_index'

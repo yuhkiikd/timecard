@@ -1,1 +1,25 @@
-=link_to "aaaa", edit_user_registration_path
+%h1.text-center.mt-5.col-12 ユーザー一覧
+%table.table.table-bordered.table-condensed.text-center
+  %thead.bg-dark.text-white
+    %tr
+      %th 従業員ID
+      %th 名前
+      %td メールアドレス
+      %td 権限
+      %td 所属
+      %td 編集
+      %td 削除
+  %tbody
+  -@users.each do |f|
+    %tr
+      %td= f.id
+      %td= f.name
+      %td= f.email
+      %td
+        - if f.admin?
+          管理者
+        - else
+          一般ユーザー
+      %td= f.affiliation.name
+      %td= link_to '編集', edit_user_path(f)
+      %td= link_to '削除', f, method: :delete, data: { confirm: t('.delete_confirm') }

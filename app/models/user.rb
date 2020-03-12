@@ -11,7 +11,6 @@ class User < ApplicationRecord
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
                     uniqueness: true
   devise :validatable, password_length: 8..128
-  devise :validatable, admin_presence: true
   validates :affiliation_id, presence: true
   before_destroy :least_one_destroy
   before_update :least_one_update

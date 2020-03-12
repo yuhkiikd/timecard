@@ -1,0 +1,42 @@
+%h1.text-center.mt-4.col-12 ユーザー情報編集
+.container.text-center.mb-5
+  .row.justify-content-around
+    .col-12.h-25.mb-4.text-center
+  = form_with model: @user, local: true do |f|
+    -if @user.errors.any?
+      #error_explanation
+      %h2
+        = @user.errors.count
+        件のエラーがあります。
+      %ul
+      - @user.errors.full_messages.each do |msg|
+        %li.mb-3
+          = msg
+
+    .row.justify-content-around
+      .form-group.col-10.h-25.mb-3.text-center
+        = f.label :name
+        = f.text_field :name, class: "form-control input-lg h-25 p-2 text-center"
+    .row.justify-content-around
+      .form-group.col-10.h-25.mb-3.text-center
+        = f.label :email
+        = f.email_field :email, class: "form-control input-lg h-25 p-2 text-center"
+    .row.justify-content-around
+      .form-group.col-10.h-25.mb-3.text-center
+        = f.label :password
+        = f.password_field :password, class: "form-control input-lg h-25 p-2 text-center"
+    .row.justify-content-around
+      .form-group.col-10.h-25.mb-3.text-center
+        = f.label :password_confirmation
+        = f.password_field :password_confirmation, class: "form-control input-lg h-25 p-2 text-center"
+    .row.justify-content-around
+      .form-group.col-10.h-25.mb-3.text-center
+        = f.label :affiliation
+        = f.collection_select :affiliation_id, affiliation_select, :id, :name, {:prompt => true}, class: "form-control input-lg h-25 p-2"
+    .row.justify-content-around
+      .form-group.col-10.h-25.mb-4.text-center
+        = f.label :admin
+        = f.select :admin, [["一般", false],["管理者", true]], { selected: 1 }, class: "form-control input-lg h-25 p-2"
+    .row.justify-content-around
+      .form-group.col-6.h-25
+        = f.submit class: "form-control input-lg h-25 p-4 btn-dark"

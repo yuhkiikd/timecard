@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable
 
   belongs_to :affiliation, foreign_key: "affiliation_id"
   has_many :time_card, dependent: :destroy
@@ -10,7 +10,8 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 50 },
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
                     uniqueness: true
-  validates :password, presence: true, length: { minimum: 8 }
+  devise :validatable, password_length: 8..128
+  devise :validatable, admin_presence: true
   validates :affiliation_id, presence: true
   before_destroy :least_one_destroy
   before_update :least_one_update

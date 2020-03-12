@@ -20,6 +20,19 @@ class UsersController < ApplicationController
     @overtime = TimeCard.where(year: @year, month: @month, user_id: @user.id).sum(:overtime)
   end
 
+  def edit
+  end
+
+  def update
+    if @user.update(user_params)
+      redirect_to users_path, notice: "ユーザー情報を更新しました"
+    elsif @user.errors.any?
+      render :edit, alert: "管理者は最低1人必要です"
+    else
+      redirect_to users_path, alert: "ユーザー更新できませんでした"
+    end
+  end
+
   def destroy
     if @user.destroy
       redirect_to users_path, notice: "ユーザーを削除しました"
@@ -34,5 +47,9 @@ class UsersController < ApplicationController
 
   def set_users
     @user = User.find(params[:id])
+  end
+
+  def user_params
+    params.require(:user).permit(:name, :email, :password, :affiliation_id, :admin)
   end
 end

@@ -1,34 +1,30 @@
 %h1 出退勤時間編集
+%h2= "#{@time_card.year}"
 %div.container
-  = form_with(model: @time_card, local: true) do |f|
+  = form_with(model: @time_card, local: true, url: time_card_path) do |f|
     - if @time_card.errors.any?
       %div#error_explanation
-      %h2= @time_card.errors.count 件のエラーがあります。
+      %h2="#{@time_card.errors.count} 件のエラーがあります。"
       %ul
         -@time_card.errors.full_messages.each do |msg|
           %li= msg
     %div.year
-      =f.label :year
-      =f.text_field :year, readonly: true, disabled: true
+      =f.hidden_field :year
     %div.month
-      =f.label :month
-      =f.text_field :month, readonly: true, disabled: true
+      =f.hidden_field :month
     %div.day
-      =f.label :day
-      =f.text_field :day, readonly: true, disabled: true
+      =f.hidden_field :day
     %div.worked_in_at
       =f.label :worked_in_at
-      =f.datetime_select :worked_in_at, {}
-    %div.worked_out_at
-      =f.label :worked_out_at
-      =f.datetime_select :worked_out_at, {}
+      =f.datetime_select :worked_in_at
     %div.breaked_in_at
       =f.label :breaked_in_at
-      =f.datetime_select :breaked_in_at, {}
+      =f.datetime_select :breaked_in_at
     %div.breaked_out_at
       =f.label :breaked_out_at
-      =f.datetime_select :breaked_out_at, {}
+      =f.datetime_select :breaked_out_at
+    %div.worked_out_at
+      =f.label :worked_out_at
+      =f.datetime_select :worked_out_at
 
-
-
-      =f.submit
+    =f.submit name: 'time_edit'

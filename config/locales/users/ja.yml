@@ -5,6 +5,10 @@ ja:
       user:
         signed_in: 'サインインしました'
         signed_out: 'サインアウトしました'
+    failure:
+      user:
+        invalid: '入力が無効、または不正です'
+        already_authenticated: 'すでにログイン済みです'
   users:
     index:
       delete_confirm: '本当に削除してもよろしいですか？'

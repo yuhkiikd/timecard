@@ -24,8 +24,8 @@
       %th= time_str(t.worked_out_at)
       %th= time_str(t.breaked_in_at)
       %th= time_str(t.breaked_out_at)
-      %th= time_count(t.worked_time)
-      %th= time_count(t.overtime)
+      %td= "#{int_to_hour(t.worked_time)-int_to_hour(t.breaked_time)}:#{int_to_time(int_to_minutes(t.worked_time) - int_to_minutes(t.breaked_time))}"
+      %td= "#{int_to_hour(t.overtime)}:#{int_to_time(int_to_minutes(t.overtime))}"
       %th= t.user.name
-      %th= link_to '編集', rails_admin.edit_path(model_name: 'time_card', id: t.id)
+      %th= link_to '編集', edit_time_card_path(t)
       %th= link_to '削除', t, method: :delete, data: { confirm: t('.delete_confirm') }

@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   resources :affiliations
   
-  resources :time_cards do
+  resources :time_cards, excpt: [:show] do
     collection do
       get 'all_index'
       post 'all_index'

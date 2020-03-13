@@ -19,14 +19,14 @@ class User < ApplicationRecord
 
   def least_one_destroy
     if User.where(admin: :true).count == 1 && self.admin?
-      errors[:alert] << '管理者権限は最低1つ必要です。'
+      errors[:base] << '管理者権限は最低1つ必要です。'
       throw :abort
     end
   end
 
   def least_one_update
     if User.where(admin: :true).count == 1 && self.admin? == false && self.admin_was == true
-      errors[:alert] << '管理者権限は最低1つ必要です'
+      errors[:base] << '管理者権限は最低1つ必要です'
       throw :abort
     end
   end

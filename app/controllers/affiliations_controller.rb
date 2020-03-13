@@ -29,8 +29,8 @@ class AffiliationsController < ApplicationController
   end
 
   def show
-    @days = TimeCard.where(year: @year, month: @month, affiliation_id: @affiliation.id).order(day: "ASC").pluck(:worked_in_at).map{ |item| item.strftime('%Y/%m/%d')}
-    @times = TimeCard.where(year: @year, month: @month, affiliation_id: @affiliation.id).order(day: "ASC").pluck(:overtime).map{ |item| Time.at(item).strftime('%X:%M').to_i}
+    @days = TimeCard.where(affiliation_id: @affiliation.id).group(:year,:month, :day).order(day: "ASC").minimum(:worked_in_at).values.map{ |item| item.strftime('%Y/%m/%d')}
+    @times = TimeCard.where(affiliation_id: @affiliation.id).group(:year,:month, :day).order(day: "ASC").sum(:overtime).values.map{ |item| Time.at(item).strftime('%X:%M').to_i}
   end
 
   def edit

@@ -6,6 +6,7 @@
       %th 所属名
       %td 従業員数
       %td 今月の残業時間
+      %td 詳細
       %td 編集
       %td 削除
   %tbody
@@ -14,6 +15,7 @@
       %td= f.id
       %td= f.name
       %td= f.user_ids.count
-      %td= "#{int_to_hour(f.time_card.sum(:worked_time))}時間"
+      %td= "#{int_to_hour(f.time_card.sum(:overtime))}時間"
+      %td= link_to '詳細', affiliation_path(f)
       %td= link_to '編集', edit_affiliation_path(f)
       %td= link_to '削除', f, method: :delete, data: { confirm: t('.delete_confirm') }

@@ -38,7 +38,7 @@ class TimeCardsController < ApplicationController
 
   def update
     if params[:worked_out]
-      @time_card.worked_out_at = Time.now
+      @time_card.worked_out_at = Time.current
       if @time_card.breaked_time.present?
         @time_card.worked_time = (@time_card.worked_out_at - @time_card.worked_in_at - @time_card.breaked_time).to_i
         @time_card.save
@@ -56,11 +56,11 @@ class TimeCardsController < ApplicationController
       end
       redirect_to time_cards_path, notice: '勤怠データを記録しました'
     elsif params[:breaked_in]
-      @time_card.breaked_in_at = Time.now
+      @time_card.breaked_in_at = Time.current
       @time_card.save
       redirect_to time_cards_path, notice: '勤怠データを記録しました'
     elsif params[:breaked_out]
-      @time_card.breaked_out_at = Time.now
+      @time_card.breaked_out_at = Time.current
       @time_card.breaked_time = (@time_card.breaked_out_at - @time_card.breaked_in_at).to_i
       @time_card.save
       redirect_to time_cards_path, notice: '勤怠データを記録しました'

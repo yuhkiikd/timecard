@@ -2,6 +2,7 @@ class AffiliationsController < ApplicationController
   before_action :logged_in?
   before_action :ensure_admin, only: [:index, :new, :edit, :destroy]
   before_action :set_affiliation, only: [:edit,:show ,:update, :destroy]
+  before_action :set_affiliation_chart_data, only: [:show]
   
   def index
     @affiliations = Affiliation.all
@@ -29,8 +30,6 @@ class AffiliationsController < ApplicationController
   end
 
   def show
-    @days = TimeCard.where(affiliation_id: @affiliation.id).group(:year,:month, :day).order(day: "ASC").minimum(:worked_in_at).values.map{ |item| item.strftime('%Y/%m/%d')}
-    @times = TimeCard.where(affiliation_id: @affiliation.id).group(:year,:month, :day).order(day: "ASC").sum(:overtime).values.map{ |item| Time.at(item).strftime('%X:%M').to_i}
   end
 
   def edit

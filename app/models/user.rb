@@ -13,7 +13,7 @@ class User < ApplicationRecord
                     uniqueness: true
   before_destroy :least_one_destroy
   before_update :do_not_update_self_admin
-  
+
   private
 
   def least_one_destroy

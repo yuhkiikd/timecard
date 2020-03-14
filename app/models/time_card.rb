@@ -11,7 +11,12 @@ class TimeCard < ApplicationRecord
   validates :worked_time, presence: true
   validates :breaked_time, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :overtime, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validates :affiliation_id, presence: true
+  validates :affiliation_id, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1}
+  validates :user_id, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1}
+
+  scope :group_date_asc_day, -> { group(:year, :month, :day).order(day: "ASC") }
+  scope :asc, -> { order(day: "ASC") }
+
   class << self
     # 今日のタイムカードを取得する
     def today(user)

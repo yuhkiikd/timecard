@@ -6,12 +6,12 @@ class TimeCard < ApplicationRecord
   validates :day, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 31 }
   validate :is_time_correct?
   validate :valid_date
-  validate :valid_in_out_date
   validates :worked_in_at, presence: true
   validates :worked_time, presence: true
   validates :breaked_time, presence: true
   validates :overtime, presence: true
   validates :affiliation_id, presence: true
+  validate :valid_in_out_date, on: :update
 
   class << self
     # 今日のタイムカードを取得する
@@ -49,7 +49,7 @@ class TimeCard < ApplicationRecord
   private
 
   def is_time_correct?
-    return if worked_in_at.nil? || worked_out_at.nil? || breaked_in_at.nil? || breaked_out_at.nil?
+    return if worked_in_at.nil? || worked_out_at.nil? || breaked_in_at.nil? || breaked_out_at.nil? 
     if worked_in_at > worked_out_at || worked_in_at > breaked_in_at || worked_in_at > breaked_out_at ||\
        worked_out_at < breaked_in_at || worked_out_at < breaked_out_at || breaked_in_at > breaked_out_at
       errors[:base] << '出勤日時　＜　休憩開始日時　＜　休憩終了日時　＜　退勤日時で入力してください'
@@ -63,16 +63,23 @@ class TimeCard < ApplicationRecord
     end
   end
 
+  def return_values
+    return if worked_in_at.nil? || worked_out_at.nil? || breaked_in_at.nil? || breaked_out_at.nil? || year.nil? || month.nil? || day.nil?
+  end
+
   def valid_in_out_date
-    return if worked_in_at.nil? || worked_out_at.nil? || breaked_in_at.nil? || breaked_out_at.nil?
-    return if year.nil? || month.nil? || day.nil?
+    return_values
+
     if year != worked_in_at.year || month != worked_in_at.month || day != worked_in_at.day
       errors[:base] << '出勤年月日がタイムカードの日付と違います。また、日付をまたいだ日時は記録できません。'
-    elsif year != worked_out_at.year || month != worked_out_at.month || day != worked_out_at.day
+    end
+    if year != worked_out_at.year || month != worked_out_at.month || day != worked_out_at.day
       errors[:base] << '退勤年月日がタイムカードの日付と違います。また、日付をまたいだ日時は記録できません。'
-    elsif year != breaked_in_at.year || month != breaked_in_at.month || day != breaked_in_at.day
+    end
+    if year != breaked_in_at.year || month != breaked_in_at.month || day != breaked_in_at.day
       errors[:base] << '休憩開始年月日がタイムカードの日付と違います。また、日付をまたいだ日時は記録できません。'
-    elsif year != breaked_out_at.year || month != breaked_out_at.month || day != breaked_out_at.day
+    end
+    if year != breaked_out_at.year || month != breaked_out_at.month || day != breaked_out_at.day
       errors[:base] << '休憩終了年月日がタイムカードの日付と違います。また、日付をまたいだ日時は記録できません。'
     end
   end

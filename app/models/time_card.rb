@@ -9,10 +9,9 @@ class TimeCard < ApplicationRecord
   validate :valid_in_out_date
   validates :worked_in_at, presence: true
   validates :worked_time, presence: true
-  validates :breaked_time, presence: true
-  validates :overtime, presence: true
+  validates :breaked_time, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :overtime, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :affiliation_id, presence: true
-
   class << self
     # 今日のタイムカードを取得する
     def today(user)
@@ -75,10 +74,5 @@ class TimeCard < ApplicationRecord
     elsif year != breaked_out_at.year || month != breaked_out_at.month || day != breaked_out_at.day
       errors[:base] << '休憩終了年月日がタイムカードの日付と違います。また、日付をまたいだ日時は記録できません。'
     end
-  end
-
-  def return_values
-    return if worked_in_at.nil? || worked_out_at.nil? || breaked_in_at.nil? || breaked_out_at.nil? ||\
-              year.nil? || month.nil? || day.nil?
   end
 end

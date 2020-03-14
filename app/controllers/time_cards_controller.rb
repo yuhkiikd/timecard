@@ -20,11 +20,18 @@ class TimeCardsController < ApplicationController
 
   def create
     @time_card = TimeCard.today(current_user)
+
     if params[:worked_in]
       @time_card.affiliation_id = current_user.affiliation_id
       @time_card.worked_in_at = DateTime.current
-      @time_card.save
-      redirect_to time_cards_path
+      if @time_card.year != @time_card.worked_in_at.year||\
+         @time_card.month != @time_card.worked_in_at.month||\
+         @time_card.day != @time_card.worked_in_at.day
+         redirect_to all_index_time_cards_path, notice: '不正な日時です'
+      else
+        @time_card.save
+        redirect_to time_cards_path
+      end
     end
   end
 

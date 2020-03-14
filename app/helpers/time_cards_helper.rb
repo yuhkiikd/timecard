@@ -61,12 +61,12 @@ module TimeCardsHelper
     time ? Time.at(time).strftime('%H:%M') : ''
   end
 
-  def int_to_hour(time)
-    time ? time / 3600 : ''
+  def int_to_hour(f = time.to_i.to_f)
+    f ? f / 3600 : ''
   end
 
-  def int_to_minutes(time)
-    time.to_i ? (time.to_f % 3600 / 60).floor : '' 
+  def int_to_minutes(f = time.to_i.to_f)
+    f ? (f % 3600 / 60).floor.ceil : '' 
   end
 
   def int_to_time(time)

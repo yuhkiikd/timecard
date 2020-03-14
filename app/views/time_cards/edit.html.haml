@@ -1,29 +1,30 @@
-%h1.text-center.mt-4.col-12 タイムカード編集
-%h2.text-center.mt-4.col-12.mb-3="#{@time_card.year}年 #{@time_card.month}月 #{@time_card.day}日"
-.container
-  .row.justify-content-around
-    .col-12.h-25.mb-4.text-center
-    = form_with(model: @time_card, local: true, url: time_card_path) do |f|
-      - if @time_card.errors.any?
-        .error_explanation
-        %h2="#{@time_card.errors.count} 件のエラーがあります。"
-        %ul
-          -@time_card.errors.full_messages.each do |msg|
-            %li= msg
-        -f.hidden_field :year
-        -f.hidden_field :month
-        -f.hidden_field :day
-      .form-group.col-12.p-3.mb-3.text-center
-        =f.label :worked_in_at
-        =f.datetime_select :worked_in_at
-      .form-group.col-12.p-3.mb-3.text-center
-        =f.label :breaked_in_at
-        =f.datetime_select :breaked_in_at
-      .form-group.col-12.p-3.mb-3.text-center
-        =f.label :breaked_out_at
-        =f.datetime_select :breaked_out_at
-      .form-group.col-12.p-3.mb-3.text-center
-        =f.label :worked_out_at
-        =f.datetime_select :worked_out_at
-      .form-group.col-12.p-3.mb-3.text-center
-        =f.submit name: 'time_edit'
+%h1 出退勤時間編集
+%h2= "#{@time_card.year}"
+%div.container
+  = form_with(model: @time_card, local: true, url: time_card_path) do |f|
+    - if @time_card.errors.any?
+      %div#error_explanation
+      %h2="#{@time_card.errors.count} 件のエラーがあります。"
+      %ul
+        -@time_card.errors.full_messages.each do |msg|
+          %li= msg
+    %div.year
+      =f.hidden_field :year
+    %div.month
+      =f.hidden_field :month
+    %div.day
+      =f.hidden_field :day
+    %div.worked_in_at
+      =f.label :worked_in_at
+      =f.datetime_select :worked_in_at
+    %div.breaked_in_at
+      =f.label :breaked_in_at
+      =f.datetime_select :breaked_in_at
+    %div.breaked_out_at
+      =f.label :breaked_out_at
+      =f.datetime_select :breaked_out_at
+    %div.worked_out_at
+      =f.label :worked_out_at
+      =f.datetime_select :worked_out_at
+
+    =f.submit name: 'time_edit'

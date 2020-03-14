@@ -32,21 +32,14 @@ class TimeCardsController < ApplicationController
   def update
     if params[:worked_out]
       @time_card.worked_out_at = Time.now
-      if @time_card.breaked_time.present?
-        @time_card.worked_time = (@time_card.worked_out_at - @time_card.worked_in_at - @time_card.breaked_time).to_i
-        @time_card.save
-      else
-        @time_card.worked_time = (@time_card.worked_out_at - @time_card.worked_in_at).to_i
-        @time_card.save
-      end
-      if @time_card.breaked_time? && 28800 < @time_card.worked_time
+      @time_card.worked_time = (@time_card.worked_out_at - @time_card.worked_in_at).to_i
+      if @time_card.breaked_time? && 28800 < @time_card.worked_time.to_i
         @time_card.worked_time -= @time_card.breaked_time
         @time_card.overtime = (@time_card.worked_time - 28800).to_i
-        @time_card.save
       elsif 28800 < @time_card.worked_time
         @time_card.overtime = (@time_card.worked_time - 28800).to_i
-        @time_card.save
       end
+      @time_card.update
       redirect_to time_cards_path, notice: '勤怠データを記録しました'
     elsif params[:breaked_in]
       @time_card.breaked_in_at = Time.now
@@ -58,16 +51,7 @@ class TimeCardsController < ApplicationController
       @time_card.save
       redirect_to time_cards_path, notice: '勤怠データを記録しました'
     elsif params[:time_edit]
-      @time_card.breaked_time = (@time_card.breaked_out_at - @time_card.breaked_in_at).to_i
-      @time_card.worked_time = (@time_card.worked_out_at - @time_card.worked_in_at - @time_card.breaked_time ).to_i
-      @time_card.save
-      if 28800 < @time_card.worked_time
-        @time_card.overtime = (@time_card.worked_time - 28800).to_i
-      else
-        @time_card.overtime = 0
-      end
-
-      if @time_card.update(time_card_edit_params)
+      if @time_card.update(time_card_params)
         redirect_to all_index_time_cards_path, notice: '勤怠データを記録しました'
       else
         render :edit
@@ -104,9 +88,5 @@ class TimeCardsController < ApplicationController
 
   def time_card_params
     params.require(:time_card).permit(:year, :month, :day, :worked_in_at, :worked_out_at, :breaked_in_at, :breaked_out_at, :user_id, :affiliation_id)
-  end
-
-  def time_card_edit_params
-    params.require(:time_card).permit(:year, :month, :day, :worked_in_at, :worked_out_at, :breaked_in_at, :breaked_out_at, :user_id, :affiliation_id, :worked_time, :breaked_time, :overtime)
   end
 end

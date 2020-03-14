@@ -70,3 +70,4 @@ gem 'config'
 gem 'erb2haml'
 gem "jquery-rails"
 gem 'bootstrap', '~> 4.4.1'
+gem 'kaminari', '~> 0.17.0'

@@ -1,0 +1,23 @@
+ja:
+  activerecord:
+    models:
+      time_card: タイムカード
+      user: "ユーザー"
+      affiliation: "所属"
+    attributes:
+      contact:
+        name: "名前"
+        email: "メールアドレス"
+        content: "内容"
+      user:
+        title: "タイトル"
+        name: "名前"
+        email: "メールアドレス"
+        current_password: "現在のパスワード"
+        password: "パスワード"
+        password_confirmation: "確認用パスワード"
+        remember_me: "ログインを記憶"
+        affiliation: "所属"
+        admin: "権限"
+      affiliation:
+        name: "所属"

@@ -61,11 +61,27 @@ module TimeCardsHelper
     time ? Time.at(time).strftime('%H:%M') : ''
   end
 
-  def worked_hour_month(time)
-    time ? time / 3600 : ''
+  def int_to_hour(f = time.to_i.to_f)
+    f ? f / 3600 : ''
   end
 
-  def worked_minutes_month(time)
-    time ? Time.at(time).strftime('%M') : ''
+  def int_to_minutes(f = time.to_i.to_f)
+    f ? (f % 3600 / 60).floor.ceil : '' 
+  end
+
+  def int_to_time(time)
+    time.to_i ? Time.at(time).strftime('%M') : ''
+  end
+
+  def set_user_chart_data
+    @chart_days = TimeCard.where(year: @year, month: @month, user_id: @user.id).asc.pluck(:worked_in_at).map{ |item| item.strftime('%Y/%m/%d')}
+    @chart_times = TimeCard.where(year: @year, month: @month, user_id: @user.id).asc.pluck(:overtime).map{ |item| Time.at(item).strftime('%X:%M').to_i}
+    @worked_time = TimeCard.where(year: @year, month: @month, user_id: @user.id).sum(:worked_time)
+    @overtime = TimeCard.where(year: @year, month: @month, user_id: @user.id).sum(:overtime)
+  end
+
+  def set_affiliation_chart_data
+    @days = TimeCard.where(affiliation_id: @affiliation.id).group_date_asc_day.minimum(:worked_in_at).values.map{ |item| item.strftime('%Y/%m/%d')}
+    @times = TimeCard.where(affiliation_id: @affiliation.id).group_date_asc_day.sum(:overtime).values.map{ |item| Time.at(item).strftime('%X:%M').to_i}
   end
 end

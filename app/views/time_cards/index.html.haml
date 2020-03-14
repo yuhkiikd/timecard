@@ -1,5 +1,5 @@
-%h1.text-center.mt-5.col-12 勤怠状況
-%h2.text-center.col-12 #{@year}年 #{@month}月
+%h1.text-center.mt-5.col-12 今月の勤怠状況
+%h2.text-center.col-12="#{@year}年 #{@month}月"
 %table.table.table-bordered.table-condensed.text-center
   %thead.bg-dark.text-white
     %tr
@@ -21,8 +21,9 @@
         %td= time_str(@time_cards[index].worked_out_at)
         %td= time_str(@time_cards[index].breaked_in_at)
         %td= time_str(@time_cards[index].breaked_out_at)
-        %td= time_count(@time_cards[index].worked_time)
-        %td= time_count(@time_cards[index].overtime)
+        %td= "#{int_to_hour(@time_cards[index].worked_time)-int_to_hour(@time_cards[index].breaked_time)}:#{int_to_time(int_to_minutes(@time_cards[index].worked_time) - int_to_minutes(@time_cards[index].breaked_time))}"
+        %td= "#{int_to_hour(@time_cards[index].overtime)}:#{int_to_time(int_to_minutes(@time_cards[index].overtime))}"
+
       -else
         %td
         %td

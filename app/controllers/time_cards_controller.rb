@@ -1,28 +1,36 @@
 class TimeCardsController < ApplicationController
+  PER = 10
   before_action :set_time_card, only: [:show, :edit, :update, :destroy]
   before_action :logged_in?
   before_action :ensure_admin, only: [:all_index, :edit]
   before_action :set_month, only: [:index]
+  before_action :set_date, only: [:new]
+  before_action :can_not_edit, only: [:edit]
+  before_action :time_card_today, only: [:new, :create]
 
   def index
     @time_cards = monthly_time_cards(current_user, @year, @month)
   end
 
   def all_index
-    @time_cards = TimeCard.all.order(worked_in_at: "DESC")
+    @time_cards = TimeCard.page(params[:page]).per(PER).order(worked_in_at: "DESC")
   end
 
   def new
-    @time_card = TimeCard.today(current_user)
   end
 
   def create
-    @time_card = TimeCard.today(current_user)
     if params[:worked_in]
       @time_card.affiliation_id = current_user.affiliation_id
       @time_card.worked_in_at = DateTime.current
-      @time_card.save
-      redirect_to time_cards_path
+      if @time_card.year != @time_card.worked_in_at.year||\
+         @time_card.month != @time_card.worked_in_at.month||\
+         @time_card.day != @time_card.worked_in_at.day
+         redirect_to all_index_time_cards_path, notice: '不正な日時です'
+      else
+        @time_card.save
+        redirect_to time_cards_path
+      end
     end
   end
 
@@ -30,30 +38,50 @@ class TimeCardsController < ApplicationController
   end
 
   def update
-    if @time_card.worked_time? && @time_card.breaked_time? && 28800 < (@time_card.worked_time - @time_card.breaked_time).to_i
-      @time_card.overtime = (@time_card.worked_time - @time_card.breaked_time).to_i
-      @time_card.save
-      redirect_to time_cards_path
-    elsif params[:worked_out]
-      @time_card.worked_out_at = Time.now
-      @time_card.worked_time = (@time_card.worked_out_at - @time_card.worked_in_at).to_i
-      if @time_card.breaked_time? && 28800 < @time_card.worked_time.to_i
+    if params[:worked_out]
+      @time_card.worked_out_at = Time.current
+      if @time_card.breaked_time.present?
+        @time_card.worked_time = (@time_card.worked_out_at - @time_card.worked_in_at - @time_card.breaked_time).to_i
+        @time_card.save
+      else
+        @time_card.worked_time = (@time_card.worked_out_at - @time_card.worked_in_at).to_i
+        @time_card.save
+      end
+      if @time_card.breaked_time? && 28800 < @time_card.worked_time
         @time_card.worked_time -= @time_card.breaked_time
         @time_card.overtime = (@time_card.worked_time - 28800).to_i
+        @time_card.save
       elsif 28800 < @time_card.worked_time
         @time_card.overtime = (@time_card.worked_time - 28800).to_i
+        @time_card.save
       end
-      @time_card.save
-      redirect_to time_cards_path
+      redirect_to time_cards_path, notice: '勤怠データを記録しました'
     elsif params[:breaked_in]
-      @time_card.breaked_in_at = Time.now
+      @time_card.breaked_in_at = Time.current
       @time_card.save
-      redirect_to time_cards_path
+      redirect_to time_cards_path, notice: '勤怠データを記録しました'
     elsif params[:breaked_out]
-      @time_card.breaked_out_at = Time.now
+      @time_card.breaked_out_at = Time.current
       @time_card.breaked_time = (@time_card.breaked_out_at - @time_card.breaked_in_at).to_i
       @time_card.save
-      redirect_to time_cards_path
+      redirect_to time_cards_path, notice: '勤怠データを記録しました'
+    elsif params[:time_edit]
+      @time_card.breaked_time = (@time_card.breaked_out_at.to_i - @time_card.breaked_in_at.to_i).to_i
+      @time_card.worked_time = (@time_card.worked_out_at.to_i - @time_card.worked_in_at.to_i - @time_card.breaked_time ).to_i
+      @time_card.save
+      if 28800 < @time_card.worked_time
+        @time_card.overtime = (@time_card.worked_time - 28800).to_i
+      else
+        @time_card.overtime = 0
+      end
+
+      if @time_card.update(time_card_edit_params)
+        redirect_to all_index_time_cards_path, notice: '勤怠データを記録しました'
+      else
+        render :edit
+      end
+    else
+      redirect_to all_index_time_cards_path, notice: '勤怠データを記録出来ませんでした'
     end
   end
 
@@ -86,9 +114,17 @@ class TimeCardsController < ApplicationController
     params.require(:time_card).permit(:year, :month, :day, :worked_in_at, :worked_out_at, :breaked_in_at, :breaked_out_at, :user_id, :affiliation_id)
   end
 
-  def set_month
-    today = Date.current
-    @year = today.year
-    @month = today.month
+  def time_card_edit_params
+    params.require(:time_card).permit(:year, :month, :day, :worked_in_at, :worked_out_at, :breaked_in_at, :breaked_out_at, :user_id, :affiliation_id, :worked_time, :breaked_time, :overtime)
+  end
+
+  def can_not_edit
+    if @time_card.worked_out_at == nil
+      redirect_to all_index_time_cards_path, alert: '編集は退勤時間を記録してから可能です。'
+    end
+  end
+
+  def time_card_today
+    @time_card = TimeCard.today(current_user)
   end
 end

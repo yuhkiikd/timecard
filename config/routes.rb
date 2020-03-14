@@ -4,16 +4,19 @@ Rails.application.routes.draw do
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
-  devise_for :users, :controllers => {
+  devise_for :users, except: [:edit], :controllers => {
     :registrations => 'users/registrations'
   }
-  resources :users, only: [:show] do
+
+  resources :users, except: [:new, :create] do
     collection do
       get 'status'
     end
   end
+
   resources :affiliations
-  resources :time_cards do
+  
+  resources :time_cards, excpt: [:show] do
     collection do
       get 'all_index'
       post 'all_index'

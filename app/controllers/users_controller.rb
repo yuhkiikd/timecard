@@ -3,18 +3,41 @@ class UsersController < ApplicationController
   before_action :ensure_admin, except: [:show]
   before_action :ensure_current_user, only: [:show, :status]
   before_action :set_users, only: [:show, :edit, :update, :destroy]
-  before_action :set_date, only: [:status, :show]
+  before_action :set_date, only: [:index, :status, :show]
+  before_action :set_user_chart_data, only: [:show]
+
+  def index
+    @users = User.all
+  end
 
   def status
-    @status = TimeCard.where(year: @year, month: @month, day: @day).or(TimeCard.where(worked_in_at: nil))
+    @status = TimeCard.where(year: @year, month: @month, day: @day)
   end
 
   def show
-    @days = TimeCard.where(year: @year, month: @month, user_id: @user.id).order(day: "ASC").pluck(:worked_in_at).map{ |item| item.strftime('%Y/%m/%d')}
-    @times = TimeCard.where(year: @year, month: @month, user_id: @user.id).order(day: "ASC").pluck(:overtime).map{ |item| Time.at(item).strftime('%X:%M').to_i}
-    @worked_time = TimeCard.where(year: @year, month: @month, user_id: @user.id).sum(:worked_time)
-    @worked_time_month = TimeCard.where(year: @year, month: @month, user_id: @user.id).sum(:worked_time)
-    @overtime_month = TimeCard.where(year: @year, month: @month, user_id: @user.id).sum(:overtime)
+  end
+
+  def edit
+  end
+
+  def update
+    if @user.update(user_params)
+      redirect_to users_path, notice: "ユーザー情報を更新しました"
+    elsif @user.errors.any?
+      render :edit, alert: "管理者は最低1人必要です"
+    else
+      redirect_to users_path, alert: "ユーザー更新できませんでした"
+    end
+  end
+
+  def destroy
+    if @user.destroy
+      redirect_to users_path, notice: "ユーザーを削除しました"
+    elsif @user.errors.any?
+      redirect_to users_path, alert: "管理者は最低1人必要です"
+    else
+      redirect_to users_path, alert: "ユーザー削除できませんでした"
+    end
   end
 
   private
@@ -23,10 +46,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def set_date
-    today = Date.current
-    @year = today.year
-    @month = today.month
-    @day = today.day
+  def user_params
+    params.require(:user).permit(:name, :email, :password, :affiliation_id, :admin)
   end
 end

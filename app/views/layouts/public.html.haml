@@ -4,4 +4,9 @@
     %title="#{yield(:title)} | お探しのページはございません"
     = stylesheet_link_tag 'application', media: 'all'
   %body
+    %nav.navbar.navbar-expand-md.navbar-dark.bg-dark
+      = link_to "TimeCard APP", root_path, { class: "navbar-brand" }
     = yield
+    %footer.footer.bg-dark
+      .container
+        %p.text-meted.text-center.text-white © Yuhki ikeda

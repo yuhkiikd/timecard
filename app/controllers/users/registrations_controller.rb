@@ -4,8 +4,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   include ApplicationHelper
   prepend_before_action :require_no_authentication, only: [:cancel]
   prepend_before_action :set_minimum_password_length, only: [:new, :edit]
-  before_action :logged_in?, only: [:new, :edit]
-  before_action :ensure_admin, only: [:new, :edit]
+  before_action :logged_in?, only: [:new]
+  before_action :ensure_admin, only: [:new]
   before_action :creatable?, only: [:new, :create]
 
   # GET /resource/sign_up
@@ -20,7 +20,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/edit
   def edit
-    super
+    redirect_to users_path
   end
 
   # PUT /resource

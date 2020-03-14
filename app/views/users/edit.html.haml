@@ -27,16 +27,12 @@
         = f.password_field :password, class: "form-control input-lg h-25 p-2 text-center"
     .row.justify-content-around
       .form-group.col-10.h-25.mb-3.text-center
-        = f.label :password_confirmation
-        = f.password_field :password_confirmation, class: "form-control input-lg h-25 p-2 text-center"
-    .row.justify-content-around
-      .form-group.col-10.h-25.mb-3.text-center
         = f.label :affiliation
         = f.collection_select :affiliation_id, affiliation_select, :id, :name, {:prompt => true}, class: "form-control input-lg h-25 p-2"
     .row.justify-content-around
       .form-group.col-10.h-25.mb-4.text-center
         = f.label :admin
-        = f.select :admin, [["一般", false],["管理者", true]], { selected: 1 }, class: "form-control input-lg h-25 p-2"
+        = f.select :admin, [["一般", false],["管理者", true]], {},class: "form-control input-lg h-25 p-2"
     .row.justify-content-around
       .form-group.col-6.h-25
         = f.submit class: "form-control input-lg h-25 p-4 btn-dark"

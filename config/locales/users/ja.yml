@@ -12,3 +12,5 @@ ja:
   users:
     index:
       delete_confirm: '本当に削除してもよろしいですか？'
+    errors:
+      affiliation: "所属"

@@ -10,7 +10,7 @@ module ApplicationHelper
 
   def logged_in?
     unless current_user.present?
-      redirect_to new_user_session_path, notice: 'ログインしてください'
+      redirect_to new_user_session_path, notice: 'ログアウト済です'
     end
   end
 

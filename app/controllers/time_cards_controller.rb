@@ -5,6 +5,7 @@ class TimeCardsController < ApplicationController
   before_action :set_month, only: [:index]
   before_action :set_date, only: [:new]
   before_action :can_not_edit, only: [:edit]
+  before_action :time_card_today, only: [:new, :create]
 
   def index
     @time_cards = monthly_time_cards(current_user, @year, @month)
@@ -15,12 +16,9 @@ class TimeCardsController < ApplicationController
   end
 
   def new
-    @time_card = TimeCard.today(current_user)
   end
 
   def create
-    @time_card = TimeCard.today(current_user)
-
     if params[:worked_in]
       @time_card.affiliation_id = current_user.affiliation_id
       @time_card.worked_in_at = DateTime.current
@@ -123,5 +121,9 @@ class TimeCardsController < ApplicationController
     if @time_card.worked_out_at == nil
       redirect_to all_index_time_cards_path, alert: '編集は退勤時間を記録してから可能です。'
     end
+  end
+
+  def time_card_today
+    @time_card = TimeCard.today(current_user)
   end
 end

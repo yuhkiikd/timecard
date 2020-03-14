@@ -76,4 +76,9 @@ class TimeCard < ApplicationRecord
       errors[:base] << '休憩終了年月日がタイムカードの日付と違います。また、日付をまたいだ日時は記録できません。'
     end
   end
+
+  def return_values
+    return if worked_in_at.nil? || worked_out_at.nil? || breaked_in_at.nil? || breaked_out_at.nil? ||\
+              year.nil? || month.nil? || day.nil?
+  end
 end

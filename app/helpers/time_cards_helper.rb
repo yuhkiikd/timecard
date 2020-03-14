@@ -66,7 +66,7 @@ module TimeCardsHelper
   end
 
   def int_to_minutes(time)
-    time.to_i ? time % 3600 / 60 : '' 
+    time.to_i ? (time.to_f % 3600 / 60).floor : '' 
   end
 
   def int_to_time(time)

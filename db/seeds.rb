@@ -1,3 +1,35 @@
+##所属
+1.times do |i|
+  Affiliation.create!(
+    name: '総務部',
+    )
+end
+
+1.times do |i|
+  Affiliation.create!(
+    name: '法務部',
+    )
+end
+
+1.times do |i|
+  Affiliation.create!(
+    name: '営業部',
+    )
+end
+
+1.times do |i|
+  Affiliation.create!(
+    name: '広報部',
+    )
+end
+
+1.times do |i|
+  Affiliation.create!(
+    name: '役員',
+    )
+end
+
+##ユーザー
 5.times do |i|
   TimeCard.create!(
     user_id: 1,
@@ -80,5 +112,26 @@ end
     breaked_time: 3600,
     overtime: 10800,
     affiliation_id: 4,
+    )
+end
+
+##タイムカード
+1.times do |i|
+  User.create!(
+    name: "admin",
+    email: "amind@a.com",
+    password: "hogehoge",
+    admin: true,
+    affiliation_id: 1,
+    )
+end
+
+19.times do |i|
+  User.create!(
+    name: "normal",
+    email: "normal-#{i + 1}@a.com",
+    password: "hogehoge",
+    admin: false,
+    affiliation_id: i + 1,
     )
 end

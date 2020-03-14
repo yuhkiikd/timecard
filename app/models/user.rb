@@ -2,7 +2,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :encryptable
+         :recoverable, :rememberable
+
   belongs_to :affiliation, foreign_key: "affiliation_id"
   has_many :time_card, dependent: :destroy
   validates :name, presence: true, length: { maximum: 10 }
@@ -13,7 +14,7 @@ class User < ApplicationRecord
   validates :affiliation_id, presence: true
   before_destroy :least_one_destroy
   before_update :least_one_update
-
+  
   private
 
   def least_one_destroy

@@ -6,8 +6,6 @@
 %>
 
 <%= form_for(resource, options) do |f| %>
- <%= render "devise/shared/error_messages", resource: resource %>
-
   <% if !defined?(password_only) || !password_only %>
     <%= f.email_field :email %>
   <% end %>
@@ -18,7 +16,7 @@
   <% end %>
   <%= f.password_field :password, autocomplete: "off", required: required %>
   <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  <% if resource.persisted? && !current_user.admin? %>
+  <% if resource.persisted? && !current_user.has_role?(:admin) %>
     <%= f.password_field :current_password, autocomplete: "off" %>
   <% end %>
 

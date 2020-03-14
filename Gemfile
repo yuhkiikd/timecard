@@ -70,5 +70,3 @@ gem 'config'
 gem 'erb2haml'
 gem "jquery-rails"
 gem 'bootstrap', '~> 4.4.1'
-gem 'bcrypt', '3.1.11'
-gem "devise-encryptable"

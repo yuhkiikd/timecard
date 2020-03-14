@@ -3,6 +3,8 @@ class TimeCardsController < ApplicationController
   before_action :logged_in?
   before_action :ensure_admin, only: [:all_index, :edit]
   before_action :set_month, only: [:index]
+  before_action :set_date, only: [:new]
+  before_action :can_not_edit, only: [:edit]
 
   def index
     @time_cards = monthly_time_cards(current_user, @year, @month)
@@ -58,8 +60,8 @@ class TimeCardsController < ApplicationController
       @time_card.save
       redirect_to time_cards_path, notice: '勤怠データを記録しました'
     elsif params[:time_edit]
-      @time_card.breaked_time = (@time_card.breaked_out_at - @time_card.breaked_in_at).to_i
-      @time_card.worked_time = (@time_card.worked_out_at - @time_card.worked_in_at - @time_card.breaked_time ).to_i
+      @time_card.breaked_time = (@time_card.breaked_out_at.to_i - @time_card.breaked_in_at.to_i).to_i
+      @time_card.worked_time = (@time_card.worked_out_at.to_i - @time_card.worked_in_at.to_i - @time_card.breaked_time ).to_i
       @time_card.save
       if 28800 < @time_card.worked_time
         @time_card.overtime = (@time_card.worked_time - 28800).to_i
@@ -108,5 +110,11 @@ class TimeCardsController < ApplicationController
 
   def time_card_edit_params
     params.require(:time_card).permit(:year, :month, :day, :worked_in_at, :worked_out_at, :breaked_in_at, :breaked_out_at, :user_id, :affiliation_id, :worked_time, :breaked_time, :overtime)
+  end
+
+  def can_not_edit
+    if @time_card.worked_out_at == nil
+      redirect_to all_index_time_cards_path, alert: '編集は退勤時間を記録してから可能です。'
+    end
   end
 end

@@ -21,7 +21,9 @@
 /yarn-error.log
 
 .byebug_history
-
+public/404.html
+public/500.html
+public/422.html
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 

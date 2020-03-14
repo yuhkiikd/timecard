@@ -215,6 +215,8 @@ GEM
       haml (>= 4.0.6, < 6.0)
       html2haml (>= 1.0.1)
       railties (>= 5.1)
+    hanmoto (0.4.0)
+      rails (>= 5.1.0)
     html2haml (2.2.0)
       erubis (~> 2.7.0)
       haml (>= 4.0, < 6)
@@ -447,6 +449,7 @@ DEPENDENCIES
   factory_bot_rails
   faker (>= 2.6.0)
   haml-rails
+  hanmoto
   jbuilder (~> 2.5)
   jquery-rails
   kaminari (~> 0.17.0)

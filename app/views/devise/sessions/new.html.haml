@@ -1,12 +1,12 @@
-%h2 Log in
-= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true, autocomplete: "email"
-  .field
-    = f.label :password
-    %br/
-    = f.password_field :password, autocomplete: "current-password"
-  .actions
-    = f.submit "Log in"
+%h1.text-center.mt-4.mb-4.col-12 Log in
+.form-horizontal
+  = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+    .form-group.text-center
+      .col-12.mb-5
+        = f.label :email
+        = f.email_field :email, class: "form-control input-lg h-25 p-2 text-center"
+      .col-12.mb-5
+        = f.label :password
+        = f.password_field :password, class: "form-control input-lg h-25 p-2 text-center"
+      .col-12
+        = f.submit "Log in",class: "form-control input-lg h-25 p-4 btn-dark"

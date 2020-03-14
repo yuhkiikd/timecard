@@ -29,3 +29,5 @@
       %th= t.user.name
       %th= link_to '編集', edit_time_card_path(t)
       %th= link_to '削除', t, method: :delete, data: { confirm: t('.delete_confirm') }
+
+= paginate @time_cards

@@ -1,4 +1,5 @@
 class TimeCardsController < ApplicationController
+  PER = 10
   before_action :set_time_card, only: [:show, :edit, :update, :destroy]
   before_action :logged_in?
   before_action :ensure_admin, only: [:all_index, :edit]
@@ -12,7 +13,7 @@ class TimeCardsController < ApplicationController
   end
 
   def all_index
-    @time_cards = TimeCard.all.order(worked_in_at: "DESC")
+    @time_cards = TimeCard.page(params[:page]).per(PER).order(worked_in_at: "DESC")
   end
 
   def new

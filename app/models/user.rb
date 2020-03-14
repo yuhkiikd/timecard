@@ -27,9 +27,6 @@ class User < ApplicationRecord
     if User.where(admin: :true).count == 1 && self.admin? == false && self.admin_was == true
       errors[:base] << '管理者の変更は別の管理者から行ってください　※管理者権限は最低1つ必要です'
       throw :abort
-    elsif self.admin?
-      errors[:base] << '管理者の変更は別の管理者から行ってください'
-      throw :abort
     end
   end
 end

@@ -3,7 +3,7 @@
 1.times do |i|
   User.create!(
     name: "admin",
-    email: "amind@a.com",
+    email: "admin@a.com",
     password: "hogehoge",
     admin: true,
     affiliation_id: 1,

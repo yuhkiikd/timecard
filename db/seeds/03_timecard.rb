@@ -1,5 +1,6 @@
 5.times do |i|
   TimeCard.create!(
+    affiliation_id: 1,
     user_id: 1,
     year: 2020,
     month: 3,
@@ -11,12 +12,12 @@
     worked_time: 36000,
     breaked_time: 3600,
     overtime: 7200,
-    affiliation_id: 1,
     )
 end
 
 5.times do |i|
   TimeCard.create!(
+    affiliation_id: 2,
     user_id: 2,
     year: 2020,
     month: 3,
@@ -28,12 +29,12 @@ end
     worked_time: 32400,
     breaked_time: 3600,
     overtime: 3600,
-    affiliation_id: 1,
     )
 end
 
 5.times do |i|
   TimeCard.create!(
+    affiliation_id: 3,
     user_id: 2,
     year: 2020,
     month: 3,
@@ -45,12 +46,12 @@ end
     worked_time: 36000,
     breaked_time: 3600,
     overtime: 7200,
-    affiliation_id: 3,
     )
 end
 
 5.times do |i|
   TimeCard.create!(
+    affiliation_id: 4,
     user_id: 3,
     year: 2020,
     month: 3,
@@ -62,12 +63,12 @@ end
     worked_time: 28000,
     breaked_time: 3600,
     overtime: 0,
-    affiliation_id: 3,
     )
 end
 
 5.times do |i|
   TimeCard.create!(
+    affiliation_id: 5,
     user_id: 4,
     year: 2020,
     month: 3,
@@ -79,6 +80,5 @@ end
     worked_time: 39600,
     breaked_time: 3600,
     overtime: 10800,
-    affiliation_id: 4,
     )
 end

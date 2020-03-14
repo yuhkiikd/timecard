@@ -23,20 +23,16 @@ class UsersController < ApplicationController
   def update
     if @user.update(user_params)
       redirect_to users_path, notice: "ユーザー情報を更新しました"
-    elsif @user.errors.any?
-      render :edit, alert: "管理者は最低1人必要です"
     else
-      redirect_to users_path, alert: "ユーザー更新できませんでした"
+      redirect_to users_path, alert: "管理者は最低1人必要です"
     end
   end
 
   def destroy
     if @user.destroy
       redirect_to users_path, notice: "ユーザーを削除しました"
-    elsif @user.errors.any?
-      redirect_to users_path, alert: "管理者は最低1人必要です"
     else
-      redirect_to users_path, alert: "ユーザー削除できませんでした"
+      redirect_to users_path, alert: "管理者は最低1人必要です"
     end
   end
 

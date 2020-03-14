@@ -24,8 +24,17 @@
       %th= time_str(t.worked_out_at)
       %th= time_str(t.breaked_in_at)
       %th= time_str(t.breaked_out_at)
-      %td= "#{int_to_hour(t.worked_time)-int_to_hour(t.breaked_time)}:#{int_to_time(int_to_minutes(t.worked_time) - int_to_minutes(t.breaked_time))}"
-      %td= "#{int_to_hour(t.overtime)}:#{int_to_time(int_to_minutes(t.overtime))}"
+      -if t.worked_out_at.present?
+        - min = (t.worked_time - t.breaked_time)
+        -if min < 0
+          %td= "00:00"
+          %td= "00:00"
+        -elsif min >= 0 && min < 3600
+          %td= "00:#{int_to_time(t.worked_time - t.breaked_time)}"
+          %td= "00:00"
+        -else
+          %td= "#{int_to_hour(t.worked_time) - int_to_hour(t.breaked_time)}:#{int_to_time(t.worked_time - t.breaked_time)}"
+          %td= "#{int_to_hour(t.overtime)}:#{int_to_time(t.overtime)}"
       %th= t.user.name
       %th= link_to '編集', edit_time_card_path(t)
       %th= link_to '削除', t, method: :delete, data: { confirm: t('.delete_confirm') }

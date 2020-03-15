@@ -2,7 +2,7 @@
 .container.text-center.mb-5
   .row.justify-content-around
     .col-12.h-25.mb-4.text-center
-  = form_with model: @user, local: true do |f|
+  = form_with model: @user, url: user_registration_path, id: 'new_user', class: 'new_user', local: true do |f|
     -if @user.errors.any?
       #error_explanation
       %h2

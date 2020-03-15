@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
   root 'time_cards#index'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
-
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
   devise_for :users, except: [:edit], :controllers => {
     :registrations => 'users/registrations'
   }

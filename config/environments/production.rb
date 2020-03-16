@@ -1,5 +1,4 @@
 Rails.application.configure do
-  require 'base64'
   config.cache_classes = true
 
   config.eager_load = true
@@ -35,15 +34,6 @@ Rails.application.configure do
   end
 
   config.active_record.dump_schema_after_migration = false
-  config.action_mailer.default_url_options = { host: '13.114.47.119' }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    enable_starttls_auto: true,
-    address:"smtp.gmail.com",
-    domain: 'gmail.com',
-    port:587,
-    user_name: Rails.application.credentials.gmail[:user_name],
-    password: Rails.application.credentials.gmail[:password],
-    authentication: :login
-  }
+  config.action_mailer.default_url_options = { host: 'https://timecard-ikd.herokuapp.com/' }
+  config.action_mailer.delivery_method = :ses
 end

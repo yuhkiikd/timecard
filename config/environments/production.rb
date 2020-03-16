@@ -1,5 +1,4 @@
 Rails.application.configure do
-  require 'base64'
   config.cache_classes = true
 
   config.eager_load = true

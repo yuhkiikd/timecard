@@ -34,8 +34,8 @@
             %td= "00:#{int_to_time(@worked_time)}"
             %td= "00:00"
           -else
-            %td= "#{int_to_hour(@worked_time)}:#{int_to_time(int_to_minutes(@worked_time))}"
-            %td= "#{int_to_hour(@overtime)}:#{int_to_time(int_to_minutes(@overtime))}"
+            %td= "#{int_to_hour(@worked_time)}:#{int_to_time(@worked_time)}"
+            %td= "#{int_to_hour(@overtime)}:#{int_to_time(@overtime)}"
 .container
   %canvas#myChart{:height => "300", :width => "900"}
   :javascript

@@ -35,7 +35,7 @@ Rails.application.configure do
   end
 
   config.active_record.dump_schema_after_migration = false
-  config.action_mailer.default_url_options = { host: 'http://13.114.47.119/' }
+  config.action_mailer.default_url_options = { host: '13.114.47.119' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address:"smtp.gmail.com",

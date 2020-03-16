@@ -1,4 +1,5 @@
 Rails.application.configure do
+  require 'base64'
   config.cache_classes = true
 
   config.eager_load = true
@@ -10,8 +11,6 @@ Rails.application.configure do
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   config.assets.js_compressor = :uglifier
-
-  config.require_master_key = true
 
   config.assets.compile = true
 

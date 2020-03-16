@@ -11,6 +11,8 @@ Rails.application.configure do
 
   config.assets.js_compressor = :uglifier
 
+  config.require_master_key = true
+
   config.assets.compile = true
 
   config.active_storage.service = :local
@@ -33,6 +35,9 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  user_name = Rails.application.credentials.gmail[:user_name]
+  password = Rails.application.credentials.gmail[:password]
+
   config.active_record.dump_schema_after_migration = false
   config.action_mailer.default_url_options = { host: 'http://13.114.47.119/' }
   config.action_mailer.delivery_method = :smtp
@@ -40,8 +45,9 @@ Rails.application.configure do
     address:"smtp.gmail.com",
     domain: 'gmail.com',
     port:587,
-    user_name: Rails.application.credentials.gmail[:user_name],
-    password: Rails.application.credentials.gmail[:password],
+    user_name: user_name,
+    password: password,
     authentication: :login
   }
+  binding.pry
 end

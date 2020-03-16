@@ -9,6 +9,7 @@ set :keep_releases, 5
 set :rbenv_ruby, '2.6.3'
 set :rbenv_type, :system
 set :log_level, :info
+set :linked_files, fetch(:linked_files, []).push("config/master.key")
 namespace :deploy do
   desc 'Restart application'
   task :restart do

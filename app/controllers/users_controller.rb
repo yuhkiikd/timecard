@@ -27,15 +27,15 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to users_path, notice: "ユーザー情報を更新しました"
     else
-      redirect_to users_path, alert: "管理者は最低1人必要です"
+      render :edit
     end
   end
 
   def destroy
-    if @user.destroy
-      redirect_to users_path, notice: "ユーザーを削除しました"
-    elsif current_user.id == @user.id && current_user.admin?
+    if current_user.id == @user.id && current_user.admin?
       redirect_to users_path, alert: "管理者は他の管理者から編集・削除をしてください"
+    elsif @user.destroy
+      redirect_to users_path, notice: "ユーザーを削除しました"
     else
       redirect_to users_path, alert: "管理者は最低1人必要です"
     end

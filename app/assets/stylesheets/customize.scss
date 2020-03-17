@@ -39,3 +39,12 @@ body {
 .pagination {
   justify-content: center;
 }
+
+#error_explanation {
+  ul{
+    padding-left: 0;
+  }
+  li{
+    list-style: none;
+  }
+}

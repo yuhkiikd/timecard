@@ -1,10 +1,14 @@
-%h2 Resend confirmation instructions
-= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
-  = render "devise/shared/error_messages", resource: resource
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email)
-  .actions
-    = f.submit "Resend confirmation instructions"
-= render "devise/shared/links"
+%h1.text-center.mt-4.col-12 Sign up
+.container.text-center.mb-5
+  .row.justify-content-around
+    .col-12.h-25.mb-4.text-center
+  = form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
+    = render "devise/shared/error_messages", resource: resource
+    .row.justify-content-around
+      .form-group.col-10.h-25.mb-3.text-center.field
+        = f.label :email
+        = f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: "form-control input-lg h-25 p-2 text-center"
+    .row.justify-content-around
+      .form-group.col-10.h-25.actions
+        = f.submit "確認メールを再送信する", class: "form-control input-lg h-25 p-4 btn-dark"
+  = render "devise/shared/links"

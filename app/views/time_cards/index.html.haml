@@ -22,15 +22,15 @@
         %td= time_str(@time_cards[index].breaked_in_at)
         %td= time_str(@time_cards[index].breaked_out_at)
         -if @time_cards[index].worked_out_at.present?
-          - min = (@time_cards[index].worked_time - @time_cards[index].breaked_time)
+          - min = (@time_cards[index].worked_time)
           -if min < 0
             %td= "00:00"
             %td= "00:00"
           -elsif min >= 0 && min < 3600
-            %td= "00:#{int_to_time(@time_cards[index].worked_time - @time_cards[index].breaked_time)}"
+            %td= "00:#{int_to_time(@time_cards[index].worked_time)}"
             %td= "00:00"
           -else
-            %td= "#{int_to_hour(@time_cards[index].worked_time) - int_to_hour(@time_cards[index].breaked_time)}:#{int_to_time(@time_cards[index].worked_time - @time_cards[index].breaked_time)}"
+            %td= "#{int_to_hour(@time_cards[index].worked_time)}:#{int_to_time(@time_cards[index].worked_time)}"
             %td= "#{int_to_hour(@time_cards[index].overtime)}:#{int_to_time(@time_cards[index].overtime)}"
         -else
           %td

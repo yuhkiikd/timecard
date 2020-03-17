@@ -80,7 +80,7 @@ module TimeCardsHelper
   def set_user_chart_data
     @chart_days = TimeCard.where(year: @year, month: @month, user_id: @user.id).asc.pluck(:worked_in_at).map{ |item| item.strftime('%Y/%m/%d')}
     @chart_times = TimeCard.where(year: @year, month: @month, user_id: @user.id).asc.pluck(:overtime).map{ |item| Time.at(item - 32400).strftime('%X:%M').to_i}
-    @worked_time = TimeCard.where(year: @year, month: @month, user_id: @user.id).sum(:worked_time) - TimeCard.where(year: @year, month: @month, user_id: @user.id).sum(:breaked_time)
+    @worked_time = TimeCard.where(year: @year, month: @month, user_id: @user.id).sum(:worked_time)
     @overtime = TimeCard.where(year: @year, month: @month, user_id: @user.id).sum(:overtime)
   end
 

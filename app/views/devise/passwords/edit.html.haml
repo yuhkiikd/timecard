@@ -1,19 +1,21 @@
-%h2 Change your password
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
-  = render "devise/shared/error_messages", resource: resource
-  = f.hidden_field :reset_password_token
-  .field
-    = f.label :password, "New password"
-    %br/
-    - if @minimum_password_length
-      %em
-        (#{@minimum_password_length} characters minimum)
-      %br/
-    = f.password_field :password, autofocus: true, autocomplete: "new-password"
-  .field
-    = f.label :password_confirmation, "Confirm new password"
-    %br/
-    = f.password_field :password_confirmation, autocomplete: "new-password"
-  .actions
-    = f.submit "Change my password"
-= render "devise/shared/links"
+%h1.text-center.mt-4.col-12 パスワードの変更
+.container.text-center.mb-5
+  .row.justify-content-around
+    .col-12.h-25.mb-4.text-center
+  = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+    = render "devise/shared/error_messages", resource: resource
+    = f.hidden_field :reset_password_token
+    .row.justify-content-around
+      .form-group.col-10.h-25.mb-3.text-center.field
+        = f.label :password, "新規パスワード"
+        - if @minimum_password_length
+          %em（半角英数#{@minimum_password_length}文字以上）
+        = f.password_field :password, autofocus: true, autocomplete: "new-password", class: "form-control input-lg h-25 p-2 text-center"
+    .row.justify-content-around
+      .form-group.col-10.h-25.mb-3.text-center.field
+        = f.label :password_confirmation, "新規パスワード確認"
+        = f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control input-lg h-25 p-2 text-center"
+    .row.justify-content-around
+      .form-group.col-10.h-25.mb-3.text-center.actions
+        = f.submit "パスワードを変更する",class: "form-control input-lg h-25 p-4 btn-dark"
+  = render "devise/shared/links"

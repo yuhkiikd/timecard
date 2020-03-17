@@ -17,7 +17,7 @@ end
 
 5.times do |i|
   TimeCard.create!(
-    affiliation_id: 2,
+    affiliation_id: 1,
     user_id: 2,
     year: 2020,
     month: 3,
@@ -34,7 +34,7 @@ end
 
 5.times do |i|
   TimeCard.create!(
-    affiliation_id: 3,
+    affiliation_id: 1,
     user_id: 2,
     year: 2020,
     month: 3,
@@ -51,7 +51,7 @@ end
 
 5.times do |i|
   TimeCard.create!(
-    affiliation_id: 4,
+    affiliation_id: 3,
     user_id: 3,
     year: 2020,
     month: 3,
@@ -68,8 +68,8 @@ end
 
 5.times do |i|
   TimeCard.create!(
-    affiliation_id: 5,
-    user_id: 4,
+    affiliation_id: 4,
+    user_id: 5,
     year: 2020,
     month: 3,
     day: 6 + i,

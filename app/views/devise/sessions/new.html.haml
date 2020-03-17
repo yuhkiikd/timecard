@@ -1,12 +1,19 @@
 %h1.text-center.mt-4.mb-4.col-12 Log in
-.form-horizontal
+.container.text-center.mb-5
+  .row.justify-content-around
+    .col-12.h-25.mb-4.text-center
   = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-    .form-group.text-center
-      .col-12.mb-5
+    .row.justify-content-around
+      .form-group.col-10.h-25.mb-3.text-center.field
         = f.label :email
         = f.email_field :email, class: "form-control input-lg h-25 p-2 text-center"
-      .col-12.mb-5
+    .row.justify-content-around
+      .form-group.col-10.h-25.mb-3.text-center.field
         = f.label :password
         = f.password_field :password, class: "form-control input-lg h-25 p-2 text-center"
-      .col-12
+    .row.justify-content-around
+      .form-group.col-10.h-25.mb-3.text-center.field
         = f.submit "Log in",class: "form-control input-lg h-25 p-4 btn-dark"
+    .row.justify-content-around
+      .form-group.col-10.h-25.actions
+  = render "devise/shared/links"

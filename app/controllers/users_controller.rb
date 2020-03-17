@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :logged_in?
-  before_action :ensure_admin, except: [:show]
+  before_action :ensure_admin, except: [:show, :edit]
   before_action :ensure_current_user, only: [:show, :status]
   before_action :set_users, only: [:show, :edit, :update, :destroy]
   before_action :set_date, only: [:index, :status, :show]
@@ -18,6 +18,9 @@ class UsersController < ApplicationController
   end
 
   def edit
+    if current_user.id == @user.id
+      redirect_to users_path, alert: "管理者は他の管理者から編集・削除をしてください"
+    end
   end
 
   def update
@@ -31,6 +34,8 @@ class UsersController < ApplicationController
   def destroy
     if @user.destroy
       redirect_to users_path, notice: "ユーザーを削除しました"
+    elsif current_user.id == @user.id && current_user.admin?
+      redirect_to users_path, alert: "管理者は他の管理者から編集・削除をしてください"
     else
       redirect_to users_path, alert: "管理者は最低1人必要です"
     end

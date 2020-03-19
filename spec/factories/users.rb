@@ -3,7 +3,6 @@ FactoryBot.define do
     id { 1 }
     name { 'test_1' }
     email { 'test_1@a.com' }
-    encrypted_password { 'hogehoge' }
     password { 'hogehoge' }
     admin { true }
     confirmed_at { '2020,3,1,9' }
@@ -17,7 +16,7 @@ FactoryBot.define do
     email { 'test_2@a.com' }
     encrypted_password { 'hogehoge' }
     password { 'hogehoge' }
-    admin { true }
+    admin { false }
     confirmed_at { '2020,3,1,9' }
     confirmation_sent_at { '2020,3,2,9' }
     affiliation_id { 2 }

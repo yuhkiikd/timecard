@@ -5,7 +5,7 @@ FactoryBot.define do
   end
 
   factory :affiliation_2, class: Affiliation do
-    id { 1 }
+    id { 2 }
     name { '製造部' }
   end
 end

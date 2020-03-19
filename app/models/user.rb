@@ -7,7 +7,7 @@ class User < ApplicationRecord
   belongs_to :affiliation, foreign_key: "affiliation_id"
   has_many :time_card, dependent: :destroy
   validates :name, presence: true,
-                   length: { maximum: 10 }
+                   length: { maximum: 30 }
   validates :email, length: { maximum: 50 },
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
                     uniqueness: true

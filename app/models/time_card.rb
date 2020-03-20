@@ -7,7 +7,7 @@ class TimeCard < ApplicationRecord
   validate :is_time_correct?
   validate :valid_date
   validates :worked_in_at, presence: true
-  validates :worked_time, presence: true
+  validates :worked_time, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :breaked_time, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :overtime, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :affiliation_id, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1}

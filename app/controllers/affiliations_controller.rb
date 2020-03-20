@@ -16,7 +16,7 @@ class AffiliationsController < ApplicationController
   def create
     @affiliation = Affiliation.new(affiliation_params)
     if @affiliation.save
-      redirect_to affiliations_path
+      redirect_to affiliations_path, notice: "新しい所属を登録しました"
     else
       render :new
     end

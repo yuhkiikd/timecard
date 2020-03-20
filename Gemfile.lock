@@ -135,6 +135,7 @@ GEM
       dry-validation (~> 1.0, >= 1.0.0)
     crass (1.0.6)
     database_cleaner (1.8.3)
+    database_rewinder (0.9.2)
     debug_inspector (0.0.3)
     deep_merge (1.2.1)
     devise (4.7.1)
@@ -433,6 +434,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   config
   database_cleaner
+  database_rewinder
   devise
   dotenv-rails
   erb2haml

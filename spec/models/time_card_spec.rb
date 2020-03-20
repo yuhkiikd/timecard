@@ -177,7 +177,7 @@ RSpec.describe TimeCard, type: :model do
     it '日付をまたいだ勤務時間は無効であること' do
       @timecard_2 = FactoryBot.build(:timecard_2) 
       @timecard_2.worked_in_at = '2020-02-29 23:10:00'
-      expect(@timecard_2).to be_valid
+      expect(@timecard_2).not_to be_valid
     end
   end
 end

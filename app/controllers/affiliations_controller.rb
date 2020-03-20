@@ -24,7 +24,7 @@ class AffiliationsController < ApplicationController
 
   def update
     if @affiliation.update(affiliation_params)
-      redirect_to affiliations_path
+      redirect_to affiliations_path, notice: "所属を編集しました"
     else
       render :edit
     end

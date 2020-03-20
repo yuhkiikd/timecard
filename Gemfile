@@ -44,7 +44,6 @@ group :test do
   gem 'spring-commands-rspec'
   gem 'database_cleaner'
   gem 'launchy'
-  gem 'selenium-webdriver'
   gem 'webdrivers'
   gem 'database_rewinder'
 end

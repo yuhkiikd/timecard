@@ -8,4 +8,9 @@ FactoryBot.define do
     id { 2 }
     name { '製造部' }
   end
+
+  factory :affiliation_3, class: Affiliation do
+    id { 3 }
+    name { '人事部' }
+  end
 end

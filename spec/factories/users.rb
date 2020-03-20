@@ -26,4 +26,26 @@ FactoryBot.define do
         email { 'Test_3@A.com' }
       end
   end
+
+  factory :user_3, class: User do
+    id { 3 }
+    name { 'test_3' }
+    email { 'test_3@a.com' }
+    password { 'hogehoge' }
+    admin { true }
+    confirmed_at { '2020,3,1,9' }
+    confirmation_sent_at { '2020,3,2,9' }
+    affiliation_id { 1 }
+  end
+
+  factory :user_4, class: User do
+    id { 4 }
+    name { 'test_4' }
+    email { 'test_4@a.com' }
+    password { 'hogehoge' }
+    confirmed_at { '2020,3,1,9' }
+    confirmation_sent_at { '2020,3,2,9' }
+    admin { true }
+    affiliation_id { 1 }
+  end
 end

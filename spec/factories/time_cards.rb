@@ -28,4 +28,19 @@ FactoryBot.define do
     breaked_time { 3600 }
     overtime { 0 }
   end
+
+  factory :timecard_3, class: TimeCard do
+    user_id { 1 }
+    affiliation_id { 3 }
+    year { 2020 }
+    month { 3 }
+    day { 3 }
+    worked_in_at { '2020-03-03 09:00:00' }
+    breaked_in_at { '2020-03-03 14:00:00' }
+    breaked_out_at { '2020-03-03 15:00:00' }
+    worked_out_at { '2020-03-03 18:00:00' }
+    worked_time { 28800 }
+    breaked_time { 3600 }
+    overtime { 0 }
+  end
 end

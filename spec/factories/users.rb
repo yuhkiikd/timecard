@@ -20,5 +20,10 @@ FactoryBot.define do
     confirmed_at { '2020,3,1,9' }
     confirmation_sent_at { '2020,3,2,9' }
     affiliation_id { 2 }
+
+      trait :change_charactor do
+        id { 3 }
+        email { 'Test_3@A.com' }
+      end
   end
 end

@@ -9,10 +9,10 @@
   %body
     %nav.navbar.navbar-expand-md.navbar-dark.bg-dark
       = link_to "TimeCard APP", root_path, { class: "navbar-brand" }
-      .navbar-brand= "#{current_user.name}さん"
-      %button.navbar-toggler{"aria-controls" => "navbar", "aria-expanded" => "false", "aria-label" => "ナビゲーションの切替", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
-        %span.navbar-toggler-icon
       - if user_signed_in?
+        .navbar-brand= "#{current_user.name} さん"
+        %button.navbar-toggler{"aria-controls" => "navbar", "aria-expanded" => "false", "aria-label" => "ナビゲーションの切替", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
+          %span.navbar-toggler-icon
         #navbar.collapse.navbar-collapse.justify-content-end
           %ul.navbar-nav
             %li.nav-item

@@ -8,11 +8,14 @@ class User < ApplicationRecord
   has_many :time_card, dependent: :destroy
   validates :name, presence: true,
                    length: { maximum: 30 }
+  before_validation { email.downcase! }                  
   validates :email, length: { maximum: 50 },
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
                     uniqueness: true
   before_destroy :least_one_destroy
   before_update :do_not_update_self_admin
+
+  scope :asc, -> { order(id: "ASC") }
 
   private
 

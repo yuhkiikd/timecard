@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   before_action :set_user_chart_data, only: [:show]
 
   def index
-    @users = User.all
+    @users = User.all.asc
   end
 
   def status

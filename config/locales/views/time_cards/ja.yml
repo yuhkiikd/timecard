@@ -4,4 +4,3 @@ ja:
     all_index:
       delete_confirm: '本当に削除してもよろしいですか？'
     edit:
-      time_card_worked_in_at: '出勤日時'

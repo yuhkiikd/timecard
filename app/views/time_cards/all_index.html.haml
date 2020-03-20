@@ -20,10 +20,10 @@
       %td= t.year
       %td= t.month
       %td= t.day
-      %th= time_str(t.worked_in_at)
-      %th= time_str(t.worked_out_at)
-      %th= time_str(t.breaked_in_at)
-      %th= time_str(t.breaked_out_at)
+      %td= time_str(t.worked_in_at)
+      %td= time_str(t.worked_out_at)
+      %td= time_str(t.breaked_in_at)
+      %td= time_str(t.breaked_out_at)
       -if t.worked_out_at.present?
         - min = (t.worked_time - t.breaked_time)
         -if min < 0
@@ -38,8 +38,8 @@
       -else
         %td
         %td
-      %th= t.user.name
-      %th= link_to '編集', edit_time_card_path(t)
-      %th= link_to '削除', t, method: :delete, data: { confirm: t('.delete_confirm') }
+      %td= t.user.name
+      %td= link_to '編集', edit_time_card_path(t)
+      %td= link_to '削除', t, method: :delete, data: { confirm: t('.delete_confirm') }
 
 = paginate @time_cards

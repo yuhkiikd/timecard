@@ -1,15 +1,15 @@
-%h1.text-center.mt-5.col-12 ユーザー一覧
+%h1.text-center.mt-5.col-12 従業員一覧
 %table.table.table-bordered.table-condensed.text-center
   %thead.bg-dark.text-white
     %tr
       %th 従業員ID
       %th 名前
-      %td メールアドレス
-      %td 権限
-      %td 所属
-      %td 詳細
-      %td 編集
-      %td 削除
+      %th メールアドレス
+      %th 権限
+      %th 所属
+      %th 詳細
+      %th 編集
+      %th 削除
   %tbody
   -@users.each do |f|
     %tr

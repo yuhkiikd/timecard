@@ -46,7 +46,7 @@ RSpec.describe '所属登録・削除・編集機能テスト', type: :system do
       it '所属従業員がいる場合、エラーメッセージが表示されること' do
         visit affiliations_path
         page.all('td')[6].click
-        expect(page.driver.browser.switch_to.alert.text).to eq "本当に削除しますか？"
+        expect(page.driver.browser.switch_to.alert.text).to eq "本当に削除してもよろしいですか？"
         page.driver.browser.switch_to.alert.accept
         expect(page).to have_content '所属ユーザーまたは所属に紐付くタイムカードがあるため削除できません'
       end
@@ -57,7 +57,7 @@ RSpec.describe '所属登録・削除・編集機能テスト', type: :system do
         FactoryBot.create(:timecard_3)
         visit affiliations_path
         page.all('td')[20].click
-        expect(page.driver.browser.switch_to.alert.text).to eq "本当に削除しますか？"
+        expect(page.driver.browser.switch_to.alert.text).to eq "本当に削除してもよろしいですか？"
         page.driver.browser.switch_to.alert.accept
         expect(page).to have_content '所属ユーザーまたは所属に紐付くタイムカードがあるため削除できません'
       end

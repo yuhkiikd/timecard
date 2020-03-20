@@ -12,6 +12,7 @@ class User < ApplicationRecord
   validates :email, length: { maximum: 50 },
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
                     uniqueness: true
+  validates :name, confirmation: true
   before_destroy :least_one_destroy
   before_update :do_not_update_self_admin
 

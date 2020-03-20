@@ -25,7 +25,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update(user_params)
+    if @user.update_attributes(user_params)
       redirect_to users_path, notice: "ユーザー情報を更新しました"
     else
       render :edit
@@ -49,6 +49,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :affiliation_id, :admin)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :affiliation_id, :admin)
   end
 end

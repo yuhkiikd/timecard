@@ -93,6 +93,23 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
         page.driver.browser.switch_to.alert.accept
         expect(page).to have_content '管理者は他の管理者から編集・削除をしてください'
       end
+
+      it '編集でき、従業員一覧が表示される・マイページの名前が変わること' do
+        visit users_path
+        page.all('td')[6].click
+        fill_in '名前', with: 'test_change_2'
+        fill_in 'メールアドレス', with: 'test_2@a.com'
+        fill_in 'パスワード', with: 'hogehoge'
+        fill_in '確認用パスワード', with: 'hogehoge'
+        select "営業部", from: "user[affiliation_id]"
+        select "一般", from: "user[admin]"
+        click_on '更新する'
+        expect(page).to have_content 'ユーザー情報を更新しました'
+        expect(page).to have_content '従業員一覧'
+        visit users_path
+        page.all('td')[5].click
+        expect(page).to have_content 'test_change_2 さんの従業員情報'
+      end
     end
   end
 end

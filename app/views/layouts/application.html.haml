@@ -14,7 +14,7 @@
         %button.navbar-toggler{"aria-controls" => "navbar", "aria-expanded" => "false", "aria-label" => "ナビゲーションの切替", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
           %span.navbar-toggler-icon
         #navbar.collapse.navbar-collapse.justify-content-end
-          %ul.navbar-nav
+          %ul.navbar-nav.text-right
             %li.nav-item
               = link_to "タイムカード打刻", new_time_card_path, { class: "nav-link" }
             %li.nav-item
@@ -24,7 +24,7 @@
             - if current_user.admin?
               %li.nav-item.dropdown
                 %a#dropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#"} 管理者メニュー
-                .dropdown-menu{"aria-labelledby" => "dropdown"}
+                .dropdown-menu.dropdown-menu-right.text-center{"aria-labelledby" => "dropdown"}
                   = link_to "ダッシュボード", rails_admin_path,{ class: "dropdown-item" }
                   = link_to "所属一覧", affiliations_path,{ class: "dropdown-item" }
                   = link_to "所属登録", new_affiliation_path,{ class: "dropdown-item" }

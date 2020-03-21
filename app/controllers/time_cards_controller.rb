@@ -7,6 +7,7 @@ class TimeCardsController < ApplicationController
   before_action :set_date, only: [:new]
   before_action :can_not_edit, only: [:edit]
   before_action :time_card_today, only: [:new, :create]
+  before_action :now_at, only: [:update]
 
   def index
     @time_cards = monthly_time_cards(current_user, @year, @month)
@@ -39,7 +40,7 @@ class TimeCardsController < ApplicationController
 
   def update
     if params[:worked_out]
-      @time_card.worked_out_at = Time.current.change(sec: 00)
+      @time_card.worked_out_at = @now_at
       if @time_card.breaked_time.present?
         @time_card.worked_time = (@time_card.worked_out_at - @time_card.worked_in_at - @time_card.breaked_time).to_i
         @time_card.save
@@ -57,11 +58,11 @@ class TimeCardsController < ApplicationController
       end
       redirect_to time_cards_path, notice: '勤怠データを記録しました'
     elsif params[:breaked_in]
-      @time_card.breaked_in_at = Time.current.change(sec: 00)
+      @time_card.breaked_in_at = @now_at
       @time_card.save
       redirect_to time_cards_path, notice: '勤怠データを記録しました'
     elsif params[:breaked_out]
-      @time_card.breaked_out_at = Time.current.change(sec: 00)
+      @time_card.breaked_out_at = @now_at
       @time_card.breaked_time = (@time_card.breaked_out_at - @time_card.breaked_in_at).to_i
       @time_card.save
       redirect_to time_cards_path, notice: '勤怠データを記録しました'
@@ -126,5 +127,9 @@ class TimeCardsController < ApplicationController
 
   def time_card_today
     @time_card = TimeCard.today(current_user)
+  end
+
+  def now_at
+    @now_at = Time.current.change(sec: 00)
   end
 end

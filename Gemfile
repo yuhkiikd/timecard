@@ -23,6 +23,10 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.8'
   gem 'factory_bot_rails'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'spring'
+  gem 'spring-commands-rspec'
+  gem 'faker', '>= 2.6.0'
+  gem 'launchy'
 end
 
 group :development do
@@ -40,8 +44,8 @@ group :test do
   gem 'spring-commands-rspec'
   gem 'database_cleaner'
   gem 'launchy'
-  gem 'selenium-webdriver'
   gem 'webdrivers'
+  gem 'database_rewinder'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
@@ -65,7 +69,6 @@ gem 'chart-js-rails'
 
 gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 gem 'cancancan'
-gem 'aws-ses'
 gem 'config'
 gem 'erb2haml'
 gem "jquery-rails"

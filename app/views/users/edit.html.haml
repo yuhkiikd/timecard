@@ -1,4 +1,5 @@
 %h1.text-center.mt-4.col-12 ユーザー情報編集
+%p.text-center.small ※メールアドレスの変更は確認メールが送られます。メール内の登録確認リンクをクリック後に反映されます。
 .container.text-center.mb-5
   .row.justify-content-around
     .col-12.h-25.mb-4.text-center
@@ -24,6 +25,10 @@
       .form-group.col-10.h-25.mb-3.text-center
         = f.label :password
         = f.password_field :password, class: "form-control input-lg h-25 p-2 text-center"
+    .row.justify-content-around
+      .form-group.col-10.h-25.mb-3.text-center.field
+        = f.label :password_confirmation
+        = f.password_field :password_confirmation, class: "form-control input-lg h-25 p-2 text-center"
     .row.justify-content-around
       .form-group.col-10.h-25.mb-3.text-center
         = f.label :affiliation

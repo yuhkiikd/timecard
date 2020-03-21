@@ -36,6 +36,12 @@ body {
   }
 }
 
+.has-error {
+  input.form-control {
+    border:1px solid #df0000;
+  }
+}
+
 .pagination {
   justify-content: center;
 }

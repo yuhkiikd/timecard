@@ -1,7 +1,7 @@
 class AffiliationsController < ApplicationController
   PER = 10
   before_action :logged_in?
-  before_action :ensure_admin, only: [:index, :new, :edit, :destroy]
+  before_action :ensure_admin, only: [:index, :new, :edit, :show, :destroy]
   before_action :set_affiliation, only: [:edit,:show ,:update, :destroy]
   before_action :set_affiliation_chart_data, only: [:show]
   
@@ -16,7 +16,7 @@ class AffiliationsController < ApplicationController
   def create
     @affiliation = Affiliation.new(affiliation_params)
     if @affiliation.save
-      redirect_to affiliations_path
+      redirect_to affiliations_path, notice: "新しい所属を登録しました"
     else
       render :new
     end
@@ -24,7 +24,7 @@ class AffiliationsController < ApplicationController
 
   def update
     if @affiliation.update(affiliation_params)
-      redirect_to affiliations_path
+      redirect_to affiliations_path, notice: "所属を編集しました"
     else
       render :edit
     end

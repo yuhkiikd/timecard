@@ -6,7 +6,7 @@
     = form_with(model: @time_card, local: true, url: time_card_path) do |f|
       - if @time_card.errors.any?
         .error_explanation
-        %h2="#{@time_card.errors.count} 件のエラーがあります。"
+        %h2.text-center="#{@time_card.errors.count} 件のエラーがあります。"
         %ul
           -@time_card.errors.full_messages.each do |msg|
             %li= msg

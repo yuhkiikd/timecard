@@ -9,11 +9,12 @@
   %body
     %nav.navbar.navbar-expand-md.navbar-dark.bg-dark
       = link_to "TimeCard APP", root_path, { class: "navbar-brand" }
-      %button.navbar-toggler{"aria-controls" => "navbar", "aria-expanded" => "false", "aria-label" => "ナビゲーションの切替", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
-        %span.navbar-toggler-icon
       - if user_signed_in?
-        #navbar.collapse.navbar-collapse
-          %ul.navbar-nav.mr-auto
+        .navbar-brand= "#{current_user.name} さん"
+        %button.navbar-toggler{"aria-controls" => "navbar", "aria-expanded" => "false", "aria-label" => "ナビゲーションの切替", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
+          %span.navbar-toggler-icon
+        #navbar.collapse.navbar-collapse.justify-content-end
+          %ul.navbar-nav.text-right
             %li.nav-item
               = link_to "タイムカード打刻", new_time_card_path, { class: "nav-link" }
             %li.nav-item
@@ -23,12 +24,12 @@
             - if current_user.admin?
               %li.nav-item.dropdown
                 %a#dropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#"} 管理者メニュー
-                .dropdown-menu{"aria-labelledby" => "dropdown"}
+                .dropdown-menu.dropdown-menu-right.text-center{"aria-labelledby" => "dropdown"}
                   = link_to "ダッシュボード", rails_admin_path,{ class: "dropdown-item" }
                   = link_to "所属一覧", affiliations_path,{ class: "dropdown-item" }
                   = link_to "所属登録", new_affiliation_path,{ class: "dropdown-item" }
-                  = link_to "ユーザー一覧", users_path,{ class: "dropdown-item" }
-                  = link_to "ユーザー登録", new_user_registration_path,{ class: "dropdown-item" }
+                  = link_to "従業員一覧", users_path,{ class: "dropdown-item" }
+                  = link_to "従業員登録", new_user_registration_path,{ class: "dropdown-item" }
                   = link_to "勤怠状況一覧", status_users_path,{ class: "dropdown-item" }
                   = link_to "全タイムカード一覧", all_index_time_cards_path,{ class: "dropdown-item" }
             %li.nav-item

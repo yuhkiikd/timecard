@@ -1,0 +1,6 @@
+---
+ja:
+  time_cards:
+    all_index:
+      delete_confirm: '本当に削除してもよろしいですか？'
+    edit:

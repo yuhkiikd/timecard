@@ -6,13 +6,13 @@ class TimeCard < ApplicationRecord
   validates :day, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 31 }
   validate :is_time_correct?
   validate :valid_date
-  validate :valid_in_out_date
   validates :worked_in_at, presence: true
-  validates :worked_time, presence: true
+  validates :worked_time, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :breaked_time, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :overtime, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :affiliation_id, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1}
   validates :user_id, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1}
+  validate :valid_in_out_date
 
   scope :group_date_asc_day, -> { group(:year, :month, :day).order(day: "ASC") }
   scope :asc, -> { order(day: "ASC") }

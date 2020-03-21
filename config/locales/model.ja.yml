@@ -21,3 +21,8 @@ ja:
         admin: "権限"
       affiliation:
         name: "所属"
+      time_card:
+        worked_in_at: "出勤日時"
+        breaked_in_at: "休憩開始日時"
+        breaked_out_at: "休憩終了日時"
+        worked_out_at: "退勤日時"

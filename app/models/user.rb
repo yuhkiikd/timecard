@@ -7,12 +7,16 @@ class User < ApplicationRecord
   belongs_to :affiliation, foreign_key: "affiliation_id"
   has_many :time_card, dependent: :destroy
   validates :name, presence: true,
-                   length: { maximum: 10 }
+                   length: { maximum: 30 }
+  before_validation { email.downcase! }                  
   validates :email, length: { maximum: 50 },
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
                     uniqueness: true
+  validates :name, confirmation: true
   before_destroy :least_one_destroy
   before_update :do_not_update_self_admin
+
+  scope :asc, -> { order(id: "ASC") }
 
   private
 

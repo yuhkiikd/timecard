@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  PER = 10
   before_action :logged_in?
   before_action :ensure_admin, except: [:show, :edit]
   before_action :ensure_current_user, only: [:show, :status]
@@ -7,7 +8,7 @@ class UsersController < ApplicationController
   before_action :set_user_chart_data, only: [:show]
 
   def index
-    @users = User.all
+    @users = User.page(params[:page]).per(PER).all.asc
   end
 
   def status
@@ -24,7 +25,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update(user_params)
+    if @user.update_attributes(user_params)
       redirect_to users_path, notice: "ユーザー情報を更新しました"
     else
       render :edit
@@ -48,6 +49,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :affiliation_id, :admin)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :affiliation_id, :admin)
   end
 end

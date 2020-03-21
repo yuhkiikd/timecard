@@ -1,7 +1,7 @@
 class AffiliationsController < ApplicationController
   PER = 10
   before_action :logged_in?
-  before_action :ensure_admin, only: [:index, :new, :edit, :destroy]
+  before_action :ensure_admin, only: [:index, :new, :edit, :show, :destroy]
   before_action :set_affiliation, only: [:edit,:show ,:update, :destroy]
   before_action :set_affiliation_chart_data, only: [:show]
   

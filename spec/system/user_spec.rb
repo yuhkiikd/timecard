@@ -6,7 +6,7 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
     FactoryBot.create(:affiliation_2)
     FactoryBot.create(:user_1, id: 3)
     FactoryBot.create(:user_2)
-    FactoryBot.build(:timecard_1)
+    FactoryBot.create(:timecard_1, id: 1, user_id: 3)
 
     visit  new_user_session_path
     fill_in 'メールアドレス', with: 'test_1@a.com'
@@ -31,6 +31,14 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
         fill_in 'パスワード', with: 'hogehoge'
         click_on 'Log in'
         expect(page).to have_content 'メールアドレスまたはパスワードが無効です。'
+      end
+
+      it '一般権限でログインすると管理者メニューが非表示なっていること' do
+        click_on 'ログアウト'
+        fill_in 'メールアドレス', with: 'test_2@a.com'
+        fill_in 'パスワード', with: 'hogehoge'
+        click_on 'Log in'
+        expect(page).not_to have_content '管理者メニュー'
       end
     end
     
@@ -109,6 +117,49 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
         visit users_path
         page.all('td')[5].click
         expect(page).to have_content 'test_change_2 さんの従業員情報'
+      end
+    end
+
+    context '一般権限テスト' do
+      it '管理者権限が必要なページが表示されないこと' do
+        click_on 'ログアウト'
+        fill_in 'メールアドレス', with: 'test_2@a.com'
+        fill_in 'パスワード', with: 'hogehoge'
+        click_on 'Log in'
+        
+        #ダッシュボード
+        visit rails_admin_path
+        expect(page).to have_content 'You are not authorized to access this page'
+        #所属一覧
+        visit affiliations_path
+        expect(page).to have_content '管理者権限がありません'
+        #所属詳細
+        visit affiliation_path(1)
+        expect(page).to have_content '管理者権限がありません'
+        #所属編集
+        visit edit_affiliation_path(1)
+        expect(page).to have_content '管理者権限がありません'
+        #所属新規登録
+        visit new_affiliation_path
+        expect(page).to have_content '管理者権限がありません'
+        #従業員一覧
+        visit users_path
+        expect(page).to have_content '管理者権限がありません'
+        #自分以外の従業員詳細
+        visit user_path(1)
+        expect(page).to have_content 'アクセス権がありません'
+        #従業員新規登録
+        visit new_user_registration_path
+        expect(page).to have_content '管理者権限がありません'
+        #従業員勤務状況
+        visit status_users_path
+        expect(page).to have_content '管理者権限がありません'
+        #全タイムカード一覧
+        visit all_index_time_cards_path
+        expect(page).to have_content '管理者権限がありません'
+        #タイムカード編集
+        visit edit_time_card_path(1)
+        expect(page).to have_content '管理者権限がありません'
       end
     end
   end

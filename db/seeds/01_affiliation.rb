@@ -27,3 +27,9 @@ end
     name: '役員',
     )
 end
+
+20.times do |i|
+  Affiliation.create!(
+    name: "test-#{i + 1}"
+    )
+end

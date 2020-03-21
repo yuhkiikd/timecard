@@ -10,7 +10,7 @@
     )
 end
 
-5.times do |i|
+20.times do |i|
   User.create!(
     name: "normal",
     email: "normal-#{i + 1}@a.com",

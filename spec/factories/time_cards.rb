@@ -12,6 +12,27 @@ FactoryBot.define do
     worked_time { 28800 }
     breaked_time { 3600 }
     overtime { 0 }
+
+      trait :overtime do
+        worked_out_at { '2020-03-01 19:00:00' }
+        worked_time { 32400 }
+        overtime { 3600 }
+      end
+
+      trait :other_day do
+        user_id { 1 }
+        affiliation_id { 1 }
+        year { 2020 }
+        month { 3 }
+        day { 2 }
+        worked_in_at { '2020-03-02 09:00:00' }
+        breaked_in_at { '2020-03-02 14:00:00' }
+        breaked_out_at { '2020-03-02 15:00:00' }
+        worked_out_at { '2020-03-02 19:00:00' }
+        worked_time { 32400 }
+        breaked_time { 3600 }
+        overtime { 3600 }
+      end
   end
 
   factory :timecard_2, class: TimeCard do

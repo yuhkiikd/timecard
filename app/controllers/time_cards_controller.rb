@@ -30,7 +30,7 @@ class TimeCardsController < ApplicationController
          redirect_to all_index_time_cards_path, notice: '不正な日時です'
       else
         @time_card.save
-        redirect_to time_cards_path
+        redirect_to time_cards_path, notice: '勤怠データを記録しました'
       end
     end
   end

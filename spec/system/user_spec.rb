@@ -5,8 +5,9 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
     FactoryBot.create(:affiliation_1)
     FactoryBot.create(:affiliation_2)
     FactoryBot.create(:user_1, id: 3)
-    FactoryBot.create(:user_2)
+    @user_2 = FactoryBot.create(:user_2, id: 2)
     FactoryBot.create(:timecard_1, id: 1, user_id: 3)
+    FactoryBot.create(:timecard_2, id: 2, user_id: 2)
 
     visit  new_user_session_path
     fill_in 'メールアドレス', with: 'test_1@a.com'
@@ -91,7 +92,7 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
       end
     end
 
-    context '編集機能' do
+    context '編集・削除機能' do
       it '編集画面で自身の編集削除ができないこと' do
         visit users_path
         page.all('td')[14].click
@@ -118,6 +119,18 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
         page.all('td')[5].click
         expect(page).to have_content 'test_change_2 さんの従業員情報'
       end
+
+      it 'ユーザーを削除するとメッセージが表示されること' do
+        visit users_path
+        page.all('td')[7].click
+        expect(page.driver.browser.switch_to.alert.text).to eq "本当に削除してもよろしいですか？"
+        page.driver.browser.switch_to.alert.accept
+        expect(page).to have_content 'ユーザーを削除しました'
+      end
+
+      it 'ユーザーを削除すると紐づいたタイムカードも削除されること' do
+        expect { @user_2.destroy }.to change { TimeCard.count }.by(-1)
+      end
     end
 
     context '一般権限テスト' do
@@ -126,7 +139,7 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
         fill_in 'メールアドレス', with: 'test_2@a.com'
         fill_in 'パスワード', with: 'hogehoge'
         click_on 'Log in'
-        
+
         #ダッシュボード
         visit rails_admin_path
         expect(page).to have_content 'You are not authorized to access this page'
@@ -160,6 +173,22 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
         #タイムカード編集
         visit edit_time_card_path(1)
         expect(page).to have_content '管理者権限がありません'
+      end
+    end
+
+    context '人数表示テスト' do
+      it '所属一覧に残業時間と従業員数が表示されること' do
+        FactoryBot.create(:timecard_1, :other_day, id: 5, user_id: 3)
+        visit affiliations_path
+        expect(page.all('td')[1]).to have_content '営業部'
+        expect(page.all('td')[2]).to have_content '1'
+        expect(page.all('td')[3]).to have_content '1時間'
+      end
+
+      it '所属詳細に従業員数・所属が表示されること' do
+        visit affiliation_path(1)
+        expect(page).to have_content '所属人数：1'
+        expect(page).to have_content '所属：営業部'
       end
     end
   end

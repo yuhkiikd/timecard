@@ -9,9 +9,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :creatable?, only: [:new, :create]
 
   # GET /resource/sign_up
-  def new
-    super
-  end
+  # def new
+  #   super
+  # end
 
   # POST /resource
   # def create
@@ -60,9 +60,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # The path used after sign up for inactive accounts.
-  # def after_inactive_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+  def after_inactive_sign_up_path_for(resource)
+    users_path
+  end
 
   def sign_up(resource_name, resource)
     if !current_user_is_admin?

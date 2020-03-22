@@ -17,13 +17,15 @@
         =f.label :worked_in_at
         =f.datetime_select :worked_in_at
       .form-group.col-12.p-3.mb-3.text-center
+        =f.label :worked_out_at
+        =f.datetime_select :worked_out_at
+      .form-group.col-12.p-3.mb-5.text-center
+        =f.submit '休憩なしで更新する',name: 'no_breaked'
+      #breaked_in_at.form-group.col-12.p-3.mb-3.text-center
         =f.label :breaked_in_at
         =f.datetime_select :breaked_in_at
       .form-group.col-12.p-3.mb-3.text-center
         =f.label :breaked_out_at
         =f.datetime_select :breaked_out_at
-      .form-group.col-12.p-3.mb-3.text-center
-        =f.label :worked_out_at
-        =f.datetime_select :worked_out_at
-      .form-group.col-12.p-3.mb-3.text-center
-        =f.submit name: 'time_edit'
+      .form-group.col-12.p-3.text-center
+        =f.submit '休憩ありで更新する', name: 'time_edit'

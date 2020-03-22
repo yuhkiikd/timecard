@@ -4,4 +4,4 @@ ja:
     all_index:
       delete_confirm: '本当に削除してもよろしいですか？'
     form:
-      worked_out_confirm: '【確認】　退勤処理をしてもよろしいですか？'
+      worked_out_confirm: '※退勤処理をしてもよろしいですか？'

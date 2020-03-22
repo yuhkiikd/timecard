@@ -66,23 +66,30 @@ class TimeCardsController < ApplicationController
       @time_card.breaked_time = (@time_card.breaked_out_at - @time_card.breaked_in_at).to_i
       @time_card.save
       redirect_to time_cards_path, notice: '勤怠データを記録しました'
-    elsif params[:time_edit]
-      @time_card.breaked_time = (@time_card.breaked_out_at.to_i - @time_card.breaked_in_at.to_i).to_i
-      @time_card.worked_time = (@time_card.worked_out_at.to_i - @time_card.worked_in_at.to_i - @time_card.breaked_time ).to_i
+    elsif params[:time_edit] && @time_card.valid? && @time_card.update(time_card_edit_params)
+      @time_card.breaked_time = (@time_card.breaked_out_at - @time_card.breaked_in_at).to_i
+      @time_card.worked_time = (@time_card.worked_out_at - @time_card.worked_in_at - @time_card.breaked_time ).to_i
       @time_card.save
       if 28800 < @time_card.worked_time
         @time_card.overtime = (@time_card.worked_time - 28800).to_i
       else
         @time_card.overtime = 0
       end
-
-      if @time_card.update(time_card_edit_params)
-        redirect_to all_index_time_cards_path, notice: '勤怠データを記録しました'
+      @time_card.update(time_card_edit_params)
+      redirect_to all_index_time_cards_path, notice: '勤怠データを記録しました'
+    elsif params[:no_breaked] && @time_card.valid? && @time_card.update(time_no_breaked_edit_params)
+      @time_card.worked_time = (@time_card.worked_out_at - @time_card.worked_in_at).to_i
+      @time_card.save
+      if 28800 < @time_card.worked_time
+        @time_card.overtime = (@time_card.worked_time - 28800).to_i
       else
-        render :edit
+        @time_card.overtime = 0
       end
+      @time_card.update(time_no_breaked_edit_params)
+      @time_card.update(breaked_in_at: nil,breaked_out_at: nil, breaked_time: 0)
+      redirect_to all_index_time_cards_path, notice: '勤怠データを記録しました'
     else
-      redirect_to all_index_time_cards_path, notice: '勤怠データを記録出来ませんでした'
+      render :edit, alert: '勤怠データを記録出来ませんでした'
     end
   end
 
@@ -111,8 +118,8 @@ class TimeCardsController < ApplicationController
     @time_card = TimeCard.find(params[:id])
   end
 
-  def time_card_params
-    params.require(:time_card).permit(:year, :month, :day, :worked_in_at, :worked_out_at, :breaked_in_at, :breaked_out_at, :user_id, :affiliation_id)
+  def time_no_breaked_edit_params
+    params.require(:time_card).permit(:year, :month, :day, :worked_in_at, :worked_out_at, :user_id, :affiliation_id)
   end
 
   def time_card_edit_params

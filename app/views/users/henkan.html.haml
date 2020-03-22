@@ -1,0 +1,26 @@
+%th Q1：入院の経験はありますか
+%label
+  %input#hospital0{:name => "hospital", :onclick => "hospitalflg0(this.checked);", :type => "radio"}/
+  はい
+%label
+  %input#hospital1{:name => "hospital", :onclick => "hospitalflg1(this.checked);", :type => "radio"}/
+  いいえ
+%br/
+%th Q2: Q1で「はい」と答えた方に質問します。どのような病気で入院されましたか？
+%input#hospitalization{:disabled => "disabled", :type => "text", :value => ""}/
+:javascript
+  function hospitalflg0(ischecked){
+    if(ischecked == true){
+      document.getElementById("hospitalization").disabled = false;
+    } else {
+      document.getElementById("hospitalization").disabled = true;
+    }
+  }
+  
+  function hospitalflg1(ischecked){
+    if(ischecked == true){
+      document.getElementById("hospitalization").disabled = true;
+    } else {
+      document.getElementById("hospitalization").disabled = false;
+    }
+  }

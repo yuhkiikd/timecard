@@ -67,7 +67,7 @@ RSpec.describe '所属登録・削除・編集機能テスト', type: :system do
                         id: 3,
                         name: 'テスト')
         visit affiliations_path
-        page.all('td')[20].click
+        page.all('td')[6].click
         page.driver.browser.switch_to.alert.accept
         expect(page).to have_content '所属を削除しました'
       end

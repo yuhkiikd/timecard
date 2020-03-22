@@ -30,10 +30,10 @@
           %td= "00:00"
           %td= "00:00"
         -elsif min >= 0 && min < 3600
-          %td= "00:#{int_to_time(t.worked_time - t.breaked_time)}"
+          %td= "00:#{int_to_time(t.worked_time)}"
           %td= "00:00"
         -else
-          %td= "#{int_to_hour(t.worked_time) - int_to_hour(t.breaked_time)}:#{int_to_time(t.worked_time - t.breaked_time)}"
+          %td= "#{int_to_hour(t.worked_time)}:#{int_to_time(t.worked_time)}"
           %td= "#{int_to_hour(t.overtime)}:#{int_to_time(t.overtime)}"
       -else
         %td

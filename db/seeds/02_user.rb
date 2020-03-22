@@ -14,7 +14,7 @@ end
 
 20.times do |i|
   User.create!(
-    name: "normal",
+    name: "normal-#{i + 1}",
     email: "normal-#{i + 1}@example.com",
     password: "hogehoge",
     admin: false,

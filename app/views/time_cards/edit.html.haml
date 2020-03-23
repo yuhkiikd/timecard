@@ -1,9 +1,11 @@
 %h1.text-center.mt-4.col-12 タイムカード編集
-%h2.text-center.mt-4.col-12.mb-3="#{@time_card.year}年 #{@time_card.month}月 #{@time_card.day}日"
+%p.text-center.small
+  休憩がない場合は【休憩なしで更新する】をクリックしてください（休憩時間の調節は不要です）
+%h2.text-center.mt-4.col-12.mb-1="#{@time_card.year}年 #{@time_card.month}月 #{@time_card.day}日"
 .container
   .row.justify-content-around
     .col-12.h-25.mb-4.text-center
-    = form_with(model: @time_card, local: true, url: time_card_path) do |f|
+    = form_with(model: @time_card, local: true, class: "col-12", url: time_card_path) do |f|
       - if @time_card.errors.any?
         .error_explanation
         %h2.text-center="#{@time_card.errors.count} 件のエラーがあります。"
@@ -13,19 +15,24 @@
         -f.hidden_field :year
         -f.hidden_field :month
         -f.hidden_field :day
-      .form-group.col-12.p-3.mb-3.text-center
+      .form-group.col-12.p-3.mb-2.text-center
         =f.label :worked_in_at
+        %br/
         =f.datetime_select :worked_in_at
-      .form-group.col-12.p-3.mb-3.text-center
-        =f.label :worked_out_at
-        =f.datetime_select :worked_out_at
-      .form-group.col-12.p-3.mb-5.text-center
-        =f.submit '休憩なしで更新する',name: 'no_breaked'
-      #breaked_in_at.form-group.col-12.p-3.mb-3.text-center
+      .form-group.col-12.p-3.mb-2.text-center
         =f.label :breaked_in_at
+        %br/
         =f.datetime_select :breaked_in_at
-      .form-group.col-12.p-3.mb-3.text-center
+      .form-group.col-12.p-3.mb-2.text-center
         =f.label :breaked_out_at
+        %br/
         =f.datetime_select :breaked_out_at
+      .form-group.col-12.p-3.mb-5.text-center
+        =f.label :worked_out_at
+        %br/
+        =f.datetime_select :worked_out_at, id: 'inlineFormCustomSelect', class: 'custom-select'
       .form-group.col-12.p-3.text-center
-        =f.submit '休憩ありで更新する', name: 'time_edit'
+        .row
+          =f.submit '休憩なしで更新する', name: 'no_breaked', id: 'no_breaked', class: "css-fukidashi col-5 form-control h-25 p-4 btn-dark mr-auto"
+          %p.fukidashi 休憩時間は調節は不要
+          =f.submit '休憩ありで更新する', name: 'time_edit', class: "col-5 form-control h-25 p-4 btn-dark"

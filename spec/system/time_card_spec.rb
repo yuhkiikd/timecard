@@ -8,7 +8,7 @@ RSpec.describe '出退勤時間記録・編集・削除テスト', type: :system
     FactoryBot.create(:user_2)
 
     visit new_user_session_path
-    fill_in 'メールアドレス', with: 'test_1@a.com'
+    fill_in 'メールアドレス', with: 'test_1@example.com'
     fill_in 'パスワード', with: 'hogehoge'
     click_on 'Log in'
     visit new_time_card_path
@@ -169,6 +169,18 @@ RSpec.describe '出退勤時間記録・編集・削除テスト', type: :system
         select '30', from: 'time_card[breaked_in_at(5i)]'
         click_on '休憩ありで更新する'
         expect(page).to have_content '出勤日時　＜　休憩開始日時　＜　休憩終了日時　＜　退勤日時で入力してください'
+      end
+
+      it '休憩なしで更新すると休憩時間が表示から消えること' do
+        FactoryBot.create(:timecard_1)
+        visit all_index_time_cards_path
+        expect(page.all('td')[5]).to have_content '14:00'
+        expect(page.all('td')[6]).to have_content '15:00'
+        visit edit_time_card_path(1)
+        expect(page).to have_content 'タイムカード編集'
+        click_on '休憩なしで更新する'
+        expect(page.all('td')[5]).to have_content ''
+        expect(page.all('td')[6]).to have_content ''
       end
     end
 

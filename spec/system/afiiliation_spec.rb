@@ -9,7 +9,7 @@ RSpec.describe '所属登録・削除・編集機能テスト', type: :system do
     FactoryBot.build(:timecard_1)
 
     visit  new_user_session_path
-    fill_in 'メールアドレス', with: 'test_1@a.com'
+    fill_in 'メールアドレス', with: 'test_1@example.com'
     fill_in 'パスワード', with: 'hogehoge'
     click_on 'Log in'
   end

@@ -9,7 +9,7 @@ RSpec.describe '所属登録・削除・編集機能テスト', type: :system do
     FactoryBot.build(:timecard_1)
 
     visit  new_user_session_path
-    fill_in 'メールアドレス', with: 'test_1@a.com'
+    fill_in 'メールアドレス', with: 'test_1@example.com'
     fill_in 'パスワード', with: 'hogehoge'
     click_on 'Log in'
   end
@@ -67,7 +67,7 @@ RSpec.describe '所属登録・削除・編集機能テスト', type: :system do
                         id: 3,
                         name: 'テスト')
         visit affiliations_path
-        page.all('td')[20].click
+        page.all('td')[6].click
         page.driver.browser.switch_to.alert.accept
         expect(page).to have_content '所属を削除しました'
       end

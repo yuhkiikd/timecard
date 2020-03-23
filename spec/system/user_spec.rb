@@ -10,7 +10,7 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
     FactoryBot.create(:timecard_2, id: 2, user_id: 2)
 
     visit  new_user_session_path
-    fill_in 'メールアドレス', with: 'test_1@a.com'
+    fill_in 'メールアドレス', with: 'test_1@example.com'
     fill_in 'パスワード', with: 'hogehoge'
     click_on 'Log in'
   end
@@ -19,8 +19,8 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
     context 'ログイン・ログアウトテスト' do
       it 'ログアウトして、ログイン出来ること' do
         click_on 'ログアウト'
-        expect(page).to have_content 'ログアウト済です'
-        fill_in 'メールアドレス', with: 'test_1@a.com'
+        expect(page).to have_content 'サインアウトしました'
+        fill_in 'メールアドレス', with: 'test_1@example.com'
         fill_in 'パスワード', with: 'hogehoge'
         click_on 'Log in'
         expect(page).to have_content 'サインインしました'
@@ -28,7 +28,7 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
 
       it '登録にないメールアドレスならログイン無効なこと' do
         click_on 'ログアウト'
-        fill_in 'メールアドレス', with: 'aaaaaaaa@a.com'
+        fill_in 'メールアドレス', with: 'aaaaaaaa@example.com'
         fill_in 'パスワード', with: 'hogehoge'
         click_on 'Log in'
         expect(page).to have_content 'メールアドレスまたはパスワードが無効です。'
@@ -36,7 +36,7 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
 
       it '一般権限でログインすると管理者メニューが非表示なっていること' do
         click_on 'ログアウト'
-        fill_in 'メールアドレス', with: 'test_2@a.com'
+        fill_in 'メールアドレス', with: 'test_2@example.com'
         fill_in 'パスワード', with: 'hogehoge'
         click_on 'Log in'
         expect(page).not_to have_content '管理者メニュー'
@@ -48,7 +48,7 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
         click_on '管理者メニュー'
         click_on '従業員登録'
         fill_in '名前', with: 'test_5'
-        fill_in 'メールアドレス', with: 'test_5@a.com'
+        fill_in 'メールアドレス', with: 'test_5@example.com'
         fill_in 'パスワード', with: 'hogehoge'
         fill_in '確認用パスワード', with: 'hogehoge'
         select "営業部", from: "user[affiliation_id]"
@@ -80,7 +80,7 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
         click_on '管理者メニュー'
         click_on '従業員登録'
         fill_in '名前', with: 'test_5'
-        fill_in 'メールアドレス', with: 'test_5@a.com'
+        fill_in 'メールアドレス', with: 'test_5@example.com'
         fill_in 'パスワード', with: 'hogeho'
         fill_in '確認用パスワード', with: 'hogehoge'
         select "営業部", from: "user[affiliation_id]"
@@ -95,9 +95,9 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
     context '編集・削除機能' do
       it '編集画面で自身の編集削除ができないこと' do
         visit users_path
-        page.all('td')[14].click
+        page.all('td')[6].click
         expect(page).to have_content '管理者は他の管理者から編集・削除をしてください'
-        page.all('td')[15].click
+        page.all('td')[7].click
         expect(page.driver.browser.switch_to.alert.text).to eq "本当に削除してもよろしいですか？"
         page.driver.browser.switch_to.alert.accept
         expect(page).to have_content '管理者は他の管理者から編集・削除をしてください'
@@ -105,9 +105,9 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
 
       it '編集でき、従業員一覧が表示される・マイページの名前が変わること' do
         visit users_path
-        page.all('td')[6].click
+        page.all('td')[14].click
         fill_in '名前', with: 'test_change_2'
-        fill_in 'メールアドレス', with: 'test_2@a.com'
+        fill_in 'メールアドレス', with: 'test_2@example.com'
         fill_in 'パスワード', with: 'hogehoge'
         fill_in '確認用パスワード', with: 'hogehoge'
         select "営業部", from: "user[affiliation_id]"
@@ -116,13 +116,13 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
         expect(page).to have_content 'ユーザー情報を更新しました'
         expect(page).to have_content '従業員一覧'
         visit users_path
-        page.all('td')[5].click
+        page.all('td')[13].click
         expect(page).to have_content 'test_change_2 さんの従業員情報'
       end
 
       it 'ユーザーを削除するとメッセージが表示されること' do
         visit users_path
-        page.all('td')[7].click
+        page.all('td')[15].click
         expect(page.driver.browser.switch_to.alert.text).to eq "本当に削除してもよろしいですか？"
         page.driver.browser.switch_to.alert.accept
         expect(page).to have_content 'ユーザーを削除しました'
@@ -136,7 +136,7 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
     context '一般権限テスト' do
       it '管理者権限が必要なページが表示されないこと' do
         click_on 'ログアウト'
-        fill_in 'メールアドレス', with: 'test_2@a.com'
+        fill_in 'メールアドレス', with: 'test_2@example.com'
         fill_in 'パスワード', with: 'hogehoge'
         click_on 'Log in'
 
@@ -180,9 +180,9 @@ RSpec.describe 'セッション機能、ユーザー登録・削除・編集機�
       it '所属一覧に残業時間と従業員数が表示されること' do
         FactoryBot.create(:timecard_1, :other_day, id: 5, user_id: 3)
         visit affiliations_path
-        expect(page.all('td')[1]).to have_content '営業部'
-        expect(page.all('td')[2]).to have_content '1'
-        expect(page.all('td')[3]).to have_content '1時間'
+        expect(page.all('td')[8]).to have_content '営業部'
+        expect(page.all('td')[9]).to have_content '1'
+        expect(page.all('td')[10]).to have_content '1時間'
       end
 
       it '所属詳細に従業員数・所属が表示されること' do

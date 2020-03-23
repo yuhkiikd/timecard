@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :user_1, class: User do
     id { 1 }
     name { 'test_1' }
-    email { 'test_1@a.com' }
+    email { 'test_1@example.com' }
     password { 'hogehoge' }
     admin { true }
     confirmed_at { '2020,3,1,9' }
@@ -13,7 +13,7 @@ FactoryBot.define do
   factory :user_2, class: User do
     id { 2 }
     name { 'test_2' }
-    email { 'test_2@a.com' }
+    email { 'test_2@example.com' }
     encrypted_password { 'hogehoge' }
     password { 'hogehoge' }
     admin { false }
@@ -23,7 +23,7 @@ FactoryBot.define do
 
       trait :change_charactor do
         id { 3 }
-        email { 'Test_3@A.com' }
+        email { 'Test_3@exaMple.com' }
       end
   end
 
@@ -41,7 +41,7 @@ FactoryBot.define do
   factory :user_4, class: User do
     id { 4 }
     name { 'test_4' }
-    email { 'test_4@a.com' }
+    email { 'test_4@example.com' }
     password { 'hogehoge' }
     confirmed_at { '2020,3,1,9' }
     confirmation_sent_at { '2020,3,2,9' }

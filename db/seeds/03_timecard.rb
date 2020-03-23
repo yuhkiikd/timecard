@@ -60,7 +60,7 @@ end
     worked_out_at: DateTime.new(2020,3,6 + i,18 - 9),
     breaked_in_at: DateTime.new(2020,3,6 + i,12 - 9),
     breaked_out_at: DateTime.new(2020,3,6 + i,13 - 9),
-    worked_time: 28000,
+    worked_time: 28800,
     breaked_time: 3600,
     overtime: 0,
     )

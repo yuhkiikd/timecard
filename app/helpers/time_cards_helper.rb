@@ -77,23 +77,29 @@ module TimeCardsHelper
     time.to_i ? Time.at(time).strftime('%M') : ''
   end
 
+  #従業員の詳細用データ
   def set_user_chart_data
-    @chart_days = TimeCard.where(year: @year, month: @month, user_id: @user.id).asc.pluck(:worked_in_at).map{ |item| item.strftime('%Y/%m/%d')}
-    if Rails.env.production?
-      @chart_times = TimeCard.where(year: @year, month: @month, user_id: @user.id).asc.pluck(:overtime).map{ |item| Time.at(item - 32400).strftime('%X:%M').to_i}
-    elsif Rails.env.development?
-      @chart_times = TimeCard.where(year: @year, month: @month, user_id: @user.id).asc.pluck(:overtime).map{ |item| Time.at(item).strftime('%X:%M').to_i}
+    @timecard_base_data = TimeCard.where(year: @year, month: @month, user_id: @user.id)
+
+    @chart_days = @timecard_base_data.asc.pluck(:worked_in_at).map{ |item| item.strftime('%Y/%m/%d')}
+    if Rails.env.production?#AWS用の時間データ抽出（AWS上だと時間の持ち方が違うため）
+      @chart_times = @timecard_base_data.asc.pluck(:overtime).map{ |item| Time.at(item - 32400).strftime('%X:%M').to_i}
+    elsif Rails.env.development?#開発環境の時間データ抽出
+      @chart_times = @timecard_base_data.asc.pluck(:overtime).map{ |item| Time.at(item).strftime('%X:%M').to_i}
     end
-    @worked_time = TimeCard.where(year: @year, month: @month, user_id: @user.id).sum(:worked_time)
-    @overtime = TimeCard.where(year: @year, month: @month, user_id: @user.id).sum(:overtime)
+    @worked_time = @timecard_base_data.sum(:worked_time)
+    @overtime = @timecard_base_data.sum(:overtime)
   end
 
+  #所属のグラフ用データ
   def set_affiliation_chart_data
-    @days = TimeCard.where(affiliation_id: @affiliation.id).group_date_asc_day.minimum(:worked_in_at).values.map{ |item| item.strftime('%Y/%m/%d')}
-    if Rails.env.production?
-      @times = TimeCard.where(affiliation_id: @affiliation.id).group_date_asc_day.sum(:overtime).values.map{ |item| Time.at(item - 32400).strftime('%X:%M').to_i}
-    elsif Rails.env.development?
-      @times = TimeCard.where(affiliation_id: @affiliation.id).group_date_asc_day.sum(:overtime).values.map{ |item| Time.at(item).strftime('%X:%M').to_i}
+    @affiliation_base_data = TimeCard.where(affiliation_id: @affiliation.id).group_date_asc_day
+
+    @chart_days = @affiliation_base_data.minimum(:worked_in_at).values.map{ |item| item.strftime('%Y/%m/%d')}
+    if Rails.env.production?#AWS用の時間データ抽出（AWS上だと時間の持ち方が違うため）
+      @times = @affiliation_base_data.sum(:overtime).values.map{ |item| Time.at(item - 32400).strftime('%X:%M').to_i}
+    elsif Rails.env.development?#開発環境の時間データ抽出
+      @times = @affiliation_base_data.sum(:overtime).values.map{ |item| Time.at(item).strftime('%X:%M').to_i}
     end
   end
 end

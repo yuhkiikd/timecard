@@ -16,7 +16,7 @@ class User < ApplicationRecord
   before_destroy :least_one_destroy
   before_update :do_not_update_self_admin
 
-  scope :asc, -> { order(id: "ASC") }
+  scope :desc, -> { order(id: "DESC") }
 
   private
 

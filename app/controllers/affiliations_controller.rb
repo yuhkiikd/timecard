@@ -6,7 +6,7 @@ class AffiliationsController < ApplicationController
   before_action :set_affiliation_chart_data, only: [:show]
   
   def index
-    @affiliations = Affiliation.all
+    @affiliations = Affiliation.page(params[:page]).per(PER).order(id: "DESC")
   end
 
   def new

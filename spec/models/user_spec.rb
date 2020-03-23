@@ -41,7 +41,7 @@ RSpec.describe User, type: :model do
     end
 
     it '重複したemailなら無効であること' do
-      @user_2.email = 'test_1@a.com'
+      @user_2.email = 'test_1@example.com'
       expect(@user_2).not_to be_valid
     end
 
@@ -53,7 +53,7 @@ RSpec.describe User, type: :model do
     it "大文字だった場合小文字なっていること" do
       user_3 = FactoryBot.build(:user_2, :change_charactor)
       user_3.save!
-      expect(user_3.email).to eq "test_3@a.com"
+      expect(user_3.email).to eq "test_3@example.com"
     end
   end
 end

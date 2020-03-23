@@ -1,14 +1,14 @@
 class UsersController < ApplicationController
   PER = 10
   before_action :logged_in?
-  before_action :ensure_admin, except: [:show, :edit]
+  before_action :ensure_admin, except: [:show]
   before_action :ensure_current_user, only: [:show, :status]
   before_action :set_users, only: [:show, :edit, :update, :destroy]
   before_action :set_date, only: [:index, :status, :show]
   before_action :set_user_chart_data, only: [:show]
 
   def index
-    @users = User.page(params[:page]).per(PER).all.asc
+    @users = User.page(params[:page]).per(PER).all.desc
   end
 
   def status

@@ -71,3 +71,5 @@
             },
         }
     });
+  -if current_user.admin?
+    %p.text-center.mt-5= link_to '一覧へ戻る', users_path

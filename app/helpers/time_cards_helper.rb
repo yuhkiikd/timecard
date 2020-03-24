@@ -50,7 +50,7 @@ module TimeCardsHelper
       '休憩中'
     when :left
       '退社済'
-    end  
+    end
   end
 
   def time_str(time)

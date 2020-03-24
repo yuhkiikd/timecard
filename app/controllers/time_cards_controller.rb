@@ -127,7 +127,7 @@ class TimeCardsController < ApplicationController
   end
 
   def can_not_edit
-    if @time_card.worked_out_at == nil
+    if @time_card.worked_out_at == nil && DateTime.current.month == @time_card.month && DateTime.current.day == @time_card.day
       redirect_to all_index_time_cards_path, alert: '編集は退勤時間を記録してから可能です。'
     end
   end

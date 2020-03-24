@@ -9,10 +9,29 @@
     %th 休憩開始時間
     %th 休憩終了時間
   - @status.each do |t|
-    %tr
-      %td= t.user.name
-      %td= working_status(t)
-      %td= time_str(t.worked_in_at)
-      %td= time_str(t.worked_out_at)
-      %td= time_str(t.breaked_in_at)
-      %td= time_str(t.breaked_out_at)
+    - if working_status(t) == '勤務中'
+      %tr
+        %td= t.user.name
+        %td= working_status(t)
+        %td= time_str(t.worked_in_at)
+        %td= time_str(t.worked_out_at)
+        %td= time_str(t.breaked_in_at)
+        %td= time_str(t.breaked_out_at)
+  - @status.each do |t|
+    - if working_status(t) == '休憩中'
+      %tr
+        %td= t.user.name
+        %td= working_status(t)
+        %td= time_str(t.worked_in_at)
+        %td= time_str(t.worked_out_at)
+        %td= time_str(t.breaked_in_at)
+        %td= time_str(t.breaked_out_at)
+  - @status.each do |t|
+    - if working_status(t) == '退社済'
+      %tr
+        %td= t.user.name
+        %td= working_status(t)
+        %td= time_str(t.worked_in_at)
+        %td= time_str(t.worked_out_at)
+        %td= time_str(t.breaked_in_at)
+        %td= time_str(t.breaked_out_at)

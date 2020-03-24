@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def status
-    @status = TimeCard.where(year: @year, month: @month, day: @day)
+    @status = TimeCard.where(year: @year, month: @month, day: @day).order(worked_out_at: 'DESC')
   end
 
   def show

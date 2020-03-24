@@ -36,6 +36,7 @@
       .form-group.col-10.h-25.mb-4.text-center.field
         = f.label :admin
         = f.select :admin, [["一般", false],["管理者", true]], { selected: 1 }, class: "form-control input-lg h-25 p-2"
-    .row.justify-content-around
+    .row.justify-content-around.mb-5
       .form-group.col-6.h-25.actions
         = f.submit class: "form-control input-lg h-25 p-4 btn-dark"
+  %p.text-center= link_to '一覧へ戻る', users_path

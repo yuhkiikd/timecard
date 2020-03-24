@@ -4,7 +4,7 @@
 %h2.text-center.mt-4.col-12.mb-1="#{@time_card.year}年 #{@time_card.month}月 #{@time_card.day}日"
 .container
   .row.justify-content-around
-    .col-12.h-25.mb-4.text-center
+    .col-12.h-25.mb-5.text-center
     = form_with(model: @time_card, local: true, class: "col-12", url: time_card_path) do |f|
       - if @time_card.errors.any?
         .error_explanation
@@ -31,8 +31,9 @@
         =f.label :worked_out_at
         %br/
         =f.datetime_select :worked_out_at, id: 'inlineFormCustomSelect', class: 'custom-select'
-      .form-group.col-12.p-3.text-center
+      .form-group.col-12.p-3.text-center.mb-5
         .row
           =f.submit '休憩なしで更新する', name: 'no_breaked', id: 'no_breaked', class: "css-fukidashi col-5 form-control h-25 p-4 btn-dark mr-auto"
           %p.fukidashi 休憩時間の調節は不要
           =f.submit '休憩ありで更新する', name: 'time_edit', class: "col-5 form-control h-25 p-4 btn-dark"
+    %p.text-center= link_to '一覧へ戻る', all_index_time_cards_path

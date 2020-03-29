@@ -40,54 +40,15 @@ class TimeCardsController < ApplicationController
 
   def update
     if params[:worked_out]
-      @time_card.worked_out_at = @now_at
-      if @time_card.breaked_time.present?
-        @time_card.worked_time = (@time_card.worked_out_at - @time_card.worked_in_at - @time_card.breaked_time).to_i
-        @time_card.save
-      else
-        @time_card.worked_time = (@time_card.worked_out_at - @time_card.worked_in_at).to_i
-        @time_card.save
-      end
-      if @time_card.breaked_time? && 28800 < @time_card.worked_time
-        @time_card.worked_time -= @time_card.breaked_time
-        @time_card.overtime = (@time_card.worked_time - 28800).to_i
-        @time_card.save
-      elsif 28800 < @time_card.worked_time
-        @time_card.overtime = (@time_card.worked_time - 28800).to_i
-        @time_card.save
-      end
-      redirect_to time_cards_path, notice: '勤怠データを記録しました'
+      worked_out_save
     elsif params[:breaked_in]
-      @time_card.breaked_in_at = @now_at
-      @time_card.save
-      redirect_to time_cards_path, notice: '勤怠データを記録しました'
+      breaked_in_save
     elsif params[:breaked_out]
-      @time_card.breaked_out_at = @now_at
-      @time_card.breaked_time = (@time_card.breaked_out_at - @time_card.breaked_in_at).to_i
-      @time_card.save
-      redirect_to time_cards_path, notice: '勤怠データを記録しました'
+      breaked_out_save
     elsif params[:time_edit] && @time_card.valid? && @time_card.update(time_card_edit_params)
-      @time_card.breaked_time = (@time_card.breaked_out_at - @time_card.breaked_in_at).to_i
-      @time_card.worked_time = (@time_card.worked_out_at - @time_card.worked_in_at - @time_card.breaked_time ).to_i
-      @time_card.save
-      if 28800 < @time_card.worked_time
-        @time_card.overtime = (@time_card.worked_time - 28800).to_i
-      else
-        @time_card.overtime = 0
-      end
-      @time_card.update(time_card_edit_params)
-      redirect_to all_index_time_cards_path, notice: '勤怠データを記録しました'
+      edit_breaked_ture_save
     elsif params[:no_breaked] && @time_card.valid? && @time_card.update(time_no_breaked_edit_params)
-      @time_card.worked_time = (@time_card.worked_out_at - @time_card.worked_in_at).to_i
-      @time_card.save
-      if 28800 < @time_card.worked_time
-        @time_card.overtime = (@time_card.worked_time - 28800).to_i
-      else
-        @time_card.overtime = 0
-      end
-      @time_card.update(time_no_breaked_edit_params)
-      @time_card.update(breaked_in_at: nil,breaked_out_at: nil, breaked_time: 0)
-      redirect_to all_index_time_cards_path, notice: '勤怠データを記録しました'
+      time_edit_no_breaked_save
     else
       render :edit, alert: '勤怠データを記録出来ませんでした'
     end

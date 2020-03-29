@@ -1,10 +1,10 @@
 class TimeCardsController < ApplicationController
+  include TimeSaveActions
   PER = 10
   before_action :set_time_card, only: [:show, :edit, :update, :destroy]
   before_action :logged_in?
   before_action :ensure_admin, only: [:all_index, :edit]
-  before_action :set_month, only: [:index]
-  before_action :set_date, only: [:new]
+  before_action :set_date, only: [:index, :new]
   before_action :can_not_edit, only: [:edit]
   before_action :time_card_today, only: [:new, :create]
   before_action :now_at, only: [:update]
@@ -22,13 +22,13 @@ class TimeCardsController < ApplicationController
 
   def create
     if params[:worked_in]
-      @time_card.affiliation_id = current_user.affiliation_id
       @time_card.worked_in_at = DateTime.current.change(sec: 00)
       if @time_card.year != @time_card.worked_in_at.year||\
          @time_card.month != @time_card.worked_in_at.month||\
          @time_card.day != @time_card.worked_in_at.day
          redirect_to all_index_time_cards_path, notice: '不正な日時です'
       else
+        @time_card.affiliation_id = current_user.affiliation_id
         @time_card.save
         redirect_to time_cards_path, notice: '勤怠データを記録しました'
       end

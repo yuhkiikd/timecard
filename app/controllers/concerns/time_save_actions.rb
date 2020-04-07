@@ -51,6 +51,7 @@ module TimeSaveActions
     redirect_to all_index_time_cards_path, notice: '勤怠データを記録しました'
   end
 
+  #勤怠時間編集（休憩なし）
   def time_edit_no_breaked_save
     @time_card.worked_time = (@time_card.worked_out_at - @time_card.worked_in_at).to_i
     @time_card.save

@@ -75,3 +75,4 @@ gem "jquery-rails"
 gem 'bootstrap', '~> 4.4.1'
 gem 'kaminari', '~> 0.17.0'
 gem 'hanmoto'
+gem 'ransack'

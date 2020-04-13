@@ -1,16 +1,21 @@
 class TimeCardsController < ApplicationController
   include TimeSaveActions
+  include SearchActions
   PER = 10
   before_action :set_time_card, only: [:show, :edit, :update, :destroy]
   before_action :logged_in?
   before_action :ensure_admin, only: [:all_index, :edit]
-  before_action :set_date, only: [:index, :new]
+  before_action :set_date, only: [:index, :sort, :new]
   before_action :can_not_edit, only: [:edit]
   before_action :time_card_today, only: [:new, :create]
   before_action :now_at, only: [:update]
 
   def index
     @time_cards = monthly_time_cards(current_user, @year, @month)
+  end
+
+  def sort
+    search_action
   end
 
   def all_index

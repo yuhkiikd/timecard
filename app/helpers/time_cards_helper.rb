@@ -39,6 +39,10 @@ module TimeCardsHelper
     end
   end
 
+  def year_select
+    TimeCard.group(:year).select("year")
+  end
+
   # 勤務状況を取得する
   def working_status(time_card)
     case time_card.working_status

@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   
   resources :time_cards, excpt: [:show] do
     collection do
+      get 'sort'
       get 'all_index'
       post 'all_index'
     end

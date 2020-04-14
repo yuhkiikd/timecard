@@ -1,14 +1,12 @@
-%h1.text-center.mt-5.col-12 今月の勤怠状況
+%h1.text-center.mt-5.mb-3.col-12="#{@year}年 #{@month}月の勤怠状況"
 
-= form_with(url:sort_time_cards_path, method: :get, local: true) do |f|
-  = f.collection_select :year, year_select, :year, :year, {selected: DateTime.current.year}
-  = "年"
-  = f.select :month, [1,2,3,4,5,6,7,8,9,10,11,12], {selected: DateTime.current.month}
-  = "月"
-  = f.submit "検索"
+.container.mb-4
+  = form_with(url:sort_time_cards_path, method: :get, local: true, class: "form-inline text-center justify-content-center") do |f|
+    .row.mb-2
+      = f.collection_select :year, year_select, :year, :year, { prompt: "年" }, { class: "form-control text-center col mr-2" }
+      = f.select :month, [1,2,3,4,5,6,7,8,9,10,11,12], { prompt: "月" }, { class: "form-control text-center col mr-2" }
+      = f.submit "検索", {class: "btn btn-primary"}
 
-
-%h2.text-center.col-12="#{@year}年 #{@month}月"
 %table.table.table-bordered.table-condensed.text-center
   %thead.bg-dark.text-white
     %tr

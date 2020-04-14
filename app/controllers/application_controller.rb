@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   include UsersHelper
   include TimeCardsHelper
+  include SearchActions
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected

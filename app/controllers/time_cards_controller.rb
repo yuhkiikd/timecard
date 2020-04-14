@@ -1,6 +1,5 @@
 class TimeCardsController < ApplicationController
   include TimeSaveActions
-  include SearchActions
   PER = 10
   before_action :set_time_card, only: [:show, :edit, :update, :destroy]
   before_action :logged_in?

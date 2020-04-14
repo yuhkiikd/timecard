@@ -13,7 +13,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :affiliations
+  resources :affiliations do
+    collection do
+      get 'sort'
+    end
+  end
   
   resources :time_cards, excpt: [:show] do
     collection do

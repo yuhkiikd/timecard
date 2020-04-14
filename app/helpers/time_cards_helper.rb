@@ -97,7 +97,7 @@ module TimeCardsHelper
 
   #所属のグラフ用データ
   def set_affiliation_chart_data
-    @affiliation_base_data = TimeCard.where(affiliation_id: @affiliation.id).group_date_asc_day
+    @affiliation_base_data = TimeCard.where(year: @year, month: @month, affiliation_id: @affiliation.id).group_date_asc_day
 
     @chart_days = @affiliation_base_data.minimum(:worked_in_at).values.map{ |item| item.strftime('%Y/%m/%d')}
     if Rails.env.production?#AWS用の時間データ抽出（AWS上だと時間の持ち方が違うため）

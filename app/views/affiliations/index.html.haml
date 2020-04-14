@@ -1,4 +1,5 @@
 %h1.text-center.mt-5.col-12 所属一覧
+
 %table.table.table-bordered.table-condensed.text-center
   %thead.bg-dark.text-white
     %tr
@@ -15,7 +16,7 @@
       %td= f.id
       %td= f.name
       %td= f.user_ids.count
-      %td= "#{int_to_hour(f.time_card.sum(:overtime))}時間"
+      %td= "#{int_to_hour(f.time_card.where(year: @year, month: @month).sum(:overtime))}時間"
       %td= link_to '詳細', affiliation_path(f)
       %td= link_to '編集', edit_affiliation_path(f)
       %td= link_to '削除', f, method: :delete, data: { confirm: t('.delete_confirm') }

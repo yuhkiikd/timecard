@@ -3,7 +3,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "4",
-    "jquery": "^3.4.1"
+    "jquery": "^3.5.0"
   },
   "description": "出退勤時間を管理して残業時間などをグラフで表示し、業務改善の指標とするアプリ",
   "version": "1.0.0",

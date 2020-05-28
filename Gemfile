@@ -59,7 +59,7 @@ gem 'better_errors'
 gem 'binding_of_caller'
 
 gem 'rails-i18n', '5.1.3'
-gem 'kaminari', '~> 0.17.0'
+gem 'kaminari', '~> 1.2.1'
 gem 'faker', '>= 2.6.0'
 
 gem 'devise'
@@ -73,6 +73,6 @@ gem 'config'
 gem 'erb2haml'
 gem "jquery-rails"
 gem 'bootstrap', '~> 4.4.1'
-gem 'kaminari', '~> 0.17.0'
+gem 'kaminari', '~> 1.2.1'
 gem 'hanmoto'
 gem 'ransack'
